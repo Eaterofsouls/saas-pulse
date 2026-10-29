@@ -1,0 +1,46 @@
+[{"stream_name":"stderr","time":7.622933809,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.622978077,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.622984535,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.622993185,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.232303334,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.232350662,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.232356565,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.232362554,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":9.534720153,"data":"Execution started at: 2026-10-29 17:52:24 UTC\n"}
+,{"stream_name":"stdout","time":41.646465339,"data":"Installing trl\u003e=0.8.0...\n"}
+,{"stream_name":"stdout","time":44.584038957,"data":"Installing bitsandbytes\u003e=0.43.0...\n"}
+,{"stream_name":"stdout","time":47.896366098,"data":"Installing scikit-learn...\n"}
+,{"stream_name":"stdout","time":49.745837437,"data":"Execution Device: cuda (Tesla T4)\n"}
+,{"stream_name":"stdout","time":49.745868639,"data":"VRAM Available: 14.56 GB\n"}
+,{"stream_name":"stderr","time":52.845258846,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":52.845852539,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":52.845872321,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":52.845879928,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":52.845885214,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":52.84588978,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":52.845893883,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":52.845898055,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":52.845902531,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":52.845906989,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":52.845911387,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":52.845916212,"data":"Exception encountered at \"In [2]\":\n"}
+,{"stream_name":"stderr","time":52.845920853,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":52.845924881,"data":"FileNotFoundError                         Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":52.845928773,"data":"/tmp/ipykernel_23/870033274.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":52.845933559,"data":"     25 \n"}
+,{"stream_name":"stderr","time":52.845949183,"data":"     26 if DATASET_DIR is None:\n"}
+,{"stream_name":"stderr","time":52.845952627,"data":"---\u003e 27     raise FileNotFoundError(\"Could not find SaaS-Pulse dataset directory. Please verify dataset upload.\")\n"}
+,{"stream_name":"stderr","time":52.845956161,"data":"     28 \n"}
+,{"stream_name":"stderr","time":52.84595898,"data":"     29 print(f\"Loaded Dataset Directory: {DATASET_DIR.resolve()}\")\n"}
+,{"stream_name":"stderr","time":52.845962216,"data":"\n"}
+,{"stream_name":"stderr","time":52.845965326,"data":"FileNotFoundError: Could not find SaaS-Pulse dataset directory. Please verify dataset upload.\n"}
+,{"stream_name":"stderr","time":52.845968876,"data":"\n"}
+,{"stream_name":"stderr","time":54.927941564,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":54.927986664,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":55.082128522,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":55.082151918,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":55.806397517,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":55.883569356,"data":"[NbConvertApp] Writing 41372 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":58.263305844,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":58.843638183,"data":"[NbConvertApp] Writing 398402 bytes to __results__.html\n"}
+]
