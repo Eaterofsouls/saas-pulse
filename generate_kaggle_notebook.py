@@ -268,17 +268,17 @@ def extract_label_from_text(raw_text):
     return 'none_or_commodity'
 
 def run_llm_inference(prompt_messages, max_new_tokens=100):
-    input_ids = tokenizer.apply_chat_template(prompt_messages, tokenize=True, add_generation_prompt=True, return_tensors="pt")
-    input_ids = input_ids.to(model.device)
+    text_prompt = tokenizer.apply_chat_template(prompt_messages, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer(text_prompt, return_tensors="pt").to(model.device)
     with torch.no_grad():
         output = model.generate(
-            input_ids,
+            **inputs,
             max_new_tokens=max_new_tokens,
             temperature=0.1,
             do_sample=False,
             pad_token_id=tokenizer.pad_token_id
         )
-    generated_tokens = output[0][input_ids.shape[1]:]
+    generated_tokens = output[0][inputs["input_ids"].shape[1]:]
     return tokenizer.decode(generated_tokens, skip_special_tokens=True)
 """)
 
@@ -461,16 +461,17 @@ for idx, row in tqdm(df_test.iterrows(), total=len(df_test)):
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_msg}
     ]
-    input_ids = tokenizer.apply_chat_template(lora_messages, tokenize=True, add_generation_prompt=True, return_tensors="pt").to(eval_model.device)
+    text_prompt = tokenizer.apply_chat_template(lora_messages, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer(text_prompt, return_tensors="pt").to(eval_model.device)
     with torch.no_grad():
         output = eval_model.generate(
-            input_ids,
+            **inputs,
             max_new_tokens=90,
             temperature=0.1,
             do_sample=False,
             pad_token_id=tokenizer.pad_token_id
         )
-    gen_text = tokenizer.decode(output[0][input_ids.shape[1]:], skip_special_tokens=True)
+    gen_text = tokenizer.decode(output[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
     raws_lora.append(gen_text)
     preds_lora.append(extract_label_from_text(gen_text))
 

@@ -1,0 +1,107 @@
+[{"stream_name":"stderr","time":8.372414902,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.372461493,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.372466226,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.372468906,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":9.033278356,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.03330636,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.033311083,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.033314924,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":10.467154062,"data":"Execution started at: 2026-10-29 17:58:21 UTC\n"}
+,{"stream_name":"stdout","time":45.089167492,"data":"Installing trl\u003e=0.8.0...\n"}
+,{"stream_name":"stdout","time":48.364426784,"data":"Installing bitsandbytes\u003e=0.43.0...\n"}
+,{"stream_name":"stdout","time":52.435970848,"data":"Installing scikit-learn...\n"}
+,{"stream_name":"stdout","time":54.450159339,"data":"Execution Device: cuda (Tesla T4)\n"}
+,{"stream_name":"stdout","time":54.450195015,"data":"VRAM Available: 14.56 GB\n"}
+,{"stream_name":"stdout","time":54.65170391,"data":"Searching for dataset files across roots:\n"}
+,{"stream_name":"stdout","time":54.651753997,"data":"Checking root: /kaggle/input\n"}
+,{"stream_name":"stdout","time":54.651762627,"data":"  Entries in input: ['datasets']\n"}
+,{"stream_name":"stdout","time":54.651767893,"data":"Found companies.csv at: /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/companies.csv\n"}
+,{"stream_name":"stdout","time":54.651773021,"data":"Loaded Dataset Directory: /kaggle/input/datasets/notaveragehee/saas-pulse-dataset\n"}
+,{"stream_name":"stdout","time":54.840792045,"data":"1. Companies: 100 records across 6 categories\n"}
+,{"stream_name":"stdout","time":54.840825917,"data":"2. Revenue: 538 annual records covering 100 companies\n"}
+,{"stream_name":"stdout","time":54.840833669,"data":"3. Stock Performance: 100 tickers tracked with 2023-2026 excess returns\n"}
+,{"stream_name":"stdout","time":54.840839505,"data":"4. Gold 10-K Moat Dataset: 200 stratified paragraphs\n"}
+,{"stream_name":"stdout","time":54.840844308,"data":"5. Gold HN Developer Stance: 60 stratified comments\n"}
+,{"stream_name":"stderr","time":55.017371953,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":55.017410755,"data":"\n"}
+,{"stream_name":"stderr","time":55.017415282,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":85.812370654,"data":"Model successfully loaded onto: cuda:0\n"}
+,{"stream_name":"stdout","time":85.868274272,"data":"Benchmarking Zero-Shot and Few-Shot CoT on 40 test paragraphs...\n"}
+,{"stream_name":"stderr","time":85.869342909,"data":"\r  0%|          | 0/40 [00:00\u003c?, ?it/s]\n"}
+,{"stream_name":"stderr","time":85.893612997,"data":"\r  0%|          | 0/40 [00:00\u003c?, ?it/s][transformers] The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.\n"}
+,{"stream_name":"stderr","time":85.893654982,"data":"\n"}
+,{"stream_name":"stderr","time":85.893659449,"data":"[transformers] The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.\n"}
+,{"stream_name":"stderr","time":85.895255923,"data":"\r  0%|          | 0/40 [00:00\u003c?, ?it/s]\n"}
+,{"stream_name":"stderr","time":85.903431234,"data":"\r  0%|          | 0/40 [00:00\u003c?, ?it/s]\n"}
+,{"stream_name":"stderr","time":85.903449311,"data":"\n"}
+,{"stream_name":"stderr","time":85.903454187,"data":"\n"}
+,{"stream_name":"stderr","time":89.641615365,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":89.642498247,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":89.644064774,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":89.64408048600001,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":89.644085666,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":89.64409004,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":89.644093883,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":89.644097575,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":89.64410138,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":89.644104849,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":89.644109204,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":89.644113325,"data":"Exception encountered at \"In [5]\":\n"}
+,{"stream_name":"stderr","time":89.644117054,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":89.644120821,"data":"KeyError                                  Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":89.644124154,"data":"/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py in __getattr__(self, item)\n"}
+,{"stream_name":"stderr","time":89.644144836,"data":"    286         try:\n"}
+,{"stream_name":"stderr","time":89.644150774,"data":"--\u003e 287             return self.data[item]\n"}
+,{"stream_name":"stderr","time":89.644155606,"data":"    288         except KeyError:\n"}
+,{"stream_name":"stderr","time":89.644159728,"data":"\n"}
+,{"stream_name":"stderr","time":89.644163385,"data":"KeyError: 'shape'\n"}
+,{"stream_name":"stderr","time":89.644166882,"data":"\n"}
+,{"stream_name":"stderr","time":89.644170321,"data":"During handling of the above exception, another exception occurred:\n"}
+,{"stream_name":"stderr","time":89.644174004,"data":"\n"}
+,{"stream_name":"stderr","time":89.644177301,"data":"AttributeError                            Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":89.644181069,"data":"/tmp/ipykernel_24/3007804553.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":89.644184805,"data":"     43         {\"role\": \"user\", \"content\": user_msg}\n"}
+,{"stream_name":"stderr","time":89.644197628,"data":"     44     ]\n"}
+,{"stream_name":"stderr","time":89.644201224,"data":"---\u003e 45     out_zs = run_llm_inference(zs_messages, max_new_tokens=90)\n"}
+,{"stream_name":"stderr","time":89.644204863,"data":"     46     raws_zero_shot.append(out_zs)\n"}
+,{"stream_name":"stderr","time":89.644208342,"data":"     47     preds_zero_shot.append(extract_label_from_text(out_zs))\n"}
+,{"stream_name":"stderr","time":89.644211881,"data":"\n"}
+,{"stream_name":"stderr","time":89.644215217,"data":"/tmp/ipykernel_24/127993478.py in run_llm_inference(prompt_messages, max_new_tokens)\n"}
+,{"stream_name":"stderr","time":89.644228893,"data":"     44     input_ids = input_ids.to(model.device)\n"}
+,{"stream_name":"stderr","time":89.644231459,"data":"     45     with torch.no_grad():\n"}
+,{"stream_name":"stderr","time":89.644233859,"data":"---\u003e 46         output = model.generate(\n"}
+,{"stream_name":"stderr","time":89.644236336,"data":"     47             input_ids,\n"}
+,{"stream_name":"stderr","time":89.644241059,"data":"     48             max_new_tokens=max_new_tokens,\n"}
+,{"stream_name":"stderr","time":89.64424354,"data":"\n"}
+,{"stream_name":"stderr","time":89.644245799,"data":"/usr/local/lib/python3.13/dist-packages/torch/utils/_contextlib.py in decorate_context(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":89.644248326,"data":"    122         # pyrefly: ignore [bad-context-manager]\n"}
+,{"stream_name":"stderr","time":89.644250831,"data":"    123         with ctx_factory():\n"}
+,{"stream_name":"stderr","time":89.644253229,"data":"--\u003e 124             return func(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":89.644255717,"data":"    125 \n"}
+,{"stream_name":"stderr","time":89.644258099,"data":"    126     return decorate_context\n"}
+,{"stream_name":"stderr","time":89.644260441,"data":"\n"}
+,{"stream_name":"stderr","time":89.644263561,"data":"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py in generate(self, inputs, generation_config, logits_processor, stopping_criteria, prefix_allowed_tokens_fn, synced_gpus, assistant_model, streamer, negative_prompt_ids, negative_prompt_attention_mask, custom_generate, **kwargs)\n"}
+,{"stream_name":"stderr","time":89.644266666,"data":"   2519         if \"inputs_tensor\" in inspect.signature(decoding_method).parameters.keys():\n"}
+,{"stream_name":"stderr","time":89.644269228,"data":"   2520             generation_mode_kwargs[\"inputs_tensor\"] = inputs_tensor\n"}
+,{"stream_name":"stderr","time":89.644271734,"data":"-\u003e 2521         batch_size = inputs_tensor.shape[0]\n"}
+,{"stream_name":"stderr","time":89.644274177,"data":"   2522 \n"}
+,{"stream_name":"stderr","time":89.644276525,"data":"   2523         device = inputs_tensor.device\n"}
+,{"stream_name":"stderr","time":89.644278882,"data":"\n"}
+,{"stream_name":"stderr","time":89.644281106,"data":"/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py in __getattr__(self, item)\n"}
+,{"stream_name":"stderr","time":89.644283529,"data":"    287             return self.data[item]\n"}
+,{"stream_name":"stderr","time":89.644285864,"data":"    288         except KeyError:\n"}
+,{"stream_name":"stderr","time":89.644288181,"data":"--\u003e 289             raise AttributeError\n"}
+,{"stream_name":"stderr","time":89.644290556,"data":"    290 \n"}
+,{"stream_name":"stderr","time":89.644292803,"data":"    291     def __getstate__(self):\n"}
+,{"stream_name":"stderr","time":89.644295158,"data":"\n"}
+,{"stream_name":"stderr","time":89.644297458,"data":"AttributeError: \n"}
+,{"stream_name":"stderr","time":89.644302765,"data":"\n"}
+,{"stream_name":"stderr","time":91.882818707,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":91.88284644,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":92.04970994,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":92.049754221,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":92.837201124,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":92.93980364,"data":"[NbConvertApp] Writing 155566 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":95.477598471,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":96.133137606,"data":"[NbConvertApp] Writing 493296 bytes to __results__.html\n"}
+]
