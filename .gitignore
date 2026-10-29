@@ -1,0 +1,26 @@
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets and credentials (NON-NEGOTIABLE)
+kaggle.json
+KAGGLE_KEY
+*.env
+.env*
+*token*
+*secret*
+*credential*
+
+# Large raw dataset files exceeding GitHub 50MB/100MB limits
+# (Audited via dataset/MANIFEST.csv and dataset/samples/filings_paragraphs_sample.jsonl)
+dataset/filings_paragraphs.jsonl
+raw/
+
+# Package archive (uploaded to GitHub release / Kaggle dataset)
+saas_pulse_dataset.zip

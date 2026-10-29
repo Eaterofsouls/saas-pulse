@@ -1,0 +1,101 @@
+ticker,name,cik,category,has_10k_fy2022_2025
+CRM,"Salesforce, Inc.",0001108524,horizontal,True
+ADBE,ADOBE INC.,0000796343,horizontal,True
+NOW,"ServiceNow, Inc.",0001373715,horizontal,True
+WDAY,"Workday, Inc.",0001327811,fintech/HR,True
+INTU,INTUIT INC.,0000896878,fintech/HR,True
+ADSK,"Autodesk, Inc.",0000769397,horizontal,True
+TEAM,Atlassian Corp,0001650372,horizontal,True
+HUBS,HUBSPOT INC,0001404655,horizontal,True
+SNOW,Snowflake Inc.,0001640147,data/infra,True
+DDOG,"Datadog, Inc.",0001561550,data/infra,True
+CRWD,"CrowdStrike Holdings, Inc.",0001535527,security,True
+ZS,"Zscaler, Inc.",0001713683,security,True
+OKTA,"Okta, Inc.",0001660134,security,True
+TWLO,TWILIO INC,0001447669,communication,True
+ZM,"Zoom Communications, Inc.",0001585521,communication,True
+DOCU,"DOCUSIGN, INC.",0001261333,horizontal,True
+BOX,BOX INC,0001372612,horizontal,True
+DBX,"DROPBOX, INC.",0001467623,horizontal,True
+ASAN,"Asana, Inc.",0001477720,horizontal,True
+ESTC,Elastic N.V.,0001707753,data/infra,True
+MDB,"MongoDB, Inc.",0001441816,data/infra,True
+NET,"Cloudflare, Inc.",0001477333,data/infra,True
+PATH,"UiPath, Inc.",0001734722,data/infra,True
+PLTR,Palantir Technologies Inc.,0001321655,data/infra,True
+VEEV,VEEVA SYSTEMS INC,0001393052,vertical,True
+PCTY,Paylocity Holding Corp,0001591698,fintech/HR,True
+PAYC,"Paycom Software, Inc.",0001590955,fintech/HR,True
+BILL,"BILL Holdings, Inc.",0001786352,fintech/HR,True
+FIVN,"Five9, Inc.",0001288847,communication,True
+RNG,"RingCentral, Inc.",0001384905,communication,True
+EGHT,8X8 INC /DE/,0001023731,communication,True
+BRZE,"Braze, Inc.",0001676238,vertical,True
+AMPL,"Amplitude, Inc.",0001866692,vertical,True
+SPT,"Sprout Social, Inc.",0001517375,vertical,True
+SEMR,"Semrush Holdings, Inc.",0001831840,vertical,True
+WK,WORKIVA INC,0001445305,horizontal,True
+APPF,APPFOLIO INC,0001433195,vertical,True
+GWRE,"Guidewire Software, Inc.",0001528396,vertical,True
+MANH,MANHATTAN ASSOCIATES INC,0001056696,vertical,True
+PEGA,PEGASYSTEMS INC,0001013857,horizontal,True
+TYL,TYLER TECHNOLOGIES INC,0000860731,vertical,True
+FRSH,Freshworks Inc.,0001544522,vertical,True
+PD,"PagerDuty, Inc.",0001568100,vertical,True
+DT,"Dynatrace, Inc.",0001773383,data/infra,True
+S,"SentinelOne, Inc.",0001583708,security,True
+QLYS,"QUALYS, INC.",0001107843,security,True
+TENB,"Tenable Holdings, Inc.",0001660280,security,True
+RPD,"Rapid7, Inc.",0001560327,security,True
+VRNS,VARONIS SYSTEMS INC,0001361113,security,True
+GTLB,Gitlab Inc.,0001653482,data/infra,True
+CFLT,"Confluent, Inc.",0001699838,data/infra,True
+DOCN,"DigitalOcean Holdings, Inc.",0001582961,data/infra,True
+FSLY,"Fastly, Inc.",0001517413,data/infra,True
+NCNO,"nCino, Inc.",0001902733,fintech/HR,True
+ALKT,"ALKAMI TECHNOLOGY, INC.",0001529274,fintech/HR,True
+QTWO,"Q2 Holdings, Inc.",0001410384,fintech/HR,True
+PRO,"PROS Holdings, Inc.",0001397187,vertical,True
+BLKB,BLACKBAUD INC,0001280058,vertical,True
+ZI,ZoomInfo Technologies Inc.,0001794515,vertical,True
+BL,"BLACKLINE, INC.",0001666134,fintech/HR,True
+PRGS,PROGRESS SOFTWARE CORP /MA,0000876167,data/infra,True
+CVLT,COMMVAULT SYSTEMS INC,0001169561,data/infra,True
+NTNX,"Nutanix, Inc.",0001618732,data/infra,True
+SPSC,SPS COMMERCE INC,0001092699,vertical,True
+KVYO,"Klaviyo, Inc.",0001835830,fintech/HR,True
+IOT,Samsara Inc.,0001642896,data/infra,True
+PCOR,"PROCORE TECHNOLOGIES, INC.",0001611052,vertical,True
+OTEX,OPEN TEXT CORP,0001002638,vertical,True
+FROG,JFrog Ltd,0001800667,data/infra,True
+TOST,"Toast, Inc.",0001650164,fintech/HR,True
+RAMP,"LiveRamp Holdings, Inc.",0000733269,vertical,True
+YEXT,"Yext, Inc.",0001614178,vertical,True
+PANW,Palo Alto Networks Inc,0001327567,security,True
+FTNT,"Fortinet, Inc.",0001262039,security,True
+AKAM,AKAMAI TECHNOLOGIES INC,0001086222,data/infra,True
+PTC,PTC INC.,0000857005,horizontal,True
+CDNS,CADENCE DESIGN SYSTEMS INC,0000813672,horizontal,True
+SNPS,SYNOPSYS INC,0000883241,horizontal,True
+CXM,"Sprinklr, Inc.",0001569345,horizontal,True
+DUOL,"Duolingo, Inc.",0001562088,horizontal,True
+APP,AppLovin Corp,0001751008,horizontal,True
+GEN,Gen Digital Inc.,0000849399,security,True
+ALRM,"Alarm.com Holdings, Inc.",0001459200,security,True
+APPN,APPIAN CORP,0001441683,horizontal,True
+VERX,"Vertex, Inc.",0001806837,vertical,True
+AGYS,AGILYSYS INC,0000078749,vertical,True
+FOUR,"Shift4 Payments, Inc.",0001794669,fintech/HR,True
+FLYW,Flywire Corp,0001580560,fintech/HR,True
+PAY,"Paymentus Holdings, Inc.",0001841156,fintech/HR,True
+BLND,"Blend Labs, Inc.",0001855747,fintech/HR,True
+LAW,"CS Disco, Inc.",0001625641,horizontal,True
+COUR,"Coursera, Inc.",0001651562,horizontal,True
+TASK,"TaskUs, Inc.",0001829864,horizontal,True
+BAND,Bandwidth Inc.,0001514416,communication,True
+CSGP,"COSTAR GROUP, INC.",0001057352,horizontal,True
+CALX,"CALIX, INC",0001406666,horizontal,True
+YOU,"Clear Secure, Inc.",0001856314,horizontal,True
+MQ,"Marqeta, Inc.",0001522540,fintech/HR,True
+PAYO,Payoneer Global Inc.,0001845815,fintech/HR,True
+RELY,"Remitly Global, Inc.",0001782170,fintech/HR,True

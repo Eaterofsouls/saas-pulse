@@ -1,0 +1,130 @@
+product,domain,public_ticker_or_blank
+Salesforce,salesforce.com,CRM
+Adobe,adobe.com,ADBE
+ServiceNow,servicenow.com,NOW
+Workday,workday.com,WDAY
+Intuit,intuit.com,INTU
+Autodesk,autodesk.com,ADSK
+Atlassian,atlassian.com,TEAM
+HubSpot,hubspot.com,HUBS
+Snowflake,snowflake.com,SNOW
+Datadog,datadoghq.com,DDOG
+CrowdStrike,crowdstrike.com,CRWD
+Zscaler,zscaler.com,ZS
+Okta,okta.com,OKTA
+Twilio,twilio.com,TWLO
+Zoom,zoom.us,ZM
+DocuSign,docusign.com,DOCU
+Box,box.com,BOX
+Dropbox,dropbox.com,DBX
+Asana,asana.com,ASAN
+Elastic,elastic.co,ESTC
+MongoDB,mongodb.com,MDB
+Cloudflare,cloudflare.com,NET
+UiPath,uipath.com,PATH
+Palantir,palantir.com,PLTR
+Veeva,veeva.com,VEEV
+Paylocity,paylocity.com,PCTY
+Paycom,paycom.com,PAYC
+BILL,bill.com,BILL
+Five9,five9.com,FIVN
+RingCentral,ringcentral.com,RNG
+8x8,8x8.com,EGHT
+Braze,braze.com,BRZE
+Amplitude,amplitude.com,AMPL
+Sprout Social,sproutsocial.com,SPT
+Semrush,semrush.com,SEMR
+Workiva,workiva.com,WK
+AppFolio,appfolio.com,APPF
+Guidewire,guidewire.com,GWRE
+Manhattan Associates,manh.com,MANH
+Pegasystems,pega.com,PEGA
+Tyler Technologies,tylertech.com,TYL
+Freshworks,freshworks.com,FRSH
+PagerDuty,pagerduty.com,PD
+Dynatrace,dynatrace.com,DT
+SentinelOne,sentinelone.com,S
+Qualys,qualys.com,QLYS
+Tenable,tenable.com,TENB
+Rapid7,rapid7.com,RPD
+Varonis,varonis.com,VRNS
+GitLab,gitlab.com,GTLB
+Confluent,confluent.io,CFLT
+DigitalOcean,digitalocean.com,DOCN
+Fastly,fastly.com,FSLY
+nCino,ncino.com,NCNO
+Alkami,alkami.com,ALKT
+Q2,q2.com,QTWO
+PROS,pros.com,PRO
+Blackbaud,blackbaud.com,BLKB
+ZoomInfo,zoominfo.com,ZI
+BlackLine,blackline.com,BL
+Progress,progress.com,PRGS
+Commvault,commvault.com,CVLT
+Nutanix,nutanix.com,NTNX
+SPS Commerce,spscommerce.com,SPSC
+Klaviyo,klaviyo.com,KVYO
+Samsara,samsara.com,IOT
+Procore,procore.com,PCOR
+OpenText,opentext.com,OTEX
+JFrog,jfrog.com,FROG
+Toast,toasttab.com,TOST
+LiveRamp,liveramp.com,RAMP
+Yext,yext.com,YEXT
+Palo Alto Networks,paloaltonetworks.com,PANW
+Fortinet,fortinet.com,FTNT
+Akamai,akamai.com,AKAM
+PTC,ptc.com,PTC
+Cadence,cadence.com,CDNS
+Synopsys,synopsys.com,SNPS
+Sprinklr,sprinklr.com,CXM
+Duolingo,duolingo.com,DUOL
+AppLovin,applovin.com,APP
+Gen Digital,gendigital.com,GEN
+Alarm.com,alarm.com,ALRM
+Appian,appian.com,APPN
+Vertex,vertexinc.com,VERX
+Agilysys,agilysys.com,AGYS
+Shift4 Payments,shift4.com,FOUR
+Flywire,flywire.com,FLYW
+Paymentus,paymentus.com,PAY
+Blend Labs,blend.com,BLND
+CS Disco,csdisco.com,LAW
+Coursera,coursera.org,COUR
+TaskUs,taskus.com,TASK
+Bandwidth,bandwidth.com,BAND
+CoStar Group,costargroup.com,CSGP
+Calix,calix.com,CALX
+CLEAR,clearme.com,YOU
+"Marqeta, Inc.",mq.com,MQ
+Payoneer Global Inc.,payo.com,PAYO
+"Remitly Global, Inc.",rely.com,RELY
+Notion,notion.so,
+Canva,canva.com,
+Zapier,zapier.com,
+Airtable,airtable.com,
+Linear,linear.app,
+Intercom,intercom.com,
+Calendly,calendly.com,
+Miro,miro.com,
+Webflow,webflow.com,
+Grammarly,grammarly.com,
+Gusto,gusto.com,
+Rippling,rippling.com,
+Retool,retool.com,
+ClickUp,clickup.com,
+Pipedrive,pipedrive.com,
+Zendesk,zendesk.com,
+Mixpanel,mixpanel.com,
+Typeform,typeform.com,
+Vercel,vercel.com,
+Supabase,supabase.com,
+Postman,postman.com,
+Lucid,lucidchart.com,
+Loom,loom.com,
+Trello,trello.com,
+Slack,slack.com,
+Monday,monday.com,MNDY
+Figma,figma.com,
+Shopify,shopify.com,SHOP
+Stripe,stripe.com,
