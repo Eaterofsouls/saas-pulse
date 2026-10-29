@@ -391,7 +391,7 @@ sft_kwargs = {
     "per_device_train_batch_size": 2,
     "gradient_accumulation_steps": 4,
     "learning_rate": 2e-4,
-    "fp16": (device == "cuda"),
+    "fp16": False,
     "bf16": False,
     "logging_steps": 5,
     "save_strategy": "no",
@@ -412,7 +412,6 @@ if device == "cuda":
     model.gradient_checkpointing_enable()
     peft_model = prepare_model_for_kbit_training(model)
     peft_model = get_peft_model(peft_model, peft_config)
-    peft_model.to(torch.float16)
     peft_model.print_trainable_parameters()
     
     trainer_kwargs = {

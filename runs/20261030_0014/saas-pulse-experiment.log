@@ -1,0 +1,174 @@
+[{"stream_name":"stderr","time":6.019574439,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.019607581,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.019620747,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.019624996,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":6.576302947,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.576333945,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.576340085,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.576344523,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":7.775679592,"data":"Execution started at: 2026-10-29 18:43:37 UTC\n"}
+,{"stream_name":"stdout","time":33.471355971,"data":"Installing trl\u003e=0.8.0...\n"}
+,{"stream_name":"stdout","time":36.774304066,"data":"Installing bitsandbytes\u003e=0.43.0...\n"}
+,{"stream_name":"stdout","time":40.055392342,"data":"Installing scikit-learn...\n"}
+,{"stream_name":"stdout","time":41.89511658,"data":"Execution Device: cuda (Tesla T4)\n"}
+,{"stream_name":"stdout","time":41.895161851,"data":"VRAM Available: 14.56 GB\n"}
+,{"stream_name":"stdout","time":41.977396773,"data":"Searching for dataset files across roots:\n"}
+,{"stream_name":"stdout","time":41.977424543,"data":"Checking root: /kaggle/input\n"}
+,{"stream_name":"stdout","time":41.977442343999996,"data":"  Entries in input: ['datasets']\n"}
+,{"stream_name":"stdout","time":41.977447589,"data":"Found companies.csv at: /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/companies.csv\n"}
+,{"stream_name":"stdout","time":41.977452393,"data":"Loaded Dataset Directory: /kaggle/input/datasets/notaveragehee/saas-pulse-dataset\n"}
+,{"stream_name":"stdout","time":41.977463881,"data":"1. Companies: 100 records across 6 categories\n"}
+,{"stream_name":"stdout","time":41.977467845,"data":"2. Revenue: 538 annual records covering 100 companies\n"}
+,{"stream_name":"stdout","time":41.977471271,"data":"3. Stock Performance: 100 tickers tracked with 2023-2026 excess returns\n"}
+,{"stream_name":"stdout","time":41.977474542,"data":"4. Gold 10-K Moat Dataset: 200 stratified paragraphs\n"}
+,{"stream_name":"stdout","time":41.977477837,"data":"5. Gold HN Developer Stance: 60 stratified comments\n"}
+,{"stream_name":"stderr","time":42.441923938,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":42.441948804,"data":"\n"}
+,{"stream_name":"stderr","time":42.441952785,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":45.550385647,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stderr","time":45.550412713,"data":"\n"}
+,{"stream_name":"stderr","time":45.550418544,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stdout","time":81.412705567,"data":"Model successfully loaded onto: cuda:0\n"}
+,{"stream_name":"stdout","time":81.46234282,"data":"Benchmarking Zero-Shot and Few-Shot CoT on 40 test paragraphs...\n"}
+,{"stream_name":"stderr","time":81.463182615,"data":"\r  0%|          | 0/40 [00:00\u003c?, ?it/s]\n"}
+,{"stream_name":"stderr","time":81.484432445,"data":"\r  0%|          | 0/40 [00:00\u003c?, ?it/s][transformers] The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.\n"}
+,{"stream_name":"stderr","time":81.484450993,"data":"\n"}
+,{"stream_name":"stderr","time":81.484455202,"data":"[transformers] The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.\n"}
+,{"stream_name":"stderr","time":88.617881193,"data":"\r  2%|▎         | 1/40 [00:07\u003c04:38,  7.15s/it]\n"}
+,{"stream_name":"stderr","time":95.108396201,"data":"\r  2%|▎         | 1/40 [00:07\u003c04:38,  7.15s/it]\r  5%|▌         | 2/40 [00:13\u003c04:17,  6.76s/it]\n"}
+,{"stream_name":"stderr","time":101.02146737,"data":"\r  5%|▌         | 2/40 [00:13\u003c04:17,  6.76s/it]\r  8%|▊         | 3/40 [00:19\u003c03:55,  6.38s/it]\n"}
+,{"stream_name":"stderr","time":105.850093186,"data":"\r  8%|▊         | 3/40 [00:19\u003c03:55,  6.38s/it]\r 10%|█         | 4/40 [00:24\u003c03:27,  5.76s/it]\n"}
+,{"stream_name":"stderr","time":112.575376113,"data":"\r 10%|█         | 4/40 [00:24\u003c03:27,  5.76s/it]\r 12%|█▎        | 5/40 [00:31\u003c03:33,  6.11s/it]\n"}
+,{"stream_name":"stderr","time":118.50874561,"data":"\r 12%|█▎        | 5/40 [00:31\u003c03:33,  6.11s/it]\r 15%|█▌        | 6/40 [00:37\u003c03:25,  6.05s/it]\n"}
+,{"stream_name":"stderr","time":123.696796966,"data":"\r 15%|█▌        | 6/40 [00:37\u003c03:25,  6.05s/it]\r 18%|█▊        | 7/40 [00:42\u003c03:10,  5.77s/it]\n"}
+,{"stream_name":"stderr","time":132.40408518,"data":"\r 18%|█▊        | 7/40 [00:42\u003c03:10,  5.77s/it]\r 20%|██        | 8/40 [00:50\u003c03:34,  6.70s/it]\n"}
+,{"stream_name":"stderr","time":137.984562552,"data":"\r 20%|██        | 8/40 [00:50\u003c03:34,  6.70s/it]\r 22%|██▎       | 9/40 [00:56\u003c03:16,  6.35s/it]\n"}
+,{"stream_name":"stderr","time":143.873718431,"data":"\r 22%|██▎       | 9/40 [00:56\u003c03:16,  6.35s/it]\r 25%|██▌       | 10/40 [01:02\u003c03:06,  6.21s/it]\n"}
+,{"stream_name":"stderr","time":150.466814204,"data":"\r 25%|██▌       | 10/40 [01:02\u003c03:06,  6.21s/it]\r 28%|██▊       | 11/40 [01:09\u003c03:03,  6.33s/it]\n"}
+,{"stream_name":"stderr","time":156.840464298,"data":"\r 28%|██▊       | 11/40 [01:09\u003c03:03,  6.33s/it]\r 30%|███       | 12/40 [01:15\u003c02:57,  6.34s/it]\n"}
+,{"stream_name":"stderr","time":162.39056327,"data":"\r 30%|███       | 12/40 [01:15\u003c02:57,  6.34s/it]\r 32%|███▎      | 13/40 [01:20\u003c02:44,  6.10s/it]\n"}
+,{"stream_name":"stderr","time":167.492394804,"data":"\r 32%|███▎      | 13/40 [01:20\u003c02:44,  6.10s/it]\r 35%|███▌      | 14/40 [01:26\u003c02:30,  5.80s/it]\n"}
+,{"stream_name":"stderr","time":173.465748579,"data":"\r 35%|███▌      | 14/40 [01:26\u003c02:30,  5.80s/it]\r 38%|███▊      | 15/40 [01:32\u003c02:26,  5.85s/it]\n"}
+,{"stream_name":"stderr","time":181.592834633,"data":"\r 38%|███▊      | 15/40 [01:32\u003c02:26,  5.85s/it]\r 40%|████      | 16/40 [01:40\u003c02:36,  6.54s/it]\n"}
+,{"stream_name":"stderr","time":186.727032806,"data":"\r 40%|████      | 16/40 [01:40\u003c02:36,  6.54s/it]\r 42%|████▎     | 17/40 [01:45\u003c02:20,  6.12s/it]\n"}
+,{"stream_name":"stderr","time":194.503438063,"data":"\r 42%|████▎     | 17/40 [01:45\u003c02:20,  6.12s/it]\r 45%|████▌     | 18/40 [01:53\u003c02:25,  6.61s/it]\n"}
+,{"stream_name":"stderr","time":201.428811906,"data":"\r 45%|████▌     | 18/40 [01:53\u003c02:25,  6.61s/it]\r 48%|████▊     | 19/40 [01:59\u003c02:20,  6.71s/it]\n"}
+,{"stream_name":"stderr","time":207.717621895,"data":"\r 48%|████▊     | 19/40 [01:59\u003c02:20,  6.71s/it]\r 50%|█████     | 20/40 [02:06\u003c02:11,  6.58s/it]\n"}
+,{"stream_name":"stderr","time":213.919658426,"data":"\r 50%|█████     | 20/40 [02:06\u003c02:11,  6.58s/it]\r 52%|█████▎    | 21/40 [02:12\u003c02:02,  6.47s/it]\n"}
+,{"stream_name":"stderr","time":222.031573308,"data":"\r 52%|█████▎    | 21/40 [02:12\u003c02:02,  6.47s/it]\r 55%|█████▌    | 22/40 [02:20\u003c02:05,  6.96s/it]\n"}
+,{"stream_name":"stderr","time":227.767544917,"data":"\r 55%|█████▌    | 22/40 [02:20\u003c02:05,  6.96s/it]\r 57%|█████▊    | 23/40 [02:26\u003c01:52,  6.59s/it]\n"}
+,{"stream_name":"stderr","time":233.752125788,"data":"\r 57%|█████▊    | 23/40 [02:26\u003c01:52,  6.59s/it]\r 60%|██████    | 24/40 [02:32\u003c01:42,  6.41s/it]\n"}
+,{"stream_name":"stderr","time":239.549672196,"data":"\r 60%|██████    | 24/40 [02:32\u003c01:42,  6.41s/it]\r 62%|██████▎   | 25/40 [02:38\u003c01:33,  6.23s/it]\n"}
+,{"stream_name":"stderr","time":247.477082086,"data":"\r 62%|██████▎   | 25/40 [02:38\u003c01:33,  6.23s/it]\r 65%|██████▌   | 26/40 [02:46\u003c01:34,  6.74s/it]\n"}
+,{"stream_name":"stderr","time":254.457205847,"data":"\r 65%|██████▌   | 26/40 [02:46\u003c01:34,  6.74s/it]\r 68%|██████▊   | 27/40 [02:52\u003c01:28,  6.81s/it]\n"}
+,{"stream_name":"stderr","time":260.288669755,"data":"\r 68%|██████▊   | 27/40 [02:52\u003c01:28,  6.81s/it]\r 70%|███████   | 28/40 [02:58\u003c01:18,  6.52s/it]\n"}
+,{"stream_name":"stderr","time":266.45200067,"data":"\r 70%|███████   | 28/40 [02:58\u003c01:18,  6.52s/it]\r 72%|███████▎  | 29/40 [03:04\u003c01:10,  6.41s/it]\n"}
+,{"stream_name":"stderr","time":272.383221259,"data":"\r 72%|███████▎  | 29/40 [03:04\u003c01:10,  6.41s/it]\r 75%|███████▌  | 30/40 [03:10\u003c01:02,  6.27s/it]\n"}
+,{"stream_name":"stderr","time":279.69235724,"data":"\r 75%|███████▌  | 30/40 [03:10\u003c01:02,  6.27s/it]\r 78%|███████▊  | 31/40 [03:18\u003c00:59,  6.58s/it]\n"}
+,{"stream_name":"stderr","time":285.391045122,"data":"\r 78%|███████▊  | 31/40 [03:18\u003c00:59,  6.58s/it]\r 80%|████████  | 32/40 [03:23\u003c00:50,  6.32s/it]\n"}
+,{"stream_name":"stderr","time":290.107551703,"data":"\r 80%|████████  | 32/40 [03:23\u003c00:50,  6.32s/it]\r 82%|████████▎ | 33/40 [03:28\u003c00:40,  5.84s/it]\n"}
+,{"stream_name":"stderr","time":297.524090029,"data":"\r 82%|████████▎ | 33/40 [03:28\u003c00:40,  5.84s/it]\r 85%|████████▌ | 34/40 [03:36\u003c00:37,  6.31s/it]\n"}
+,{"stream_name":"stderr","time":303.883056211,"data":"\r 85%|████████▌ | 34/40 [03:36\u003c00:37,  6.31s/it]\r 88%|████████▊ | 35/40 [03:42\u003c00:31,  6.32s/it]\n"}
+,{"stream_name":"stderr","time":310.34244813,"data":"\r 88%|████████▊ | 35/40 [03:42\u003c00:31,  6.32s/it]\r 90%|█████████ | 36/40 [03:48\u003c00:25,  6.36s/it]\n"}
+,{"stream_name":"stderr","time":315.699542696,"data":"\r 90%|█████████ | 36/40 [03:48\u003c00:25,  6.36s/it]\r 92%|█████████▎| 37/40 [03:54\u003c00:18,  6.06s/it]\n"}
+,{"stream_name":"stderr","time":321.742953118,"data":"\r 92%|█████████▎| 37/40 [03:54\u003c00:18,  6.06s/it]\r 95%|█████████▌| 38/40 [04:00\u003c00:12,  6.06s/it]\n"}
+,{"stream_name":"stderr","time":327.780081351,"data":"\r 95%|█████████▌| 38/40 [04:00\u003c00:12,  6.06s/it]\r 98%|█████████▊| 39/40 [04:06\u003c00:06,  6.05s/it]\n"}
+,{"stream_name":"stderr","time":335.443594452,"data":"\r 98%|█████████▊| 39/40 [04:06\u003c00:06,  6.05s/it]\r100%|██████████| 40/40 [04:13\u003c00:00,  6.53s/it]\n"}
+,{"stream_name":"stderr","time":335.446384032,"data":"\r100%|██████████| 40/40 [04:13\u003c00:00,  6.53s/it]\r100%|██████████| 40/40 [04:13\u003c00:00,  6.35s/it]\n"}
+,{"stream_name":"stdout","time":335.447158963,"data":"Zero-shot \u0026 Few-shot evaluation complete.\n"}
+,{"stream_name":"stderr","time":335.447919408,"data":"\r100%|██████████| 40/40 [04:13\u003c00:00,  6.35s/it]\n"}
+,{"stream_name":"stderr","time":335.447935628,"data":"\n"}
+,{"stream_name":"stderr","time":335.447940026,"data":"\n"}
+,{"stream_name":"stdout","time":341.357431895,"data":"trainable params: 4,358,144 || all params: 1,548,072,448 || trainable%: 0.2815\n"}
+,{"stream_name":"stderr","time":347.61932116,"data":"[transformers] The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None}.\n"}
+,{"stream_name":"stderr","time":347.619359007,"data":"\n"}
+,{"stream_name":"stderr","time":347.61936495,"data":"[transformers] The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None}.\n"}
+,{"stream_name":"stdout","time":347.620623846,"data":"Beginning LoRA Training (3 Epochs)...\n"}
+,{"stream_name":"stderr","time":357.339577815,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":357.340303276,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":357.340324475,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":357.340330933,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":357.340336217,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":357.340340979,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":357.340345469,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":357.340350699,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":357.340355001,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":357.340359346,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":357.340363553,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":357.340368142,"data":"Exception encountered at \"In [6]\":\n"}
+,{"stream_name":"stderr","time":357.340372801,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":357.340377354,"data":"NotImplementedError                       Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":357.340393145,"data":"/tmp/ipykernel_24/1414374904.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":357.34039715,"data":"     70     trainer = SFTTrainer(**trainer_kwargs)\n"}
+,{"stream_name":"stderr","time":357.34040038,"data":"     71     print(\"Beginning LoRA Training (3 Epochs)...\")\n"}
+,{"stream_name":"stderr","time":357.340403848,"data":"---\u003e 72     train_result = trainer.train()\n"}
+,{"stream_name":"stderr","time":357.34040713,"data":"     73     print(\"LoRA Fine-Tuning Complete.\")\n"}
+,{"stream_name":"stderr","time":357.340410362,"data":"     74     eval_model = peft_model\n"}
+,{"stream_name":"stderr","time":357.340414455,"data":"\n"}
+,{"stream_name":"stderr","time":357.340417539,"data":"/usr/local/lib/python3.13/dist-packages/transformers/trainer.py in train(self, resume_from_checkpoint, trial, ignore_keys_for_eval)\n"}
+,{"stream_name":"stderr","time":357.3404209,"data":"   1456         ctx = suppress_progress_bars() if args.push_to_hub else contextlib.nullcontext()\n"}
+,{"stream_name":"stderr","time":357.340424269,"data":"   1457         with ctx:\n"}
+,{"stream_name":"stderr","time":357.340427505,"data":"-\u003e 1458             return inner_training_loop(\n"}
+,{"stream_name":"stderr","time":357.340431673,"data":"   1459                 args=args,\n"}
+,{"stream_name":"stderr","time":357.340435265,"data":"   1460                 resume_from_checkpoint=resume_from_checkpoint,\n"}
+,{"stream_name":"stderr","time":357.340438842,"data":"\n"}
+,{"stream_name":"stderr","time":357.340441954,"data":"/usr/local/lib/python3.13/dist-packages/transformers/trainer.py in _inner_training_loop(self, batch_size, args, resume_from_checkpoint, trial, ignore_keys_for_eval)\n"}
+,{"stream_name":"stderr","time":357.340446007,"data":"   1538         for epoch in range(epochs_trained, num_train_epochs):\n"}
+,{"stream_name":"stderr","time":357.340450899,"data":"   1539             self.control = self.callback_handler.on_epoch_begin(self.args, self.state, self.control)\n"}
+,{"stream_name":"stderr","time":357.34045446,"data":"-\u003e 1540             self._run_epoch(\n"}
+,{"stream_name":"stderr","time":357.340457788,"data":"   1541                 model=model,\n"}
+,{"stream_name":"stderr","time":357.340461211,"data":"   1542                 epoch=epoch,\n"}
+,{"stream_name":"stderr","time":357.34046466,"data":"\n"}
+,{"stream_name":"stderr","time":357.340467912,"data":"/usr/local/lib/python3.13/dist-packages/transformers/trainer.py in _run_epoch(self, model, epoch, train_dataloader, steps_in_epoch, num_update_steps_per_epoch, trial, ignore_keys_for_eval, start_time, resume_from_checkpoint, epochs_trained, steps_trained_in_current_epoch)\n"}
+,{"stream_name":"stderr","time":357.340471847,"data":"   1788                     grad_norm = None\n"}
+,{"stream_name":"stderr","time":357.340475501,"data":"   1789                     if self.args.max_grad_norm \u003e 0:\n"}
+,{"stream_name":"stderr","time":357.340478862,"data":"-\u003e 1790                         grad_norm = self._clip_grad_norm(model)\n"}
+,{"stream_name":"stderr","time":357.340482269,"data":"   1791                     grad_norm = self._get_grad_norm(model, grad_norm=grad_norm)\n"}
+,{"stream_name":"stderr","time":357.34048599,"data":"   1792 \n"}
+,{"stream_name":"stderr","time":357.340489434,"data":"\n"}
+,{"stream_name":"stderr","time":357.340492649,"data":"/usr/local/lib/python3.13/dist-packages/transformers/trainer.py in _clip_grad_norm(self, model)\n"}
+,{"stream_name":"stderr","time":357.340496374,"data":"   2546         if is_sagemaker_mp_enabled() and self.args.fp16:\n"}
+,{"stream_name":"stderr","time":357.340504119,"data":"   2547             return self.optimizer.clip_master_grads(self.args.max_grad_norm)\n"}
+,{"stream_name":"stderr","time":357.340507992,"data":"-\u003e 2548         return self.accelerator.clip_grad_norm_(model.parameters(), self.args.max_grad_norm)\n"}
+,{"stream_name":"stderr","time":357.340511899,"data":"   2549 \n"}
+,{"stream_name":"stderr","time":357.340515337,"data":"   2550     def _get_grad_norm(self, model, grad_norm=None):\n"}
+,{"stream_name":"stderr","time":357.340518875,"data":"\n"}
+,{"stream_name":"stderr","time":357.340522526,"data":"/usr/local/lib/python3.13/dist-packages/accelerate/accelerator.py in clip_grad_norm_(self, parameters, max_norm, norm_type)\n"}
+,{"stream_name":"stderr","time":357.34052629,"data":"   3004                     if parameters == [p for p in model.parameters()]:\n"}
+,{"stream_name":"stderr","time":357.340529885,"data":"   3005                         return model.clip_grad_norm_(max_norm, norm_type)\n"}
+,{"stream_name":"stderr","time":357.34053339,"data":"-\u003e 3006         self.unscale_gradients()\n"}
+,{"stream_name":"stderr","time":357.340537036,"data":"   3007         return torch.nn.utils.clip_grad_norm_(parameters, max_norm, norm_type=norm_type)\n"}
+,{"stream_name":"stderr","time":357.340540857,"data":"   3008 \n"}
+,{"stream_name":"stderr","time":357.340545135,"data":"\n"}
+,{"stream_name":"stderr","time":357.340548484,"data":"/usr/local/lib/python3.13/dist-packages/accelerate/accelerator.py in unscale_gradients(self, optimizer)\n"}
+,{"stream_name":"stderr","time":357.340552572,"data":"   2942                 while isinstance(opt, AcceleratedOptimizer):\n"}
+,{"stream_name":"stderr","time":357.340556312,"data":"   2943                     opt = opt.optimizer\n"}
+,{"stream_name":"stderr","time":357.340559795,"data":"-\u003e 2944                 self.scaler.unscale_(opt)\n"}
+,{"stream_name":"stderr","time":357.340563439,"data":"   2945 \n"}
+,{"stream_name":"stderr","time":357.34056698,"data":"   2946     def clip_grad_norm_(self, parameters, max_norm, norm_type=2):\n"}
+,{"stream_name":"stderr","time":357.340570709,"data":"\n"}
+,{"stream_name":"stderr","time":357.340575399,"data":"/usr/local/lib/python3.13/dist-packages/torch/amp/grad_scaler.py in unscale_(self, optimizer)\n"}
+,{"stream_name":"stderr","time":357.340579485,"data":"    356         found_inf = torch.full((), 0.0, dtype=torch.float32, device=self._scale.device)\n"}
+,{"stream_name":"stderr","time":357.340583238,"data":"    357 \n"}
+,{"stream_name":"stderr","time":357.340587155,"data":"--\u003e 358         optimizer_state[\"found_inf_per_device\"] = self._unscale_grads_(\n"}
+,{"stream_name":"stderr","time":357.340591088,"data":"    359             optimizer, inv_scale, found_inf, False\n"}
+,{"stream_name":"stderr","time":357.340594842,"data":"    360         )\n"}
+,{"stream_name":"stderr","time":357.340598207,"data":"\n"}
+,{"stream_name":"stderr","time":357.340601487,"data":"/usr/local/lib/python3.13/dist-packages/torch/amp/grad_scaler.py in _unscale_grads_(self, optimizer, inv_scale, found_inf, allow_fp16)\n"}
+,{"stream_name":"stderr","time":357.340605264,"data":"    292             for device, per_dtype_grads in per_device_and_dtype_grads.items():\n"}
+,{"stream_name":"stderr","time":357.340608725,"data":"    293                 for grads in per_dtype_grads.values():\n"}
+,{"stream_name":"stderr","time":357.340612329,"data":"--\u003e 294                     torch._amp_foreach_non_finite_check_and_unscale_(\n"}
+,{"stream_name":"stderr","time":357.340616297,"data":"    295                         grads,\n"}
+,{"stream_name":"stderr","time":357.340619439,"data":"    296                         per_device_found_inf.get(device),\n"}
+,{"stream_name":"stderr","time":357.340627132,"data":"\n"}
+,{"stream_name":"stderr","time":357.340631236,"data":"NotImplementedError: \"_amp_foreach_non_finite_check_and_unscale_cuda\" not implemented for 'BFloat16'\n"}
+,{"stream_name":"stderr","time":357.340635019,"data":"\n"}
+,{"stream_name":"stderr","time":359.387000959,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":359.387043802,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":359.528150039,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":359.528173472,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":360.236631409,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":360.346297917,"data":"[NbConvertApp] Writing 281097 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":362.78788842,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":363.392856202,"data":"[NbConvertApp] Writing 597371 bytes to __results__.html\n"}
+]
