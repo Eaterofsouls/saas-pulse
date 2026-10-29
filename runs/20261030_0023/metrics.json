@@ -1,0 +1,450 @@
+{
+  "execution_metadata": {
+    "timestamp_utc": "2026-10-29 18:53:08 UTC",
+    "elapsed_seconds": 1446.49,
+    "device": "cuda",
+    "gpu_name": "Tesla T4",
+    "seed": 42,
+    "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "quantization": "4-bit NF4",
+    "lora_hyperparameters": {
+      "r": 16,
+      "alpha": 32,
+      "dropout": 0.05,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ],
+      "learning_rate": 0.0002,
+      "epochs": 3,
+      "effective_batch_size": 8
+    }
+  },
+  "dataset_split_counts": {
+    "moats_train": 140,
+    "moats_val": 20,
+    "moats_test": 40,
+    "hn_stance_test": 60
+  },
+  "task_1_moats": {
+    "num_test_examples": 40,
+    "methods": {
+      "zero_shot": {
+        "accuracy": 0.325,
+        "accuracy_wilson_ci": [
+          0.20084316962661725,
+          0.4798254191110201
+        ],
+        "macro_precision": 0.2786195286195286,
+        "macro_recall": 0.35000000000000003,
+        "macro_f1": 0.25952380952380955,
+        "macro_f1_bootstrap_ci": [
+          0.14423768844407792,
+          0.35641827943298526
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.22727272727272727,
+            "recall": 0.8333333333333334,
+            "f1_score": 0.35714285714285715,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1_score": 0.5,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.4444444444444444,
+            "recall": 0.6666666666666666,
+            "f1_score": 0.5333333333333333,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.5,
+            "recall": 0.1,
+            "f1_score": 0.16666666666666666,
+            "support": 10
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            6,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            2,
+            0,
+            1,
+            3,
+            0
+          ],
+          [
+            0,
+            3,
+            0,
+            3,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            4,
+            0
+          ],
+          [
+            0,
+            4,
+            1,
+            2,
+            2,
+            1
+          ]
+        ]
+      },
+      "few_shot_cot": {
+        "accuracy": 0.425,
+        "accuracy_wilson_ci": [
+          0.28509168524815875,
+          0.5780519956394001
+        ],
+        "macro_precision": 0.5026455026455027,
+        "macro_recall": 0.4277777777777778,
+        "macro_f1": 0.4037893555437415,
+        "macro_f1_bootstrap_ci": [
+          0.24622052734137134,
+          0.5214404712934125
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 1.0,
+            "recall": 0.8333333333333334,
+            "f1_score": 0.9090909090909091,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.3333333333333333,
+            "recall": 0.16666666666666666,
+            "f1_score": 0.2222222222222222,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1_score": 0.5,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.23809523809523808,
+            "recall": 0.8333333333333334,
+            "f1_score": 0.37037037037037035,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.4444444444444444,
+            "recall": 0.4,
+            "f1_score": 0.42105263157894735,
+            "support": 10
+          }
+        },
+        "confusion_matrix": [
+          [
+            5,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            3,
+            2
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            2,
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            5,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            5,
+            4
+          ]
+        ]
+      },
+      "lora": {
+        "accuracy": 0.25,
+        "accuracy_wilson_ci": [
+          0.14186967895549518,
+          0.40194259066970106
+        ],
+        "macro_precision": 0.041666666666666664,
+        "macro_recall": 0.16666666666666666,
+        "macro_f1": 0.06666666666666667,
+        "macro_f1_bootstrap_ci": [
+          0.037037037037037035,
+          0.09523809523809523
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.25,
+            "recall": 1.0,
+            "f1_score": 0.4,
+            "support": 10
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            10
+          ]
+        ]
+      }
+    },
+    "mcnemar_tests": {
+      "zero_shot_vs_few_shot": {
+        "contingency_table": [
+          [
+            7,
+            6
+          ],
+          [
+            10,
+            17
+          ]
+        ],
+        "b_a_correct_b_wrong": 6,
+        "c_a_wrong_b_correct": 10,
+        "chi2": 0.5625,
+        "chi2_p_value": 0.4532547047537363,
+        "exact_binomial_p_value": 0.454498291015625
+      },
+      "few_shot_vs_lora": {
+        "contingency_table": [
+          [
+            4,
+            13
+          ],
+          [
+            6,
+            17
+          ]
+        ],
+        "b_a_correct_b_wrong": 13,
+        "c_a_wrong_b_correct": 6,
+        "chi2": 1.894736842105263,
+        "chi2_p_value": 0.1686686188878147,
+        "exact_binomial_p_value": 0.1670684814453125
+      },
+      "zero_shot_vs_lora": {
+        "contingency_table": [
+          [
+            1,
+            12
+          ],
+          [
+            9,
+            18
+          ]
+        ],
+        "b_a_correct_b_wrong": 12,
+        "c_a_wrong_b_correct": 9,
+        "chi2": 0.19047619047619047,
+        "chi2_p_value": 0.6625205835400574,
+        "exact_binomial_p_value": 0.6636238098144531
+      }
+    }
+  },
+  "task_2_hn_stance": {
+    "num_test_examples": 60,
+    "accuracy": 0.3333333333333333,
+    "macro_f1": 0.16666666666666666,
+    "per_class": {
+      "build_internal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "support": 20
+      },
+      "buy_saas": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "support": 20
+      },
+      "hybrid_or_neutral": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1_score": 0.5,
+        "support": 20
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        0,
+        20
+      ],
+      [
+        0,
+        0,
+        20
+      ],
+      [
+        0,
+        0,
+        20
+      ]
+    ]
+  },
+  "econometric_linkage": {
+    "active_companies_analyzed": 96,
+    "spearman_rho_growth_vs_excess_return": 0.3508150800857126,
+    "spearman_p_value": 0.0004577887763441942,
+    "category_median_excess_return_vs_igv": {
+      "communication": -34.080000000000005,
+      "data/infra": 42.15,
+      "fintech/HR": -131.155,
+      "horizontal": -70.99,
+      "security": -16.355,
+      "vertical": -94.16
+    }
+  }
+}
