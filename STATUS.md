@@ -1,16 +1,16 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-30 00:17:30 IST  
-**Current Step**: Step 3 — Kaggle Kernel Version 6 Running on GPU T4  
+**Last Updated**: 2026-10-30 00:23:30 IST  
+**Current Step**: Step 3 — Kaggle Kernel Version 7 Running on GPU T4  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
 ## 1. Current Execution Status
-- **Phase**: Live Kaggle GPU T4 Execution (Run 6 / Version 6).
-- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 (~4 minutes elapsed, active Zero-Shot/Few-Shot evaluation).
+- **Phase**: Live Kaggle GPU T4 Execution (Run 7 / Version 7).
+- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 with disabled GradScaler for pure FP32 LoRA adapter optimization.
 - **Heartbeat Log**:
   - `2026-10-29 23:15 IST`: Git initialized, secrets scanned clean, initial commit pushed.
   - `2026-10-29 23:18 IST`: GitHub Release `v1.0.0` published with `saas_pulse_dataset.zip`.
@@ -20,8 +20,8 @@
   - `2026-10-29 23:34 IST`: Kernel Version 3 pushed. Zero-shot & Few-shot completed 100%; error at `SFTConfig.max_seq_length`. Full logs and HTML archived in `runs/20261029_2334/`.
   - `2026-10-29 23:47 IST`: Kernel Version 4 pushed. Zero-shot & Few-shot completed 100%; error at `SFTTrainer` redundant `peft_config`. Full logs and HTML archived in `runs/20261029_2347/`.
   - `2026-10-29 23:58 IST`: Kernel Version 5 pushed. Zero-shot & Few-shot completed 100%; error at PyTorch AMP unscale on BFloat16 on Turing T4. Full logs and HTML archived in `runs/20261029_2358/`.
-  - `2026-10-30 00:14 IST`: Kernel Version 6 pushed with explicit Float16 casting across model, adapters, and SFTConfig.
-  - `2026-10-30 00:17 IST`: [Heartbeat] Kernel version 6 actively running on Tesla T4 (~4 min elapsed).
+  - `2026-10-30 00:14 IST`: Kernel Version 6 pushed. Zero-shot & Few-shot completed 100%; GradScaler unscale error persisted on Turing T4 due to PyTorch AMP. Full logs and HTML archived in `runs/20261030_0014/`.
+  - `2026-10-30 00:23 IST`: Kernel Version 7 pushed with GradScaler disabled (`fp16=False, bf16=False`) for clean FP32 LoRA adapter optimization. Run status: **RUNNING**.
 
 ---
 
@@ -34,7 +34,7 @@
 | **2** | **Gold Benchmark Deduplication** | **PASSED** | `gold_10k_moats.csv` strictly 0 text overlap across train/val/test. |
 | **3** | **Methodology & Provenance** | **PASSED** | `GOLD_PROVENANCE.md` & `HN_STANCE_METHOD.md` published. |
 | **4** | **Kaggle Dataset Upload** | **PASSED** | `notaveragehee/saas-pulse-dataset` is active and `ready`. |
-| **5** | **Kaggle T4 Experiment Execution** | **RUNNING** | Run 6 active on Tesla T4 (`saas-pulse-experiment`). |
+| **5** | **Kaggle T4 Experiment Execution** | **RUNNING** | Run 7 active on Tesla T4 (`saas-pulse-experiment`). |
 | **6** | **Remote Output Retrieval & Audit** | *Pending* | Downloading `metrics.json`, predictions, loss curve to `runs/`. |
 | **7** | **Slide Verification & CHECKS.md** | *Pending* | Regenerating slides directly from execution `metrics.json`. |
 
@@ -46,4 +46,5 @@
 3. **Run 3 (`runs/20261029_2334/`)**: Failed (`TypeError: max_seq_length` in `SFTConfig`).
 4. **Run 4 (`runs/20261029_2347/`)**: Failed (`ValueError: redundant peft_config` in `SFTTrainer`).
 5. **Run 5 (`runs/20261029_2358/`)**: Failed (`NotImplementedError: GradScaler unscale on BFloat16` on Turing T4).
-6. **Run 6 (`runs/20261030_0014/`)**: Currently executing on GPU T4 with explicit `Float16`.
+6. **Run 6 (`runs/20261030_0014/`)**: Failed (GradScaler unscale on BFloat16 during backprop).
+7. **Run 7 (`runs/20261030_0023/`)**: Currently executing on GPU T4 with disabled GradScaler.
