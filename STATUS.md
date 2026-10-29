@@ -1,7 +1,7 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-30 00:14:00 IST  
+**Last Updated**: 2026-10-30 00:17:30 IST  
 **Current Step**: Step 3 — Kaggle Kernel Version 6 Running on GPU T4  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
@@ -10,7 +10,7 @@
 
 ## 1. Current Execution Status
 - **Phase**: Live Kaggle GPU T4 Execution (Run 6 / Version 6).
-- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 with strict Float16 precision for Turing GPU compatibility.
+- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 (~4 minutes elapsed, active Zero-Shot/Few-Shot evaluation).
 - **Heartbeat Log**:
   - `2026-10-29 23:15 IST`: Git initialized, secrets scanned clean, initial commit pushed.
   - `2026-10-29 23:18 IST`: GitHub Release `v1.0.0` published with `saas_pulse_dataset.zip`.
@@ -20,7 +20,8 @@
   - `2026-10-29 23:34 IST`: Kernel Version 3 pushed. Zero-shot & Few-shot completed 100%; error at `SFTConfig.max_seq_length`. Full logs and HTML archived in `runs/20261029_2334/`.
   - `2026-10-29 23:47 IST`: Kernel Version 4 pushed. Zero-shot & Few-shot completed 100%; error at `SFTTrainer` redundant `peft_config`. Full logs and HTML archived in `runs/20261029_2347/`.
   - `2026-10-29 23:58 IST`: Kernel Version 5 pushed. Zero-shot & Few-shot completed 100%; error at PyTorch AMP unscale on BFloat16 on Turing T4. Full logs and HTML archived in `runs/20261029_2358/`.
-  - `2026-10-30 00:14 IST`: Kernel Version 6 pushed with explicit Float16 casting across model, adapters, and SFTConfig. Run status: **RUNNING**.
+  - `2026-10-30 00:14 IST`: Kernel Version 6 pushed with explicit Float16 casting across model, adapters, and SFTConfig.
+  - `2026-10-30 00:17 IST`: [Heartbeat] Kernel version 6 actively running on Tesla T4 (~4 min elapsed).
 
 ---
 
@@ -40,25 +41,9 @@
 ---
 
 ## 3. Run History & Failure Audits
-1. **Run 1 (`runs/20261029_2322/`)**:
-   - Status: Failed (`FileNotFoundError`).
-   - Cause: Search path only globbed current directory `.` instead of `/kaggle/input`.
-   - Resolution: Recursive search across `[Path("/kaggle/input"), Path("../input"), Path("."), Path("..")]`.
-2. **Run 2 (`runs/20261029_2328/`)**:
-   - Status: Failed (`AttributeError: KeyError: 'shape'`).
-   - Cause: Modern Hugging Face `apply_chat_template` returns a `BatchEncoding` dict which cannot be passed positionally to `model.generate()`.
-   - Resolution: Two-step tokenization (`tokenizer.apply_chat_template(..., tokenize=False)` followed by `tokenizer(..., return_tensors="pt")`) and unpacking with `**inputs`.
-3. **Run 3 (`runs/20261029_2334/`)**:
-   - Status: Failed (`TypeError: max_seq_length` in `SFTConfig`). Zero-shot & Few-shot evaluation completed 100% (40/40 test paragraphs).
-   - Cause: Recent `trl` version renamed `max_seq_length` to `max_length`.
-   - Resolution: Dynamic parameter inspection via `inspect.signature(SFTConfig.__init__).parameters`.
-4. **Run 4 (`runs/20261029_2347/`)**:
-   - Status: Failed (`ValueError: You passed a PeftModel instance together with a peft_config to the trainer`).
-   - Cause: Passing both an already-wrapped `peft_model` and `peft_config` into `SFTTrainer`.
-   - Resolution: Omit redundant `peft_config` argument when passing `peft_model`.
-5. **Run 5 (`runs/20261029_2358/`)**:
-   - Status: Failed (`NotImplementedError: "_amp_foreach_non_finite_check_and_unscale_cuda" not implemented for 'BFloat16'`).
-   - Cause: NVIDIA Tesla T4 Turing GPU lacks hardware BFloat16 support; Qwen defaults config to bfloat16 causing GradScaler unscale failure.
-   - Resolution: Explicit `torch_dtype=torch.float16`, `peft_model.to(torch.float16)`, `fp16=True`, `bf16=False`.
-6. **Run 6 (`runs/20261030_0014/`)**:
-   - Status: Currently executing on GPU T4.
+1. **Run 1 (`runs/20261029_2322/`)**: Failed (`FileNotFoundError` path glob).
+2. **Run 2 (`runs/20261029_2328/`)**: Failed (`AttributeError: shape` on `BatchEncoding`).
+3. **Run 3 (`runs/20261029_2334/`)**: Failed (`TypeError: max_seq_length` in `SFTConfig`).
+4. **Run 4 (`runs/20261029_2347/`)**: Failed (`ValueError: redundant peft_config` in `SFTTrainer`).
+5. **Run 5 (`runs/20261029_2358/`)**: Failed (`NotImplementedError: GradScaler unscale on BFloat16` on Turing T4).
+6. **Run 6 (`runs/20261030_0014/`)**: Currently executing on GPU T4 with explicit `Float16`.
