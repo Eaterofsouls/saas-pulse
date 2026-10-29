@@ -24,3 +24,7 @@ raw/
 
 # Package archive (uploaded to GitHub release / Kaggle dataset)
 saas_pulse_dataset.zip
+
+# Kaggle CLI staging directories
+kaggle_dataset_staging/
+kaggle_kernel_staging/
