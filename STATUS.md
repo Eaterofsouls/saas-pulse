@@ -1,16 +1,16 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-29 23:52:00 IST  
-**Current Step**: Step 3 — Kaggle Kernel Version 4 Running on GPU T4  
+**Last Updated**: 2026-10-29 23:58:50 IST  
+**Current Step**: Step 3 — Kaggle Kernel Version 5 Running on GPU T4  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
 ## 1. Current Execution Status
-- **Phase**: Live Kaggle GPU T4 Execution (Run 4 / Version 4).
-- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 (~5 minutes elapsed, active LoRA training & multi-method benchmark inference).
+- **Phase**: Live Kaggle GPU T4 Execution (Run 5 / Version 5).
+- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 with clean `SFTTrainer` adapter binding.
 - **Heartbeat Log**:
   - `2026-10-29 23:15 IST`: Git initialized, secrets scanned clean, initial commit pushed.
   - `2026-10-29 23:18 IST`: GitHub Release `v1.0.0` published with `saas_pulse_dataset.zip`.
@@ -18,8 +18,8 @@
   - `2026-10-29 23:22 IST`: Kernel Version 1 pushed. Error recorded (dataset path glob issue). Full logs and HTML archived in `runs/20261029_2322/`.
   - `2026-10-29 23:28 IST`: Kernel Version 2 pushed. Error recorded (`AttributeError: shape` on `BatchEncoding`). Full logs and HTML archived in `runs/20261029_2328/`.
   - `2026-10-29 23:34 IST`: Kernel Version 3 pushed. Zero-shot & Few-shot completed 100%; error at `SFTConfig.max_seq_length`. Full logs and HTML archived in `runs/20261029_2334/`.
-  - `2026-10-29 23:47 IST`: Kernel Version 4 pushed with dynamic `SFTConfig` parameter inspection. Run status: **RUNNING**.
-  - `2026-10-29 23:52 IST`: [Heartbeat] Kernel version 4 actively running on Tesla T4 (~5 min elapsed).
+  - `2026-10-29 23:47 IST`: Kernel Version 4 pushed. Zero-shot & Few-shot completed 100%; error at `SFTTrainer` redundant `peft_config`. Full logs and HTML archived in `runs/20261029_2347/`.
+  - `2026-10-29 23:58 IST`: Kernel Version 5 pushed with clean adapter passing to `SFTTrainer`. Run status: **RUNNING**.
 
 ---
 
@@ -32,7 +32,7 @@
 | **2** | **Gold Benchmark Deduplication** | **PASSED** | `gold_10k_moats.csv` strictly 0 text overlap across train/val/test. |
 | **3** | **Methodology & Provenance** | **PASSED** | `GOLD_PROVENANCE.md` & `HN_STANCE_METHOD.md` published. |
 | **4** | **Kaggle Dataset Upload** | **PASSED** | `notaveragehee/saas-pulse-dataset` is active and `ready`. |
-| **5** | **Kaggle T4 Experiment Execution** | **RUNNING** | Run 4 active on Tesla T4 (`saas-pulse-experiment`). |
+| **5** | **Kaggle T4 Experiment Execution** | **RUNNING** | Run 5 active on Tesla T4 (`saas-pulse-experiment`). |
 | **6** | **Remote Output Retrieval & Audit** | *Pending* | Downloading `metrics.json`, predictions, loss curve to `runs/`. |
 | **7** | **Slide Verification & CHECKS.md** | *Pending* | Regenerating slides directly from execution `metrics.json`. |
 
@@ -52,4 +52,8 @@
    - Cause: Recent `trl` version renamed `max_seq_length` to `max_length`.
    - Resolution: Dynamic parameter inspection via `inspect.signature(SFTConfig.__init__).parameters`.
 4. **Run 4 (`runs/20261029_2347/`)**:
+   - Status: Failed (`ValueError: You passed a PeftModel instance together with a peft_config to the trainer`).
+   - Cause: Passing both an already-wrapped `peft_model` and `peft_config` into `SFTTrainer`.
+   - Resolution: Omit redundant `peft_config` argument when passing `peft_model`.
+5. **Run 5 (`runs/20261029_2358/`)**:
    - Status: Currently executing on GPU T4.
