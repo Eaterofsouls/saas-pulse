@@ -206,6 +206,7 @@ if device == "cuda":
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
+        torch_dtype=torch.float16,
         device_map="auto",
         trust_remote_code=True
     )
@@ -391,6 +392,7 @@ sft_kwargs = {
     "gradient_accumulation_steps": 4,
     "learning_rate": 2e-4,
     "fp16": (device == "cuda"),
+    "bf16": False,
     "logging_steps": 5,
     "save_strategy": "no",
     "report_to": "none"
@@ -410,6 +412,7 @@ if device == "cuda":
     model.gradient_checkpointing_enable()
     peft_model = prepare_model_for_kbit_training(model)
     peft_model = get_peft_model(peft_model, peft_config)
+    peft_model.to(torch.float16)
     peft_model.print_trainable_parameters()
     
     trainer_kwargs = {

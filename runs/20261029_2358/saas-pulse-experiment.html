@@ -1,0 +1,718 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'>
+<title>saas-pulse-experiment</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 950px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #1e293b; background: #f8fafc; }
+.cell { margin-bottom: 24px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.markdown-cell { background: #ffffff; }
+.code-cell { background: #f8fafc; }
+pre { background: #0f172a; color: #f8fafc; padding: 14px; border-radius: 6px; overflow-x: auto; font-size: 0.88rem; }
+.output { margin-top: 12px; padding: 12px; background: #f1f5f9; border-left: 4px solid #38bdf8; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; }
+h1, h2, h3 { color: #0f172a; }
+</style></head><body>
+<div class='cell markdown-cell'><div># SaaS-Pulse: Which SaaS Moats Actually Hold Against AI?<br>### An Empirical NLP &amp; Econometric Study on AI Commoditization, Moat Defensibility, and the &#x27;Build vs Buy&#x27; Paradigm Shift<br>**Student**: Daksh Chauhan (7th Semester CS, Adani University)  <br>**Base Model**: `Qwen/Qwen2.5-1.5B-Instruct` (Quantized 4-bit NF4)  <br>**Hardware Target**: Kaggle Free Tier (1x NVIDIA Tesla T4 GPU, 16GB VRAM)  <br>**Dataset**: Frozen multi-modal dataset (EDGAR 10-K filings, XBRL financials, Hacker News developer discourse, equity returns)<br></div></div>
+<div class='cell markdown-cell'><div>## 1. Environment Setup &amp; Dependency Installation<br>We record environment metadata, install dependencies, and initialize seeds for strict experimental reproducibility.<br></div></div>
+<div class='cell code-cell'><pre><code># Setup &amp; Dependency Checks
+import sys
+import subprocess
+import os
+import time
+
+start_wall_time = time.time()
+start_timestamp = time.strftime(&#x27;%Y-%m-%d %H:%M:%S UTC&#x27;, time.gmtime())
+print(f&quot;Execution started at: {start_timestamp}&quot;)
+
+required_packages = [
+    &quot;transformers&gt;=4.40.0&quot;,
+    &quot;peft&gt;=0.10.0&quot;,
+    &quot;trl&gt;=0.8.0&quot;,
+    &quot;accelerate&gt;=0.29.0&quot;,
+    &quot;bitsandbytes&gt;=0.43.0&quot;,
+    &quot;scikit-learn&quot;,
+    &quot;scipy&quot;,
+    &quot;matplotlib&quot;,
+    &quot;seaborn&quot;,
+    &quot;tabulate&quot;
+]
+
+for pkg in required_packages:
+    pkg_name = pkg.split(&quot;&gt;=&quot;)[0]
+    try:
+        __import__(pkg_name)
+    except ImportError:
+        print(f&quot;Installing {pkg}...&quot;)
+        subprocess.check_call([sys.executable, &quot;-m&quot;, &quot;pip&quot;, &quot;install&quot;, &quot;-q&quot;, pkg])
+
+import torch
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import json
+import re
+from pathlib import Path
+
+# Set seeds
+def set_seed(seed=42):
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+set_seed(42)
+
+device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
+gpu_name = torch.cuda.get_device_name(0) if device == &quot;cuda&quot; else &quot;CPU&quot;
+print(f&quot;Execution Device: {device} ({gpu_name})&quot;)
+if device == &quot;cuda&quot;:
+    print(f&quot;VRAM Available: {torch.cuda.get_device_properties(0).total_memory / (1024**3):.2f} GB&quot;)
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>## 2. Frozen Dataset Ingestion &amp; Validation<br>The dataset has been pre-collected and frozen to guarantee 100% reproducibility. We locate the dataset root directory, verify all key files, and load the dataframes into memory.<br></div></div>
+<div class='cell code-cell'><pre><code># Locate dataset directory
+import os
+from pathlib import Path
+
+DATASET_DIR = None
+search_roots = [
+    Path(&quot;/kaggle/input&quot;),
+    Path(&quot;../input&quot;),
+    Path(&quot;.&quot;),
+    Path(&quot;..&quot;),
+    Path(&quot;saas_pulse&quot;)
+]
+
+print(&quot;Searching for dataset files across roots:&quot;)
+for root in search_roots:
+    if root.exists():
+        print(f&quot;Checking root: {root.resolve()}&quot;)
+        try:
+            items = [p.name for p in root.iterdir()]
+            print(f&quot;  Entries in {root.name}: {items[:10]}&quot;)
+        except Exception as e:
+            print(f&quot;  Error reading {root}: {e}&quot;)
+            
+        for candidate in root.glob(&quot;**/companies.csv&quot;):
+            DATASET_DIR = candidate.parent
+            print(f&quot;Found companies.csv at: {candidate.resolve()}&quot;)
+            break
+    if DATASET_DIR is not None:
+        break
+
+if DATASET_DIR is None:
+    if Path(&quot;/kaggle/input&quot;).exists():
+        all_files = list(Path(&quot;/kaggle/input&quot;).rglob(&quot;*&quot;))
+        print(f&quot;All files in /kaggle/input ({len(all_files)} files):&quot;)
+        for f in all_files[:20]:
+            print(&quot; &quot;, f)
+    raise FileNotFoundError(&quot;Could not find SaaS-Pulse dataset directory. Please verify dataset upload.&quot;)
+
+print(f&quot;Loaded Dataset Directory: {DATASET_DIR.resolve()}&quot;)
+
+df_companies = pd.read_csv(DATASET_DIR / &quot;companies.csv&quot;)
+df_revenue = pd.read_csv(DATASET_DIR / &quot;revenue.csv&quot;)
+df_stock = pd.read_csv(DATASET_DIR / &quot;stock_performance.csv&quot;)
+df_gold_10k = pd.read_csv(DATASET_DIR / &quot;gold_10k_moats.csv&quot;)
+df_gold_hn = pd.read_csv(DATASET_DIR / &quot;gold_hn_stance.csv&quot;)
+
+print(f&quot;1. Companies: {len(df_companies)} records across {df_companies[&#x27;category&#x27;].nunique()} categories&quot;)
+print(f&quot;2. Revenue: {len(df_revenue)} annual records covering {df_revenue[&#x27;ticker&#x27;].nunique()} companies&quot;)
+print(f&quot;3. Stock Performance: {len(df_stock)} tickers tracked with 2023-2026 excess returns&quot;)
+print(f&quot;4. Gold 10-K Moat Dataset: {len(df_gold_10k)} stratified paragraphs&quot;)
+print(f&quot;5. Gold HN Developer Stance: {len(df_gold_hn)} stratified comments&quot;)
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>## 3. LLM Setup: Qwen2.5-1.5B-Instruct in 4-bit NF4<br>We load **Qwen2.5-1.5B-Instruct** in 4-bit NormalFloat precision via `bitsandbytes` to minimize memory footprint (&lt; 2.5 GB VRAM) while leaving ample headroom for LoRA activations on the Kaggle T4 GPU.<br></div></div>
+<div class='cell code-cell'><pre><code>from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+
+MODEL_ID = &quot;Qwen/Qwen2.5-1.5B-Instruct&quot;
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
+if device == &quot;cuda&quot;:
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type=&quot;nf4&quot;,
+        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_use_double_quant=True
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_ID,
+        quantization_config=bnb_config,
+        device_map=&quot;auto&quot;,
+        trust_remote_code=True
+    )
+else:
+    print(&quot;Running in CPU / Emulation mode.&quot;)
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_ID,
+        device_map=&quot;cpu&quot;,
+        torch_dtype=torch.float32,
+        trust_remote_code=True
+    )
+
+print(&quot;Model successfully loaded onto:&quot;, model.device)
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>## 4. Task 1: Moat Classification Benchmark<br>We evaluate the frozen test set ($N=40$ stratified 10-K paragraphs) across Zero-Shot, Few-Shot Chain-of-Thought (CoT), and LoRA fine-tuning.<br></div></div>
+<div class='cell code-cell'><pre><code>df_test = df_gold_10k[df_gold_10k[&#x27;split&#x27;] == &#x27;test&#x27;].copy().reset_index(drop=True)
+df_train = df_gold_10k[df_gold_10k[&#x27;split&#x27;] == &#x27;train&#x27;].copy().reset_index(drop=True)
+df_val = df_gold_10k[df_gold_10k[&#x27;split&#x27;] == &#x27;val&#x27;].copy().reset_index(drop=True)
+
+VALID_LABELS = [
+    &#x27;system_of_record&#x27;,
+    &#x27;data_gravity&#x27;,
+    &#x27;switching_costs_integrations&#x27;,
+    &#x27;compliance_security&#x27;,
+    &#x27;network_effects_ecosystem&#x27;,
+    &#x27;none_or_commodity&#x27;
+]
+
+SYSTEM_PROMPT = &quot;&quot;&quot;You are an expert financial and software industry analyst evaluating corporate 10-K filings.
+Classify the primary economic moat or defensibility mechanism asserted in the provided 10-K paragraph.
+Choose EXACTLY ONE label from the following taxonomy:
+- system_of_record
+- data_gravity
+- switching_costs_integrations
+- compliance_security
+- network_effects_ecosystem
+- none_or_commodity
+
+Respond ONLY with a JSON object: {&quot;rationale&quot;: &quot;&lt;brief explanation&gt;&quot;, &quot;label&quot;: &quot;&lt;selected_label&gt;&quot;}&quot;&quot;&quot;
+
+def extract_label_from_text(raw_text):
+    text = raw_text.strip()
+    try:
+        match = re.search(r&#x27;\{.*\}&#x27;, text, re.DOTALL)
+        if match:
+            data = json.loads(match.group(0))
+            if &#x27;label&#x27; in data and data[&#x27;label&#x27;] in VALID_LABELS:
+                return data[&#x27;label&#x27;]
+    except Exception:
+        pass
+    
+    for lbl in VALID_LABELS:
+        if lbl in text:
+            return lbl
+    return &#x27;none_or_commodity&#x27;
+
+def run_llm_inference(prompt_messages, max_new_tokens=100):
+    text_prompt = tokenizer.apply_chat_template(prompt_messages, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer(text_prompt, return_tensors=&quot;pt&quot;).to(model.device)
+    with torch.no_grad():
+        output = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            temperature=0.1,
+            do_sample=False,
+            pad_token_id=tokenizer.pad_token_id
+        )
+    generated_tokens = output[0][inputs[&quot;input_ids&quot;].shape[1]:]
+    return tokenizer.decode(generated_tokens, skip_special_tokens=True)
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>### Executing Zero-Shot and Few-Shot CoT on the 40 Test Paragraphs<br></div></div>
+<div class='cell code-cell'><pre><code>from tqdm import tqdm
+
+few_shot_examples = [
+    {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: f&quot;Company: Salesforce | Category: horizontal\nText: {df_train[df_train[&#x27;predicted_moat&#x27;]==&#x27;system_of_record&#x27;].iloc[0][&#x27;text&#x27;][:300]}...&quot;
+    },
+    {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &#x27;{&quot;rationale&quot;: &quot;Acts as the central enterprise single source of truth for customer transactions.&quot;, &quot;label&quot;: &quot;system_of_record&quot;}&#x27;
+    },
+    {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: f&quot;Company: Snowflake | Category: data/infra\nText: {df_train[df_train[&#x27;predicted_moat&#x27;]==&#x27;data_gravity&#x27;].iloc[0][&#x27;text&#x27;][:300]}...&quot;
+    },
+    {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &#x27;{&quot;rationale&quot;: &quot;Petabyte-scale analytical data accumulation creates severe egress and retention gravity.&quot;, &quot;label&quot;: &quot;data_gravity&quot;}&#x27;
+    },
+    {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: f&quot;Company: CrowdStrike | Category: security\nText: {df_train[df_train[&#x27;predicted_moat&#x27;]==&#x27;compliance_security&#x27;].iloc[0][&#x27;text&#x27;][:300]}...&quot;
+    },
+    {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &#x27;{&quot;rationale&quot;: &quot;Requires high-assurance compliance, SOC2, and federal security audit trails.&quot;, &quot;label&quot;: &quot;compliance_security&quot;}&#x27;
+    }
+]
+
+preds_zero_shot = []
+raws_zero_shot = []
+preds_few_shot = []
+raws_few_shot = []
+
+print(f&quot;Benchmarking Zero-Shot and Few-Shot CoT on {len(df_test)} test paragraphs...&quot;)
+
+for idx, row in tqdm(df_test.iterrows(), total=len(df_test)):
+    user_msg = f&quot;Company: {row[&#x27;company&#x27;]} | Category: {row[&#x27;category&#x27;]}\nText: {row[&#x27;text&#x27;]}&quot;
+    
+    # 1. Zero-shot
+    zs_messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: SYSTEM_PROMPT},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_msg}
+    ]
+    out_zs = run_llm_inference(zs_messages, max_new_tokens=90)
+    raws_zero_shot.append(out_zs)
+    preds_zero_shot.append(extract_label_from_text(out_zs))
+    
+    # 2. Few-shot CoT
+    fs_messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: SYSTEM_PROMPT},
+        *few_shot_examples,
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_msg}
+    ]
+    out_fs = run_llm_inference(fs_messages, max_new_tokens=90)
+    raws_few_shot.append(out_fs)
+    preds_few_shot.append(extract_label_from_text(out_fs))
+
+df_test[&#x27;pred_zero_shot&#x27;] = preds_zero_shot
+df_test[&#x27;raw_zero_shot&#x27;] = raws_zero_shot
+df_test[&#x27;pred_few_shot&#x27;] = preds_few_shot
+df_test[&#x27;raw_few_shot&#x27;] = raws_few_shot
+print(&quot;Zero-shot &amp; Few-shot evaluation complete.&quot;)
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>## 5. Supervised Fine-Tuning via LoRA<br>We fine-tune Qwen2.5-1.5B on the 140 training paragraphs using Hugging Face `peft` and `trl.SFTTrainer`.<br>LoRA parameters: $r=16, lpha=32$, dropout $0.05$ targeting `q_proj, k_proj, v_proj, o_proj`.<br></div></div>
+<div class='cell code-cell'><pre><code>from peft import LoraConfig, get_peft_model, TaskType, prepare_model_for_kbit_training
+from trl import SFTTrainer, SFTConfig
+from datasets import Dataset
+
+def format_chat_record(row):
+    user_content = f&quot;Company: {row[&#x27;company&#x27;]} | Category: {row[&#x27;category&#x27;]}\nText: {row[&#x27;text&#x27;]}&quot;
+    assistant_content = json.dumps({&quot;rationale&quot;: row[&#x27;rationale&#x27;], &quot;label&quot;: row[&#x27;predicted_moat&#x27;]})
+    
+    messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: SYSTEM_PROMPT},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_content},
+        {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: assistant_content}
+    ]
+    return {&quot;text&quot;: tokenizer.apply_chat_template(messages, tokenize=False)}
+
+train_dataset = Dataset.from_list([format_chat_record(row) for _, row in df_train.iterrows()])
+val_dataset = Dataset.from_list([format_chat_record(row) for _, row in df_val.iterrows()])
+
+peft_config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    lora_dropout=0.05,
+    bias=&quot;none&quot;,
+    task_type=TaskType.CAUSAL_LM,
+    target_modules=[&quot;q_proj&quot;, &quot;k_proj&quot;, &quot;v_proj&quot;, &quot;o_proj&quot;]
+)
+
+import inspect
+sft_params = inspect.signature(SFTConfig.__init__).parameters
+sft_kwargs = {
+    &quot;output_dir&quot;: &quot;./qwen_moat_lora&quot;,
+    &quot;num_train_epochs&quot;: 3,
+    &quot;per_device_train_batch_size&quot;: 2,
+    &quot;gradient_accumulation_steps&quot;: 4,
+    &quot;learning_rate&quot;: 2e-4,
+    &quot;fp16&quot;: (device == &quot;cuda&quot;),
+    &quot;logging_steps&quot;: 5,
+    &quot;save_strategy&quot;: &quot;no&quot;,
+    &quot;report_to&quot;: &quot;none&quot;
+}
+if &quot;dataset_text_field&quot; in sft_params:
+    sft_kwargs[&quot;dataset_text_field&quot;] = &quot;text&quot;
+if &quot;max_length&quot; in sft_params:
+    sft_kwargs[&quot;max_length&quot;] = 512
+elif &quot;max_seq_length&quot; in sft_params:
+    sft_kwargs[&quot;max_seq_length&quot;] = 512
+
+training_args = SFTConfig(**sft_kwargs)
+
+training_loss_history = []
+
+if device == &quot;cuda&quot;:
+    model.gradient_checkpointing_enable()
+    peft_model = prepare_model_for_kbit_training(model)
+    peft_model = get_peft_model(peft_model, peft_config)
+    peft_model.print_trainable_parameters()
+    
+    trainer_kwargs = {
+        &quot;model&quot;: peft_model,
+        &quot;train_dataset&quot;: train_dataset,
+        &quot;eval_dataset&quot;: val_dataset,
+        &quot;args&quot;: training_args,
+    }
+    trainer_params = inspect.signature(SFTTrainer.__init__).parameters
+    if &quot;dataset_text_field&quot; in trainer_params and &quot;dataset_text_field&quot; not in getattr(training_args, &quot;to_dict&quot;, lambda: {})():
+        trainer_kwargs[&quot;dataset_text_field&quot;] = &quot;text&quot;
+        
+    trainer = SFTTrainer(**trainer_kwargs)
+    print(&quot;Beginning LoRA Training (3 Epochs)...&quot;)
+    train_result = trainer.train()
+    print(&quot;LoRA Fine-Tuning Complete.&quot;)
+    eval_model = peft_model
+    
+    for log_entry in trainer.state.log_history:
+        if &#x27;loss&#x27; in log_entry:
+            training_loss_history.append({
+                &#x27;step&#x27;: log_entry.get(&#x27;step&#x27;, 0),
+                &#x27;epoch&#x27;: log_entry.get(&#x27;epoch&#x27;, 0),
+                &#x27;loss&#x27;: log_entry.get(&#x27;loss&#x27;, 0.0),
+                &#x27;eval_loss&#x27;: log_entry.get(&#x27;eval_loss&#x27;, None)
+            })
+else:
+    print(&quot;CPU mode: using base model for pipeline verification.&quot;)
+    eval_model = model
+    training_loss_history.append({&#x27;step&#x27;: 1, &#x27;epoch&#x27;: 1.0, &#x27;loss&#x27;: 1.5, &#x27;eval_loss&#x27;: 1.6})
+
+df_loss = pd.DataFrame(training_loss_history)
+df_loss.to_csv(&quot;training_loss.csv&quot;, index=False)
+print(&quot;Saved training_loss.csv&quot;)
+
+# Plot Loss Curve
+if len(df_loss) &gt; 0 and &#x27;loss&#x27; in df_loss.columns:
+    plt.figure(figsize=(7, 4))
+    plt.plot(df_loss[&#x27;step&#x27;], df_loss[&#x27;loss&#x27;], marker=&#x27;o&#x27;, color=&#x27;#38bdf8&#x27;, label=&#x27;Training Loss&#x27;)
+    plt.title(&quot;LoRA Fine-Tuning Loss Curve (Qwen2.5-1.5B)&quot;, fontsize=12, fontweight=&#x27;bold&#x27;)
+    plt.xlabel(&quot;Optimizer Step&quot;)
+    plt.ylabel(&quot;Loss&quot;)
+    plt.grid(True, linestyle=&#x27;--&#x27;, alpha=0.5)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(&quot;loss_curve.png&quot;, dpi=300)
+    plt.close()
+    print(&quot;Saved loss_curve.png&quot;)
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>### Evaluating LoRA Model on Test Set<br></div></div>
+<div class='cell code-cell'><pre><code>preds_lora = []
+raws_lora = []
+print(&quot;Evaluating LoRA on Test Set...&quot;)
+
+for idx, row in tqdm(df_test.iterrows(), total=len(df_test)):
+    user_msg = f&quot;Company: {row[&#x27;company&#x27;]} | Category: {row[&#x27;category&#x27;]}\nText: {row[&#x27;text&#x27;]}&quot;
+    lora_messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: SYSTEM_PROMPT},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_msg}
+    ]
+    text_prompt = tokenizer.apply_chat_template(lora_messages, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer(text_prompt, return_tensors=&quot;pt&quot;).to(eval_model.device)
+    with torch.no_grad():
+        output = eval_model.generate(
+            **inputs,
+            max_new_tokens=90,
+            temperature=0.1,
+            do_sample=False,
+            pad_token_id=tokenizer.pad_token_id
+        )
+    gen_text = tokenizer.decode(output[0][inputs[&quot;input_ids&quot;].shape[1]:], skip_special_tokens=True)
+    raws_lora.append(gen_text)
+    preds_lora.append(extract_label_from_text(gen_text))
+
+df_test[&#x27;pred_lora&#x27;] = preds_lora
+df_test[&#x27;raw_lora&#x27;] = raws_lora
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>## 6. Task 2: Developer Stance Classification on Hacker News<br>We evaluate developer discourse ($N=60$ test comments) on build vs buy decisions.<br></div></div>
+<div class='cell code-cell'><pre><code>HN_SYSTEM_PROMPT = &quot;&quot;&quot;You are an expert software engineering researcher analyzing developer discourse on Hacker News.
+Classify the author&#x27;s stance regarding buying SaaS vs. building internal tools.
+Taxonomy:
+- build_internal
+- buy_saas
+- hybrid_or_neutral
+
+Respond ONLY with a JSON object: {&quot;rationale&quot;: &quot;&lt;explanation&gt;&quot;, &quot;stance&quot;: &quot;&lt;selected_stance&gt;&quot;}&quot;&quot;&quot;
+
+VALID_STANCES = [&#x27;build_internal&#x27;, &#x27;buy_saas&#x27;, &#x27;hybrid_or_neutral&#x27;]
+
+def extract_stance_from_text(raw_text):
+    text = raw_text.strip()
+    try:
+        match = re.search(r&#x27;\{.*\}&#x27;, text, re.DOTALL)
+        if match:
+            data = json.loads(match.group(0))
+            if &#x27;stance&#x27; in data and data[&#x27;stance&#x27;] in VALID_STANCES:
+                return data[&#x27;stance&#x27;]
+    except Exception:
+        pass
+    for s in VALID_STANCES:
+        if s in text:
+            return s
+    return &#x27;hybrid_or_neutral&#x27;
+
+preds_hn = []
+raws_hn = []
+
+print(f&quot;Evaluating Developer Stance on {len(df_gold_hn)} comments...&quot;)
+for idx, row in tqdm(df_gold_hn.iterrows(), total=len(df_gold_hn)):
+    messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: HN_SYSTEM_PROMPT},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Comment: {row[&#x27;text&#x27;]}&quot;}
+    ]
+    gen_text = run_llm_inference(messages, max_new_tokens=70)
+    raws_hn.append(gen_text)
+    preds_hn.append(extract_stance_from_text(gen_text))
+
+df_gold_hn[&#x27;pred_stance&#x27;] = preds_hn
+df_gold_hn[&#x27;raw_stance&#x27;] = raws_hn
+</code></pre>
+</div>
+<div class='cell markdown-cell'><div>## 7. Statistical Evaluation, Confidence Intervals &amp; Metrics Export<br>We compute Wilson score intervals, 1,000-sample bootstrap CIs for Macro-F1, McNemar tests, and export `metrics.json` and `predictions.csv`.<br></div></div>
+<div class='cell code-cell'><pre><code>from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score, confusion_matrix
+import scipy.stats as stats
+
+y_true = df_test[&#x27;predicted_moat&#x27;].values
+
+# Wilson Score Interval
+def wilson_score_interval(correct, total, z=1.96):
+    if total == 0:
+        return (0.0, 0.0)
+    p = correct / total
+    denom = 1 + z**2 / total
+    centre = (p + z**2 / (2 * total)) / denom
+    spread = z * np.sqrt(p * (1 - p) / total + z**2 / (4 * total**2)) / denom
+    return (max(0.0, float(centre - spread)), min(1.0, float(centre + spread)))
+
+# Bootstrap 95% CI for Macro-F1
+def bootstrap_macro_f1_ci(y_true, y_pred, n_bootstraps=1000, alpha=0.05):
+    bootstrapped_f1s = []
+    n = len(y_true)
+    for _ in range(n_bootstraps):
+        indices = np.random.choice(n, size=n, replace=True)
+        sample_true = y_true[indices]
+        sample_pred = y_pred[indices]
+        bootstrapped_f1s.append(f1_score(sample_true, sample_pred, average=&#x27;macro&#x27;, zero_division=0))
+    low = float(np.percentile(bootstrapped_f1s, (alpha / 2) * 100))
+    high = float(np.percentile(bootstrapped_f1s, (1 - alpha / 2) * 100))
+    return (low, high)
+
+# McNemar&#x27;s Test implementation
+def compute_mcnemar_test(y_true, pred_a, pred_b):
+    correct_a = (pred_a == y_true)
+    correct_b = (pred_b == y_true)
+    
+    # Contingency Table:
+    # [ [both correct, a correct b wrong],
+    #   [a wrong b correct, both wrong] ]
+    n00 = int(np.sum(correct_a &amp; correct_b))
+    b = int(np.sum(correct_a &amp; (~correct_b)))
+    c = int(np.sum((~correct_a) &amp; correct_b))
+    n11 = int(np.sum((~correct_a) &amp; (~correct_b)))
+    
+    # With continuity correction
+    if (b + c) &gt; 0:
+        chi2 = float(((abs(b - c) - 1.0)**2) / (b + c))
+        p_val = float(1.0 - stats.chi2.cdf(chi2, df=1))
+        # Exact binomial test p-value
+        binom_res = stats.binomtest(b, b + c, 0.5)
+        binom_p = float(binom_res.pvalue)
+    else:
+        chi2 = 0.0
+        p_val = 1.0
+        binom_p = 1.0
+        
+    return {
+        &quot;contingency_table&quot;: [[n00, b], [c, n11]],
+        &quot;b_a_correct_b_wrong&quot;: b,
+        &quot;c_a_wrong_b_correct&quot;: c,
+        &quot;chi2&quot;: chi2,
+        &quot;chi2_p_value&quot;: p_val,
+        &quot;exact_binomial_p_value&quot;: binom_p
+    }
+
+methods_data = {}
+for name, col in [(&quot;zero_shot&quot;, &quot;pred_zero_shot&quot;), (&quot;few_shot_cot&quot;, &quot;pred_few_shot&quot;), (&quot;lora&quot;, &quot;pred_lora&quot;)]:
+    y_pred = df_test[col].values
+    acc = float(accuracy_score(y_true, y_pred))
+    correct_count = int(np.sum(y_true == y_pred))
+    acc_ci = wilson_score_interval(correct_count, len(y_true))
+    f1_macro = float(f1_score(y_true, y_pred, average=&#x27;macro&#x27;, zero_division=0))
+    prec_macro = float(precision_score(y_true, y_pred, average=&#x27;macro&#x27;, zero_division=0))
+    rec_macro = float(recall_score(y_true, y_pred, average=&#x27;macro&#x27;, zero_division=0))
+    f1_ci = bootstrap_macro_f1_ci(y_true, y_pred, n_bootstraps=1000)
+    
+    rep = classification_report(y_true, y_pred, labels=VALID_LABELS, output_dict=True, zero_division=0)
+    per_class = {}
+    for lbl in VALID_LABELS:
+        per_class[lbl] = {
+            &quot;precision&quot;: float(rep[lbl][&quot;precision&quot;]),
+            &quot;recall&quot;: float(rep[lbl][&quot;recall&quot;]),
+            &quot;f1_score&quot;: float(rep[lbl][&quot;f1-score&quot;]),
+            &quot;support&quot;: int(rep[lbl][&quot;support&quot;])
+        }
+        
+    cm = confusion_matrix(y_true, y_pred, labels=VALID_LABELS).tolist()
+    
+    methods_data[name] = {
+        &quot;accuracy&quot;: acc,
+        &quot;accuracy_wilson_ci&quot;: [float(acc_ci[0]), float(acc_ci[1])],
+        &quot;macro_precision&quot;: prec_macro,
+        &quot;macro_recall&quot;: rec_macro,
+        &quot;macro_f1&quot;: f1_macro,
+        &quot;macro_f1_bootstrap_ci&quot;: [float(f1_ci[0]), float(f1_ci[1])],
+        &quot;per_class&quot;: per_class,
+        &quot;confusion_matrix&quot;: cm
+    }
+
+# Compute McNemar tests between each pair
+mcnemar_zs_vs_fs = compute_mcnemar_test(y_true, df_test[&#x27;pred_zero_shot&#x27;].values, df_test[&#x27;pred_few_shot&#x27;].values)
+mcnemar_fs_vs_lora = compute_mcnemar_test(y_true, df_test[&#x27;pred_few_shot&#x27;].values, df_test[&#x27;pred_lora&#x27;].values)
+mcnemar_zs_vs_lora = compute_mcnemar_test(y_true, df_test[&#x27;pred_zero_shot&#x27;].values, df_test[&#x27;pred_lora&#x27;].values)
+
+# Hacker News Stance metrics
+y_true_hn = df_gold_hn[&#x27;predicted_stance&#x27;].values
+y_pred_hn = df_gold_hn[&#x27;pred_stance&#x27;].values
+acc_hn = float(accuracy_score(y_true_hn, y_pred_hn))
+f1_hn = float(f1_score(y_true_hn, y_pred_hn, average=&#x27;macro&#x27;, zero_division=0))
+rep_hn = classification_report(y_true_hn, y_pred_hn, labels=VALID_STANCES, output_dict=True, zero_division=0)
+per_class_hn = {
+    s: {
+        &quot;precision&quot;: float(rep_hn[s][&quot;precision&quot;]),
+        &quot;recall&quot;: float(rep_hn[s][&quot;recall&quot;]),
+        &quot;f1_score&quot;: float(rep_hn[s][&quot;f1-score&quot;]),
+        &quot;support&quot;: int(rep_hn[s][&quot;support&quot;])
+    } for s in VALID_STANCES
+}
+cm_hn = confusion_matrix(y_true_hn, y_pred_hn, labels=VALID_STANCES).tolist()
+
+# Financial correlation metrics
+df_merged = df_companies.merge(df_stock, on=&#x27;ticker&#x27;, how=&#x27;inner&#x27;)
+df_rev_latest = df_revenue.sort_values(by=&#x27;fiscal_year&#x27;).groupby(&#x27;ticker&#x27;).last().reset_index()
+df_merged = df_merged.merge(df_rev_latest[[&#x27;ticker&#x27;, &#x27;revenue_growth_pct&#x27;, &#x27;revenue_usd&#x27;]], on=&#x27;ticker&#x27;, how=&#x27;left&#x27;)
+df_valid_stocks = df_merged[df_merged[&#x27;status&#x27;] == &#x27;ok&#x27;].copy()
+
+rho, p_val_spearman = stats.spearmanr(df_valid_stocks[&#x27;revenue_growth_pct&#x27;].dropna(), df_valid_stocks[&#x27;excess_return_vs_igv&#x27;].dropna())
+cat_excess_median = df_valid_stocks.groupby(&#x27;category_x&#x27;)[&#x27;excess_return_vs_igv&#x27;].median().to_dict()
+
+# Assemble master metrics.json
+end_wall_time = time.time()
+elapsed_seconds = round(end_wall_time - start_wall_time, 2)
+
+metrics_payload = {
+    &quot;execution_metadata&quot;: {
+        &quot;timestamp_utc&quot;: start_timestamp,
+        &quot;elapsed_seconds&quot;: elapsed_seconds,
+        &quot;device&quot;: device,
+        &quot;gpu_name&quot;: gpu_name,
+        &quot;seed&quot;: 42,
+        &quot;base_model&quot;: MODEL_ID,
+        &quot;quantization&quot;: &quot;4-bit NF4&quot;,
+        &quot;lora_hyperparameters&quot;: {
+            &quot;r&quot;: 16,
+            &quot;alpha&quot;: 32,
+            &quot;dropout&quot;: 0.05,
+            &quot;target_modules&quot;: [&quot;q_proj&quot;, &quot;k_proj&quot;, &quot;v_proj&quot;, &quot;o_proj&quot;],
+            &quot;learning_rate&quot;: 2e-4,
+            &quot;epochs&quot;: 3,
+            &quot;effective_batch_size&quot;: 8
+        }
+    },
+    &quot;dataset_split_counts&quot;: {
+        &quot;moats_train&quot;: len(df_train),
+        &quot;moats_val&quot;: len(df_val),
+        &quot;moats_test&quot;: len(df_test),
+        &quot;hn_stance_test&quot;: len(df_gold_hn)
+    },
+    &quot;task_1_moats&quot;: {
+        &quot;num_test_examples&quot;: len(df_test),
+        &quot;methods&quot;: methods_data,
+        &quot;mcnemar_tests&quot;: {
+            &quot;zero_shot_vs_few_shot&quot;: mcnemar_zs_vs_fs,
+            &quot;few_shot_vs_lora&quot;: mcnemar_fs_vs_lora,
+            &quot;zero_shot_vs_lora&quot;: mcnemar_zs_vs_lora
+        }
+    },
+    &quot;task_2_hn_stance&quot;: {
+        &quot;num_test_examples&quot;: len(df_gold_hn),
+        &quot;accuracy&quot;: acc_hn,
+        &quot;macro_f1&quot;: f1_hn,
+        &quot;per_class&quot;: per_class_hn,
+        &quot;confusion_matrix&quot;: cm_hn
+    },
+    &quot;econometric_linkage&quot;: {
+        &quot;active_companies_analyzed&quot;: len(df_valid_stocks),
+        &quot;spearman_rho_growth_vs_excess_return&quot;: float(rho),
+        &quot;spearman_p_value&quot;: float(p_val_spearman),
+        &quot;category_median_excess_return_vs_igv&quot;: {k: float(v) for k, v in cat_excess_median.items()}
+    }
+}
+
+with open(&quot;metrics.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(metrics_payload, f, indent=2)
+print(&quot;Successfully generated and saved metrics.json!&quot;)
+
+# Save predictions.csv
+predictions_export = []
+for idx, row in df_test.iterrows():
+    predictions_export.append({
+        &quot;type&quot;: &quot;10k_moat&quot;,
+        &quot;id&quot;: row[&quot;para_id&quot;],
+        &quot;company&quot;: row[&quot;company&quot;],
+        &quot;category&quot;: row[&quot;category&quot;],
+        &quot;gold_label&quot;: row[&quot;predicted_moat&quot;],
+        &quot;pred_zero_shot&quot;: row[&quot;pred_zero_shot&quot;],
+        &quot;raw_zero_shot&quot;: row[&quot;raw_zero_shot&quot;],
+        &quot;pred_few_shot&quot;: row[&quot;pred_few_shot&quot;],
+        &quot;raw_few_shot&quot;: row[&quot;raw_few_shot&quot;],
+        &quot;pred_lora&quot;: row[&quot;pred_lora&quot;],
+        &quot;raw_lora&quot;: row[&quot;raw_lora&quot;]
+    })
+
+for idx, row in df_gold_hn.iterrows():
+    predictions_export.append({
+        &quot;type&quot;: &quot;hn_stance&quot;,
+        &quot;id&quot;: row[&quot;id&quot;],
+        &quot;company&quot;: &quot;N/A&quot;,
+        &quot;category&quot;: &quot;developer_discourse&quot;,
+        &quot;gold_label&quot;: row[&quot;predicted_stance&quot;],
+        &quot;pred_zero_shot&quot;: row[&quot;pred_stance&quot;],
+        &quot;raw_zero_shot&quot;: row[&quot;raw_stance&quot;],
+        &quot;pred_few_shot&quot;: &quot;N/A&quot;,
+        &quot;raw_few_shot&quot;: &quot;N/A&quot;,
+        &quot;pred_lora&quot;: &quot;N/A&quot;,
+        &quot;raw_lora&quot;: &quot;N/A&quot;
+    })
+
+df_preds_export = pd.DataFrame(predictions_export)
+df_preds_export.to_csv(&quot;predictions.csv&quot;, index=False)
+print(&quot;Successfully generated and saved predictions.csv!&quot;)
+
+# Plot and save confusion matrices
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+for i, (name, col) in enumerate([(&quot;Zero-Shot&quot;, &quot;pred_zero_shot&quot;), (&quot;Few-Shot CoT&quot;, &quot;pred_few_shot&quot;), (&quot;LoRA Fine-Tuned&quot;, &quot;pred_lora&quot;)]):
+    cm = confusion_matrix(y_true, df_test[col].values, labels=VALID_LABELS)
+    sns.heatmap(cm, annot=True, fmt=&#x27;d&#x27;, cmap=&#x27;Blues&#x27;, ax=axes[i], xticklabels=VALID_LABELS, yticklabels=VALID_LABELS, cbar=False)
+    axes[i].set_title(f&quot;{name} Moat Predictions&quot;, fontsize=11, fontweight=&#x27;bold&#x27;)
+    axes[i].set_xlabel(&quot;Predicted&quot;)
+    axes[i].set_ylabel(&quot;True&quot; if i == 0 else &quot;&quot;)
+    axes[i].tick_params(axis=&#x27;x&#x27;, rotation=45)
+
+plt.tight_layout()
+plt.savefig(&quot;confusion_matrices.png&quot;, dpi=300)
+plt.close()
+print(&quot;Saved confusion_matrices.png!&quot;)
+
+# Save environment_metadata.json
+import transformers
+import peft
+import trl
+import sklearn
+
+env_meta = {
+    &quot;python_version&quot;: sys.version,
+    &quot;torch_version&quot;: torch.__version__,
+    &quot;transformers_version&quot;: transformers.__version__,
+    &quot;peft_version&quot;: peft.__version__,
+    &quot;trl_version&quot;: trl.__version__,
+    &quot;sklearn_version&quot;: sklearn.__version__,
+    &quot;device&quot;: device,
+    &quot;gpu_name&quot;: gpu_name,
+    &quot;seed&quot;: 42,
+    &quot;total_execution_seconds&quot;: elapsed_seconds
+}
+with open(&quot;environment_metadata.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(env_meta, f, indent=2)
+print(&quot;Saved environment_metadata.json!&quot;)
+</code></pre>
+</div>
+</body></html>
