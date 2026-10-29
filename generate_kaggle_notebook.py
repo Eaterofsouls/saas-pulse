@@ -382,20 +382,27 @@ peft_config = LoraConfig(
     target_modules=["q_proj", "k_proj", "v_proj", "o_proj"]
 )
 
-training_args = SFTConfig(
-    output_dir="./qwen_moat_lora",
-    num_train_epochs=3,
-    per_device_train_batch_size=2,
-    gradient_accumulation_steps=4,
-    learning_rate=2e-4,
-    fp16=(device == "cuda"),
-    logging_steps=5,
-    eval_strategy="epoch",
-    save_strategy="no",
-    report_to="none",
-    dataset_text_field="text",
-    max_seq_length=512
-)
+import inspect
+sft_params = inspect.signature(SFTConfig.__init__).parameters
+sft_kwargs = {
+    "output_dir": "./qwen_moat_lora",
+    "num_train_epochs": 3,
+    "per_device_train_batch_size": 2,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 2e-4,
+    "fp16": (device == "cuda"),
+    "logging_steps": 5,
+    "save_strategy": "no",
+    "report_to": "none"
+}
+if "dataset_text_field" in sft_params:
+    sft_kwargs["dataset_text_field"] = "text"
+if "max_length" in sft_params:
+    sft_kwargs["max_length"] = 512
+elif "max_seq_length" in sft_params:
+    sft_kwargs["max_seq_length"] = 512
+
+training_args = SFTConfig(**sft_kwargs)
 
 training_loss_history = []
 
@@ -405,13 +412,20 @@ if device == "cuda":
     peft_model = get_peft_model(peft_model, peft_config)
     peft_model.print_trainable_parameters()
     
-    trainer = SFTTrainer(
-        model=peft_model,
-        train_dataset=train_dataset,
-        eval_dataset=val_dataset,
-        peft_config=peft_config,
-        args=training_args,
-    )
+    trainer_kwargs = {
+        "model": peft_model,
+        "train_dataset": train_dataset,
+        "eval_dataset": val_dataset,
+        "peft_config": peft_config,
+        "args": training_args,
+    }
+    trainer_params = inspect.signature(SFTTrainer.__init__).parameters
+    if "dataset_text_field" in trainer_params and "dataset_text_field" not in getattr(training_args, "to_dict", lambda: {})():
+        trainer_kwargs["dataset_text_field"] = "text"
+    if "max_seq_length" in trainer_params and "max_length" not in getattr(training_args, "to_dict", lambda: {})():
+        trainer_kwargs["max_seq_length"] = 512
+        
+    trainer = SFTTrainer(**trainer_kwargs)
     print("Beginning LoRA Training (3 Epochs)...")
     train_result = trainer.train()
     print("LoRA Fine-Tuning Complete.")
