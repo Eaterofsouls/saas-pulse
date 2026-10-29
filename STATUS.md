@@ -1,16 +1,16 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-30 00:03:00 IST  
-**Current Step**: Step 3 — Kaggle Kernel Version 5 Running on GPU T4  
+**Last Updated**: 2026-10-30 00:14:00 IST  
+**Current Step**: Step 3 — Kaggle Kernel Version 6 Running on GPU T4  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
 ## 1. Current Execution Status
-- **Phase**: Live Kaggle GPU T4 Execution (Run 5 / Version 5).
-- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 (~5 minutes elapsed, active Zero-Shot/Few-Shot evaluation).
+- **Phase**: Live Kaggle GPU T4 Execution (Run 6 / Version 6).
+- **Active Task**: Executing `saas_pulse_experiment.ipynb` on NVIDIA Tesla T4 with strict Float16 precision for Turing GPU compatibility.
 - **Heartbeat Log**:
   - `2026-10-29 23:15 IST`: Git initialized, secrets scanned clean, initial commit pushed.
   - `2026-10-29 23:18 IST`: GitHub Release `v1.0.0` published with `saas_pulse_dataset.zip`.
@@ -19,8 +19,8 @@
   - `2026-10-29 23:28 IST`: Kernel Version 2 pushed. Error recorded (`AttributeError: shape` on `BatchEncoding`). Full logs and HTML archived in `runs/20261029_2328/`.
   - `2026-10-29 23:34 IST`: Kernel Version 3 pushed. Zero-shot & Few-shot completed 100%; error at `SFTConfig.max_seq_length`. Full logs and HTML archived in `runs/20261029_2334/`.
   - `2026-10-29 23:47 IST`: Kernel Version 4 pushed. Zero-shot & Few-shot completed 100%; error at `SFTTrainer` redundant `peft_config`. Full logs and HTML archived in `runs/20261029_2347/`.
-  - `2026-10-29 23:58 IST`: Kernel Version 5 pushed with clean adapter passing to `SFTTrainer`.
-  - `2026-10-30 00:03 IST`: [Heartbeat] Kernel version 5 actively running on Tesla T4 (~5 min elapsed, Zero-Shot & Few-Shot in-context inference underway).
+  - `2026-10-29 23:58 IST`: Kernel Version 5 pushed. Zero-shot & Few-shot completed 100%; error at PyTorch AMP unscale on BFloat16 on Turing T4. Full logs and HTML archived in `runs/20261029_2358/`.
+  - `2026-10-30 00:14 IST`: Kernel Version 6 pushed with explicit Float16 casting across model, adapters, and SFTConfig. Run status: **RUNNING**.
 
 ---
 
@@ -33,7 +33,7 @@
 | **2** | **Gold Benchmark Deduplication** | **PASSED** | `gold_10k_moats.csv` strictly 0 text overlap across train/val/test. |
 | **3** | **Methodology & Provenance** | **PASSED** | `GOLD_PROVENANCE.md` & `HN_STANCE_METHOD.md` published. |
 | **4** | **Kaggle Dataset Upload** | **PASSED** | `notaveragehee/saas-pulse-dataset` is active and `ready`. |
-| **5** | **Kaggle T4 Experiment Execution** | **RUNNING** | Run 5 active on Tesla T4 (`saas-pulse-experiment`). |
+| **5** | **Kaggle T4 Experiment Execution** | **RUNNING** | Run 6 active on Tesla T4 (`saas-pulse-experiment`). |
 | **6** | **Remote Output Retrieval & Audit** | *Pending* | Downloading `metrics.json`, predictions, loss curve to `runs/`. |
 | **7** | **Slide Verification & CHECKS.md** | *Pending* | Regenerating slides directly from execution `metrics.json`. |
 
@@ -57,4 +57,8 @@
    - Cause: Passing both an already-wrapped `peft_model` and `peft_config` into `SFTTrainer`.
    - Resolution: Omit redundant `peft_config` argument when passing `peft_model`.
 5. **Run 5 (`runs/20261029_2358/`)**:
+   - Status: Failed (`NotImplementedError: "_amp_foreach_non_finite_check_and_unscale_cuda" not implemented for 'BFloat16'`).
+   - Cause: NVIDIA Tesla T4 Turing GPU lacks hardware BFloat16 support; Qwen defaults config to bfloat16 causing GradScaler unscale failure.
+   - Resolution: Explicit `torch_dtype=torch.float16`, `peft_model.to(torch.float16)`, `fp16=True`, `bf16=False`.
+6. **Run 6 (`runs/20261030_0014/`)**:
    - Status: Currently executing on GPU T4.
