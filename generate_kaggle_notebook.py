@@ -416,14 +416,11 @@ if device == "cuda":
         "model": peft_model,
         "train_dataset": train_dataset,
         "eval_dataset": val_dataset,
-        "peft_config": peft_config,
         "args": training_args,
     }
     trainer_params = inspect.signature(SFTTrainer.__init__).parameters
     if "dataset_text_field" in trainer_params and "dataset_text_field" not in getattr(training_args, "to_dict", lambda: {})():
         trainer_kwargs["dataset_text_field"] = "text"
-    if "max_seq_length" in trainer_params and "max_length" not in getattr(training_args, "to_dict", lambda: {})():
-        trainer_kwargs["max_seq_length"] = 512
         
     trainer = SFTTrainer(**trainer_kwargs)
     print("Beginning LoRA Training (3 Epochs)...")
