@@ -1,18 +1,21 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-29 23:15:00 IST  
-**Current Step**: Step 1 — Initial GitHub Setup & Kaggle Dataset Preparation  
+**Last Updated**: 2026-10-29 23:22:00 IST  
+**Current Step**: Step 3 — Kaggle Kernel Setup & Execution  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
 ## 1. Current Execution Status
-- **Phase**: Preparing live Kaggle T4 execution pipeline.
-- **Active Task**: Packaging verified dataset for private Kaggle upload and setting up kernel runner.
+- **Phase**: Live Kaggle GPU T4 Execution.
+- **Active Task**: Pushing `saas_pulse_experiment.ipynb` to Kaggle with T4 GPU and Internet enabled.
 - **Heartbeat Log**:
-  - `2026-10-29 23:15 IST`: Git initialized, .gitignore configured, secrets scan verified clean, remote pushed to main.
+  - `2026-10-29 23:15 IST`: Git initialized, secrets scanned clean, initial commit pushed.
+  - `2026-10-29 23:18 IST`: GitHub Release `v1.0.0` published with `saas_pulse_dataset.zip`.
+  - `2026-10-29 23:21 IST`: Private Kaggle dataset `notaveragehee/saas-pulse-dataset` uploaded and verified `ready`.
+  - `2026-10-29 23:22 IST`: Preparing Kaggle kernel push for T4 GPU execution.
 
 ---
 
@@ -24,8 +27,8 @@
 | **1** | **Dataset Curation & Packaging** | **PASSED** | 100/100 companies, 538 XBRL revenues, 190k paras, 7.8k HN posts. |
 | **2** | **Gold Benchmark Deduplication** | **PASSED** | `gold_10k_moats.csv` strictly 0 text overlap across train/val/test. |
 | **3** | **Methodology & Provenance** | **PASSED** | `GOLD_PROVENANCE.md` & `HN_STANCE_METHOD.md` published. |
-| **4** | **Kaggle Dataset Upload** | *Pending* | Uploading private `notaveragehee/saas-pulse-dataset`. |
-| **5** | **Kaggle T4 Experiment Execution** | *Pending* | Running `saas-pulse-experiment` with GPU T4 + Internet enabled. |
+| **4** | **Kaggle Dataset Upload** | **PASSED** | `notaveragehee/saas-pulse-dataset` is active and `ready`. |
+| **5** | **Kaggle T4 Experiment Execution** | *In Progress* | Launching `notaveragehee/saas-pulse-experiment` on GPU T4. |
 | **6** | **Remote Output Retrieval & Audit** | *Pending* | Downloading `metrics.json`, predictions, loss curve to `runs/`. |
 | **7** | **Slide Verification & CHECKS.md** | *Pending* | Regenerating slides directly from execution `metrics.json`. |
 
