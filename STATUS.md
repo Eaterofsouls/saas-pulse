@@ -18,6 +18,7 @@
   - `2026-10-31 15:14 IST`: Kernel Version 8 returned `KernelWorkerStatus.ERROR`. Error: missing `bitsandbytes` in Python 3.13 image. Run archived in `runs/20261031_1510/` with `error_analysis.md`, notebook, and full logs.
   - `2026-10-31 15:16 IST`: Cell 0 updated with automated dependency installer loop (`bitsandbytes>=0.43.0`, `trl>=0.8.0`, `scikit-learn`). Kernel Version 9 prepared.
   - `2026-10-31 15:17 IST`: [Heartbeat] Kernel Version 9 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING` on NVIDIA Tesla T4 GPU.
+  - `2026-10-31 15:20 IST`: [Heartbeat] Kernel Version 9 active on Tesla T4 (~3.5 min elapsed; dependencies installed, model loading & evaluation underway). Status: `KernelWorkerStatus.RUNNING`.
 
 ---
 
