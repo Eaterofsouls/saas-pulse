@@ -26,6 +26,7 @@
   - `2026-10-31 15:47 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~20.5 min elapsed; awaiting kernel termination and artifact packaging). Status: `KernelWorkerStatus.RUNNING`.
   - `2026-10-31 15:50 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~23 min elapsed; completing final execution). Status: `KernelWorkerStatus.RUNNING`.
   - `2026-10-31 15:52 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~25.5 min elapsed; completing corpus inference & RQ4 serialization). Status: `KernelWorkerStatus.RUNNING`.
+  - `2026-10-31 15:55 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~28 min elapsed; near end of RQ4 moat scoring across 92 companies). Status: `KernelWorkerStatus.RUNNING`.
 
 ---
 
