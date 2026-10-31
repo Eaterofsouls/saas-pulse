@@ -1,6 +1,10 @@
 # SaaS-Pulse Gold Benchmark Review Document
 
-This document records the exact distributions and sample records of the human-audited gold evaluation sets for **SaaS-Pulse**.
+> **CORRECTION (2026-10-31):** A prior version of this document described labels as "human-audited."
+> That claim was false. Labels are keyword-rule generated. No human reviewed any row.
+> The sample records below are for reference; labels are rule-generated, not verified by a human expert.
+
+This document records the exact distributions and sample records of the **rule-generated** gold evaluation sets for **SaaS-Pulse**.
 
 ---
 
