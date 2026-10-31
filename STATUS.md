@@ -22,6 +22,7 @@
   - `2026-10-31 15:34 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~7.5 min elapsed; LoRA evaluation & HN stance classification underway). Status: `KernelWorkerStatus.RUNNING`.
   - `2026-10-31 15:38 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~11 min elapsed; executing HN corpus inference & RQ4 per-company moat scoring). Status: `KernelWorkerStatus.RUNNING`.
   - `2026-10-31 15:41 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~14.5 min elapsed; near completion of RQ4 per-company moat scoring). Status: `KernelWorkerStatus.RUNNING`.
+  - `2026-10-31 15:45 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~18 min elapsed; final output serialization and metrics generation). Status: `KernelWorkerStatus.RUNNING`.
 
 ---
 
