@@ -556,31 +556,67 @@ res_fs["preds"] = fs_preds
 print("Few-shot 10K complete.")
 
 # CELL:code
-# Cell 11 — LoRA Fine-Tuning (Completion-Only Loss Masking)
+# Cell 11 — LoRA Fine-Tuning (Completion-Only Loss Masking via Standard Trainer)
 import inspect
 from peft import get_peft_model, LoraConfig, TaskType, prepare_model_for_kbit_training
-from trl import SFTConfig, SFTTrainer, DataCollatorForCompletionOnlyLM
-from datasets import Dataset
+from transformers import Trainer, TrainingArguments
+from torch.utils.data import Dataset as TorchDataset
 
-RESPONSE_TEMPLATE = "<|im_start|>assistant\n"
+class MoatSFTDataset(TorchDataset):
+    def __init__(self, df, tok, max_len=512):
+        self.examples = []
+        for row in df.itertuples():
+            msgs = [
+                {"role": "system",   "content": MOAT_SYSTEM},
+                {"role": "user",     "content": f"Paragraph:\n{row.text}\n\nAnswer:"},
+            ]
+            prompt_str = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+            comp_str   = row.final_label + "<|im_end|>\n"
+            
+            p_ids = tok.encode(prompt_str, add_special_tokens=False)
+            c_ids = tok.encode(comp_str,   add_special_tokens=False)
+            
+            total_len = len(p_ids) + len(c_ids)
+            if total_len > max_len:
+                p_ids = p_ids[-(max_len - len(c_ids)):]
+                
+            input_ids      = p_ids + c_ids
+            labels         = [-100] * len(p_ids) + c_ids
+            attention_mask = [1] * len(input_ids)
+            
+            self.examples.append({
+                "input_ids": torch.tensor(input_ids, dtype=torch.long),
+                "labels": torch.tensor(labels, dtype=torch.long),
+                "attention_mask": torch.tensor(attention_mask, dtype=torch.long),
+            })
+            
+    def __len__(self):
+        return len(self.examples)
+        
+    def __getitem__(self, idx):
+        return self.examples[idx]
 
-def format_train_example(row):
-    msgs = [
-        {"role": "system",   "content": MOAT_SYSTEM},
-        {"role": "user",     "content": f"Paragraph:\n{row['text']}\n\nAnswer:"},
-        {"role": "assistant","content": row["final_label"]},
-    ]
-    return {"text": tokenizer.apply_chat_template(msgs, tokenize=False, add_generation_prompt=False)}
+def completion_collate_fn(batch):
+    pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else 0
+    input_ids = torch.nn.utils.rnn.pad_sequence(
+        [item["input_ids"] for item in batch], batch_first=True, padding_value=pad_id
+    )
+    labels = torch.nn.utils.rnn.pad_sequence(
+        [item["labels"] for item in batch], batch_first=True, padding_value=-100
+    )
+    attention_mask = torch.nn.utils.rnn.pad_sequence(
+        [item["attention_mask"] for item in batch], batch_first=True, padding_value=0
+    )
+    return {"input_ids": input_ids, "labels": labels, "attention_mask": attention_mask}
 
-train_ds = Dataset.from_pandas(train10k[["text", "final_label"]].reset_index(drop=True))
-val_ds   = Dataset.from_pandas(val10k[["text", "final_label"]].reset_index(drop=True))
-train_ds = train_ds.map(format_train_example)
-val_ds   = val_ds.map(format_train_example)
+train_ds = MoatSFTDataset(train10k, tokenizer, max_len=512)
+val_ds   = MoatSFTDataset(val10k, tokenizer, max_len=512)
 
-# Verify template formatting
-sample_txt = format_train_example(train10k.iloc[0])["text"]
-print("Sample formatted train text end:")
-print(repr(sample_txt[-80:]))
+print(f"Dataset prepared: train={len(train_ds)}, val={len(val_ds)}")
+ex0 = train_ds[0]
+n_prompt_toks = (ex0["labels"] == -100).sum().item()
+n_comp_toks   = (ex0["labels"] != -100).sum().item()
+print(f"Sanity check: example 0 has {n_prompt_toks} prompt tokens (loss-masked with -100) and {n_comp_toks} completion tokens.")
 
 lora_cfg = LoraConfig(
     r=8,
@@ -596,44 +632,36 @@ peft_model = prepare_model_for_kbit_training(model)
 peft_model = get_peft_model(peft_model, lora_cfg)
 peft_model.print_trainable_parameters()
 
-collator = DataCollatorForCompletionOnlyLM(
-    response_template=RESPONSE_TEMPLATE,
-    tokenizer=tokenizer,
-)
+sig_ta = set(inspect.signature(TrainingArguments.__init__).parameters.keys())
+strat_key = "eval_strategy" if "eval_strategy" in sig_ta else "evaluation_strategy"
 
-sig_params = set(inspect.signature(SFTConfig.__init__).parameters.keys())
-seq_len_kwarg = "max_length" if "max_length" in sig_params else "max_seq_length"
-eval_strat_kw = "eval_strategy" if "eval_strategy" in sig_params else "evaluation_strategy"
-
-sft_kwargs = {
-    "output_dir":                    "/kaggle/working/lora_output",
-    "num_train_epochs":              4,
-    "per_device_train_batch_size":   4,
-    "gradient_accumulation_steps":   2,
-    "learning_rate":                 2e-4,
-    "warmup_steps":                  10,
-    "logging_steps":                 5,
-    eval_strat_kw:                   "epoch",
-    "save_strategy":                 "epoch",
-    "load_best_model_at_end":        True,
-    "metric_for_best_model":         "eval_loss",
-    "fp16":                          False,
-    "bf16":                          False,
-    "seed":                          SEED,
-    "report_to":                     "none",
-    "dataset_text_field":            "text",
-    seq_len_kwarg:                   512,
+train_args_kwargs = {
+    "output_dir":                  "/kaggle/working/lora_output",
+    "num_train_epochs":            4,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "learning_rate":               2e-4,
+    "warmup_steps":                10,
+    "logging_steps":               5,
+    strat_key:                     "epoch",
+    "save_strategy":               "epoch",
+    "load_best_model_at_end":      True,
+    "metric_for_best_model":       "eval_loss",
+    "fp16":                        False,
+    "bf16":                        False,
+    "seed":                        SEED,
+    "report_to":                   "none",
 }
-sft_config = SFTConfig(**sft_kwargs)
+training_args = TrainingArguments(**train_args_kwargs)
 
-trainer = SFTTrainer(
+trainer = Trainer(
     model=peft_model,
-    args=sft_config,
+    args=training_args,
     train_dataset=train_ds,
     eval_dataset=val_ds,
-    data_collator=collator,
+    data_collator=completion_collate_fn,
 )
-print("Starting LoRA training (completion-only loss masking)...")
+print("Starting LoRA training (completion-only loss masking via standard Trainer)...")
 train_result = trainer.train()
 print("Training complete.")
 print(f"  train_loss={train_result.training_loss:.4f}")

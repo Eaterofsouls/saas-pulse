@@ -1,0 +1,131 @@
+[{"stream_name":"stderr","time":6.685465597,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":6.685505441,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":7.637712402,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.637740031,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.637745012,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.637755024,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.262452191,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.262483346,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.262486919,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.262489533,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":43.00115065,"data":"Installing trl\u003e=0.8.0...\n"}
+,{"stream_name":"stdout","time":46.099744815,"data":"Installing bitsandbytes\u003e=0.43.0...\n"}
+,{"stream_name":"stdout","time":59.594944615,"data":"{\n"}
+,{"stream_name":"stdout","time":59.594976458,"data":"  \"python_version\": \"3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\",\n"}
+,{"stream_name":"stdout","time":59.594982415,"data":"  \"torch_version\": \"2.11.0+cu128\",\n"}
+,{"stream_name":"stdout","time":59.594987341,"data":"  \"cuda_available\": true,\n"}
+,{"stream_name":"stdout","time":59.594992017,"data":"  \"gpu_name\": \"Tesla T4\",\n"}
+,{"stream_name":"stdout","time":59.594996737,"data":"  \"cuda_capability\": [\n"}
+,{"stream_name":"stdout","time":59.59500149,"data":"    7,\n"}
+,{"stream_name":"stdout","time":59.595006604,"data":"    5\n"}
+,{"stream_name":"stdout","time":59.595011486,"data":"  ],\n"}
+,{"stream_name":"stdout","time":59.595016518,"data":"  \"run_started_utc\": \"2026-10-31T09:47:36.036997+00:00\",\n"}
+,{"stream_name":"stdout","time":59.595022236,"data":"  \"transformers_version\": \"5.16.1\",\n"}
+,{"stream_name":"stdout","time":59.595028121,"data":"  \"peft_version\": \"0.20.0\",\n"}
+,{"stream_name":"stdout","time":59.595032935,"data":"  \"trl_version\": \"1.17.1\",\n"}
+,{"stream_name":"stdout","time":59.595037687,"data":"  \"accelerate_version\": \"1.14.0\",\n"}
+,{"stream_name":"stdout","time":59.595042338,"data":"  \"bitsandbytes_version\": \"0.50.2\",\n"}
+,{"stream_name":"stdout","time":59.595047022,"data":"  \"scikit-learn_version\": \"1.6.1\"\n"}
+,{"stream_name":"stdout","time":59.595051657,"data":"}\n"}
+,{"stream_name":"stdout","time":59.624049311,"data":"RUN_ID=20261031_0947  OUT=/kaggle/working/run_outputs\n"}
+,{"stream_name":"stdout","time":61.476330595,"data":"  FOUND: gold_10k_moats.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/gold_10k_moats.csv\n"}
+,{"stream_name":"stdout","time":61.476364345,"data":"  FOUND: gold_hn_stance.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/gold_hn_stance.csv\n"}
+,{"stream_name":"stdout","time":61.476386029,"data":"  FOUND: filings_paragraphs.jsonl -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/filings_paragraphs.jsonl\n"}
+,{"stream_name":"stdout","time":61.476390789,"data":"  FOUND: hn_comments.jsonl -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/hn_comments.jsonl\n"}
+,{"stream_name":"stdout","time":61.476395285,"data":"  FOUND: stock_performance.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/stock_performance.csv\n"}
+,{"stream_name":"stdout","time":61.47639897,"data":"  FOUND: revenue.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/revenue.csv\n"}
+,{"stream_name":"stdout","time":62.048946375,"data":"Verification: user_corrected_label == predicted_moat in 200/200 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":62.048976302,"data":"Verification: user_corrected_label == predicted_stance in 60/60 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":62.048981045,"data":"NOTE: Gold labels are keyword-rule generated. Both train and test labels are rule-derived.\n"}
+,{"stream_name":"stdout","time":62.221838059,"data":"\n"}
+,{"stream_name":"stdout","time":62.221871909,"data":"Review file NOT found. Using pre-existing label_source / final_label from CSVs.\n"}
+,{"stream_name":"stdout","time":62.22187776,"data":"\n"}
+,{"stream_name":"stdout","time":62.22188217,"data":"10K: train=140, val=20, test=40\n"}
+,{"stream_name":"stdout","time":62.221886773,"data":"HN:  test=60\n"}
+,{"stream_name":"stdout","time":62.221891108,"data":"\n"}
+,{"stream_name":"stdout","time":62.22189477,"data":"Test label distribution (10K):\n"}
+,{"stream_name":"stdout","time":62.221898702,"data":"final_label\n"}
+,{"stream_name":"stdout","time":62.221902518,"data":"none_or_commodity               10\n"}
+,{"stream_name":"stdout","time":62.221906308,"data":"compliance_security              6\n"}
+,{"stream_name":"stdout","time":62.221913723,"data":"data_gravity                     6\n"}
+,{"stream_name":"stdout","time":62.221919667,"data":"network_effects_ecosystem        6\n"}
+,{"stream_name":"stdout","time":62.221928274,"data":"switching_costs_integrations     6\n"}
+,{"stream_name":"stdout","time":62.22193193,"data":"system_of_record                 6\n"}
+,{"stream_name":"stdout","time":62.221934602,"data":"\n"}
+,{"stream_name":"stdout","time":62.221937205,"data":"Test label distribution (HN):\n"}
+,{"stream_name":"stdout","time":62.221940134,"data":"final_label\n"}
+,{"stream_name":"stdout","time":62.221942695,"data":"build_internal       20\n"}
+,{"stream_name":"stdout","time":62.221945276,"data":"buy_saas             20\n"}
+,{"stream_name":"stdout","time":62.22194797,"data":"hybrid_or_neutral    20\n"}
+,{"stream_name":"stdout","time":62.40176982,"data":"Loading tokenizer: Qwen/Qwen2.5-1.5B-Instruct\n"}
+,{"stream_name":"stderr","time":62.762508256,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":62.76256584,"data":"\n"}
+,{"stream_name":"stderr","time":62.762595383,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":64.012358953,"data":"Loading model in 4-bit NF4 ...\n"}
+,{"stream_name":"stdout","time":89.346492992,"data":"Model loaded on cuda:0.\n"}
+,{"stream_name":"stdout","time":89.369226461,"data":"Constrained scoring and sanity gate defined.\n"}
+,{"stream_name":"stdout","time":89.393009726,"data":"Prompt builders defined with add_generation_prompt=True.\n"}
+,{"stream_name":"stdout","time":91.5624715,"data":"\n"}
+,{"stream_name":"stdout","time":91.562503147,"data":"[majority_baseline_10k] n=40  acc=0.250 [0.142, 0.402]  macro-F1=0.067 [0.037, 0.095]\n"}
+,{"stream_name":"stdout","time":91.562507636,"data":"  pred_dist: {'none_or_commodity': 40}\n"}
+,{"stream_name":"stdout","time":93.481604915,"data":"\n"}
+,{"stream_name":"stdout","time":93.481639521,"data":"[random_baseline_10k] n=40  acc=0.200 [0.105, 0.348]  macro-F1=0.194 [0.085, 0.302]\n"}
+,{"stream_name":"stdout","time":93.481645453,"data":"  pred_dist: {np.str_('system_of_record'): 6, np.str_('network_effects_ecosystem'): 9, np.str_('compliance_security'): 8, np.str_('switching_costs_integrations'): 7, np.str_('none_or_commodity'): 6, np.str_('data_gravity'): 4}\n"}
+,{"stream_name":"stdout","time":95.115135435,"data":"\n"}
+,{"stream_name":"stdout","time":95.115173156,"data":"[keyword_rule_baseline_10k] n=40  acc=1.000 [0.912, 1.000]  macro-F1=1.000 [1.000, 1.000]\n"}
+,{"stream_name":"stdout","time":95.115180261,"data":"  pred_dist: {'compliance_security': 6, 'data_gravity': 6, 'network_effects_ecosystem': 6, 'switching_costs_integrations': 6, 'none_or_commodity': 10, 'system_of_record': 6}\n"}
+,{"stream_name":"stdout","time":95.115185912,"data":"Baselines calculated.\n"}
+,{"stream_name":"stdout","time":95.315675341,"data":"Running zero-shot constrained scoring on 10K test (n=40)...\n"}
+,{"stream_name":"stdout","time":105.747444052,"data":"  10/40 done\n"}
+,{"stream_name":"stdout","time":115.284829277,"data":"  20/40 done\n"}
+,{"stream_name":"stdout","time":124.639601541,"data":"  30/40 done\n"}
+,{"stream_name":"stdout","time":133.901320029,"data":"  40/40 done\n"}
+,{"stream_name":"stdout","time":133.901349604,"data":"Sanity gate PASSED [zero_shot_10k]: distribution {'data_gravity': 10, 'system_of_record': 13, 'compliance_security': 6, 'network_effects_ecosystem': 8, 'none_or_commodity': 2, 'switching_costs_integrations': 1}\n"}
+,{"stream_name":"stdout","time":135.534873552,"data":"\n"}
+,{"stream_name":"stdout","time":135.534907117,"data":"[zero_shot_10k] n=40  acc=0.500 [0.352, 0.648]  macro-F1=0.447 [0.306, 0.554]\n"}
+,{"stream_name":"stdout","time":135.534914068,"data":"  pred_dist: {'data_gravity': 10, 'system_of_record': 13, 'compliance_security': 6, 'network_effects_ecosystem': 8, 'none_or_commodity': 2, 'switching_costs_integrations': 1}\n"}
+,{"stream_name":"stdout","time":135.534920392,"data":"Zero-shot 10K complete.\n"}
+,{"stream_name":"stdout","time":135.734830376,"data":"10K exemplar IDs (1 per class, from train): ['0001477720-22-000012_Item1_44', '0001773383-22-000053_Item1_11', '0001640147-23-000030_Item1A_24', '0001193125-26-067540_Item1_26', '0001650372-23-000040_Item1_36', '0001023731-25-000039_Item1_25']\n"}
+,{"stream_name":"stdout","time":136.587034253,"data":"HN exemplar IDs (2 per class): ['46802591', '48657658', '44912663', '41592672', '48790149', '42593210']\n"}
+,{"stream_name":"stdout","time":136.787745575,"data":"Running few-shot constrained scoring on 10K test (n=40)...\n"}
+,{"stream_name":"stdout","time":156.415149418,"data":"  10/40 done\n"}
+,{"stream_name":"stdout","time":176.976301034,"data":"  20/40 done\n"}
+,{"stream_name":"stdout","time":198.023226204,"data":"  30/40 done\n"}
+,{"stream_name":"stdout","time":220.145697468,"data":"  40/40 done\n"}
+,{"stream_name":"stdout","time":220.145729286,"data":"Sanity gate PASSED [few_shot_10k]: distribution {'compliance_security': 10, 'data_gravity': 6, 'system_of_record': 11, 'switching_costs_integrations': 2, 'none_or_commodity': 4, 'network_effects_ecosystem': 7}\n"}
+,{"stream_name":"stdout","time":221.851928535,"data":"\n"}
+,{"stream_name":"stdout","time":221.851957586,"data":"[few_shot_10k] n=40  acc=0.525 [0.375, 0.671]  macro-F1=0.495 [0.329, 0.621]\n"}
+,{"stream_name":"stdout","time":221.85197731,"data":"  pred_dist: {'compliance_security': 10, 'data_gravity': 6, 'system_of_record': 11, 'switching_costs_integrations': 2, 'none_or_commodity': 4, 'network_effects_ecosystem': 7}\n"}
+,{"stream_name":"stdout","time":221.851983002,"data":"Few-shot 10K complete.\n"}
+,{"stream_name":"stderr","time":230.944112636,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":230.944834213,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":230.944847472,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":230.944852131,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":230.944856006,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":230.944859737,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":230.944863081,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":230.944866979,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":230.94487052,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":230.944873843,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":230.944894303,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":230.9449002,"data":"Exception encountered at \"In [12]\":\n"}
+,{"stream_name":"stderr","time":230.944906045,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":230.944911191,"data":"ImportError                               Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":230.944917207,"data":"/tmp/ipykernel_25/3994470824.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":230.944922932,"data":"      2 import inspect\n"}
+,{"stream_name":"stderr","time":230.944927759,"data":"      3 from peft import get_peft_model, LoraConfig, TaskType, prepare_model_for_kbit_training\n"}
+,{"stream_name":"stderr","time":230.944933095,"data":"----\u003e 4 from trl import SFTConfig, SFTTrainer, DataCollatorForCompletionOnlyLM\n"}
+,{"stream_name":"stderr","time":230.944944789,"data":"      5 from datasets import Dataset\n"}
+,{"stream_name":"stderr","time":230.944948269,"data":"      6 \n"}
+,{"stream_name":"stderr","time":230.944951555,"data":"\n"}
+,{"stream_name":"stderr","time":230.94495487,"data":"ImportError: cannot import name 'DataCollatorForCompletionOnlyLM' from 'trl' (/usr/local/lib/python3.13/dist-packages/trl/__init__.py)\n"}
+,{"stream_name":"stderr","time":230.944958319,"data":"\n"}
+,{"stream_name":"stderr","time":233.073449638,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":233.073476736,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":233.243932104,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":233.243967784,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":234.058770278,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":234.162483947,"data":"[NbConvertApp] Writing 307963 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":236.591067426,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":237.296746985,"data":"[NbConvertApp] Writing 726110 bytes to __results__.html\n"}
+]
