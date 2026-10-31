@@ -9,8 +9,30 @@
 **Methods**: constrained log-prob scoring (no free-text JSON parsing), completion-only LoRA.
 
 # CELL:code
-# Cell 0 — Environment Metadata
-import sys, json, subprocess, datetime, os, torch
+# Cell 0 — Dependency Installation & Environment Metadata
+import sys, json, subprocess, datetime, os
+
+# Install required packages if missing
+required_packages = [
+    "transformers>=4.40.0",
+    "peft>=0.10.0",
+    "trl>=0.8.0",
+    "accelerate>=0.29.0",
+    "bitsandbytes>=0.43.0",
+    "scikit-learn",
+    "scipy",
+    "matplotlib"
+]
+for pkg in required_packages:
+    pkg_name = pkg.split(">=")[0]
+    import_name = "sklearn" if pkg_name == "scikit-learn" else pkg_name
+    try:
+        __import__(import_name)
+    except ImportError:
+        print(f"Installing {pkg}...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
+
+import torch
 
 meta = {
     "python_version": sys.version,
@@ -18,9 +40,9 @@ meta = {
     "cuda_available": torch.cuda.is_available(),
     "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "none",
     "cuda_capability": list(torch.cuda.get_device_capability(0)) if torch.cuda.is_available() else [],
-    "run_started_utc": datetime.datetime.utcnow().isoformat(),
+    "run_started_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
 }
-for pkg in ["transformers", "peft", "trl", "accelerate", "bitsandbytes", "sklearn"]:
+for pkg in ["transformers", "peft", "trl", "accelerate", "bitsandbytes", "scikit-learn"]:
     try:
         r = subprocess.run([sys.executable, "-m", "pip", "show", pkg],
                            capture_output=True, text=True)
@@ -64,7 +86,7 @@ MOAT_LABELS = [
 ]
 HN_LABELS = ["build_internal", "buy_saas", "hybrid_or_neutral"]
 
-RUN_ID = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M")
+RUN_ID = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d_%H%M")
 OUT    = Path("/kaggle/working/run_outputs")
 OUT.mkdir(parents=True, exist_ok=True)
 print(f"RUN_ID={RUN_ID}  OUT={OUT}")
@@ -975,7 +997,7 @@ print("confusion_matrices.png saved.")
 # CELL:code
 # Cell 17 — Write metrics.json
 METRICS["run_id"]            = RUN_ID
-METRICS["run_completed_utc"] = datetime.datetime.utcnow().isoformat()
+METRICS["run_completed_utc"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
 with open(OUT / "metrics.json", "w") as f:
     json.dump(METRICS, f, indent=2, default=str)

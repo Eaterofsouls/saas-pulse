@@ -1,0 +1,127 @@
+[{"stream_name":"stderr","time":5.919759977,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":5.9198126989999995,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":6.750160832,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.750189328,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.750194632,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.750198302,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.314814972,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.314838866,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.314867832,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.314872426,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":14.886983063,"data":"/tmp/ipykernel_23/362850649.py:10: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n"}
+,{"stream_name":"stderr","time":14.887041232,"data":"  \"run_started_utc\": datetime.datetime.utcnow().isoformat(),\n"}
+,{"stream_name":"stderr","time":14.887045107,"data":"\n"}
+,{"stream_name":"stderr","time":14.887047659,"data":"/tmp/ipykernel_23/362850649.py:10: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n"}
+,{"stream_name":"stderr","time":14.887050604,"data":"  \"run_started_utc\": datetime.datetime.utcnow().isoformat(),\n"}
+,{"stream_name":"stdout","time":19.7703531,"data":"{\n"}
+,{"stream_name":"stdout","time":19.770389397,"data":"  \"python_version\": \"3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\",\n"}
+,{"stream_name":"stdout","time":19.770401379,"data":"  \"torch_version\": \"2.11.0+cu128\",\n"}
+,{"stream_name":"stdout","time":19.77040565,"data":"  \"cuda_available\": true,\n"}
+,{"stream_name":"stdout","time":19.770409367,"data":"  \"gpu_name\": \"Tesla T4\",\n"}
+,{"stream_name":"stdout","time":19.770412604,"data":"  \"cuda_capability\": [\n"}
+,{"stream_name":"stdout","time":19.770415776,"data":"    7,\n"}
+,{"stream_name":"stdout","time":19.770419272,"data":"    5\n"}
+,{"stream_name":"stdout","time":19.770422437,"data":"  ],\n"}
+,{"stream_name":"stdout","time":19.770425625,"data":"  \"run_started_utc\": \"2026-10-31T09:40:34.768948\",\n"}
+,{"stream_name":"stdout","time":19.770429139,"data":"  \"transformers_version\": \"5.16.1\",\n"}
+,{"stream_name":"stdout","time":19.770451877,"data":"  \"peft_version\": \"0.20.0\",\n"}
+,{"stream_name":"stdout","time":19.770455585,"data":"  \"trl_version\": \"not_installed\",\n"}
+,{"stream_name":"stdout","time":19.770459069,"data":"  \"accelerate_version\": \"1.14.0\",\n"}
+,{"stream_name":"stdout","time":19.770471731,"data":"  \"bitsandbytes_version\": \"not_installed\",\n"}
+,{"stream_name":"stdout","time":19.770475956,"data":"  \"sklearn_version\": \"not_installed\"\n"}
+,{"stream_name":"stdout","time":19.770479412,"data":"}\n"}
+,{"stream_name":"stdout","time":21.77017407,"data":"RUN_ID=20261031_0940  OUT=/kaggle/working/run_outputs\n"}
+,{"stream_name":"stdout","time":21.860958587,"data":"  FOUND: gold_10k_moats.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/gold_10k_moats.csv\n"}
+,{"stream_name":"stdout","time":21.860992707,"data":"  FOUND: gold_hn_stance.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/gold_hn_stance.csv\n"}
+,{"stream_name":"stdout","time":21.860996714,"data":"  FOUND: filings_paragraphs.jsonl -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/filings_paragraphs.jsonl\n"}
+,{"stream_name":"stdout","time":21.860999465,"data":"  FOUND: hn_comments.jsonl -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/hn_comments.jsonl\n"}
+,{"stream_name":"stdout","time":21.861001962,"data":"  FOUND: stock_performance.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/stock_performance.csv\n"}
+,{"stream_name":"stdout","time":21.861004354,"data":"  FOUND: revenue.csv -\u003e /kaggle/input/datasets/notaveragehee/saas-pulse-dataset/revenue.csv\n"}
+,{"stream_name":"stdout","time":21.93919109,"data":"Verification: user_corrected_label == predicted_moat in 200/200 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":21.939219744,"data":"Verification: user_corrected_label == predicted_stance in 60/60 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":21.939225419,"data":"NOTE: Gold labels are keyword-rule generated. Both train and test labels are rule-derived.\n"}
+,{"stream_name":"stdout","time":21.939230067,"data":"\n"}
+,{"stream_name":"stdout","time":21.939233657,"data":"Review file NOT found. Using pre-existing label_source / final_label from CSVs.\n"}
+,{"stream_name":"stdout","time":21.939237524,"data":"\n"}
+,{"stream_name":"stdout","time":21.939240969,"data":"10K: train=140, val=20, test=40\n"}
+,{"stream_name":"stdout","time":21.939244733,"data":"HN:  test=60\n"}
+,{"stream_name":"stdout","time":21.939248282,"data":"\n"}
+,{"stream_name":"stdout","time":21.939252457,"data":"Test label distribution (10K):\n"}
+,{"stream_name":"stdout","time":21.939256572,"data":"final_label\n"}
+,{"stream_name":"stdout","time":21.939260941,"data":"none_or_commodity               10\n"}
+,{"stream_name":"stdout","time":21.939264819,"data":"compliance_security              6\n"}
+,{"stream_name":"stdout","time":21.939269166,"data":"data_gravity                     6\n"}
+,{"stream_name":"stdout","time":21.939273406,"data":"network_effects_ecosystem        6\n"}
+,{"stream_name":"stdout","time":21.939277742,"data":"switching_costs_integrations     6\n"}
+,{"stream_name":"stdout","time":21.939282222,"data":"system_of_record                 6\n"}
+,{"stream_name":"stdout","time":21.939286644,"data":"\n"}
+,{"stream_name":"stdout","time":21.939290384,"data":"Test label distribution (HN):\n"}
+,{"stream_name":"stdout","time":21.939294772,"data":"final_label\n"}
+,{"stream_name":"stdout","time":21.939298384,"data":"build_internal       20\n"}
+,{"stream_name":"stdout","time":21.939301998,"data":"buy_saas             20\n"}
+,{"stream_name":"stdout","time":21.939305605,"data":"hybrid_or_neutral    20\n"}
+,{"stream_name":"stdout","time":40.157236993,"data":"Loading tokenizer: Qwen/Qwen2.5-1.5B-Instruct\n"}
+,{"stream_name":"stderr","time":40.528649949,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":40.528701169,"data":"\n"}
+,{"stream_name":"stderr","time":40.528705762,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":43.825200658,"data":"Loading model in 4-bit NF4 ...\n"}
+,{"stream_name":"stderr","time":48.927410857,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":48.928053607,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":48.928067467,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":48.928072439,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":48.928076622,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":48.928080542000004,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":48.928084213,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":48.92808753,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":48.928091205,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":48.928094542,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":48.9280975,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":48.928120125,"data":"Exception encountered at \"In [5]\":\n"}
+,{"stream_name":"stderr","time":48.92812927,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":48.928132424,"data":"ImportError                               Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":48.928135989,"data":"/tmp/ipykernel_23/2333234813.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":48.928139781,"data":"     17 \n"}
+,{"stream_name":"stderr","time":48.928142837,"data":"     18 print(\"Loading model in 4-bit NF4 ...\")\n"}
+,{"stream_name":"stderr","time":48.928145867,"data":"---\u003e 19 model = AutoModelForCausalLM.from_pretrained(\n"}
+,{"stream_name":"stderr","time":48.928149697,"data":"     20     MODEL_ID,\n"}
+,{"stream_name":"stderr","time":48.928153179,"data":"     21     quantization_config=bnb_cfg,\n"}
+,{"stream_name":"stderr","time":48.928157112,"data":"\n"}
+,{"stream_name":"stderr","time":48.928161425,"data":"/usr/local/lib/python3.13/dist-packages/transformers/models/auto/auto_factory.py in from_pretrained(cls, pretrained_model_name_or_path, *model_args, **kwargs)\n"}
+,{"stream_name":"stderr","time":48.92816562,"data":"    400                 if parent_quant is not None:\n"}
+,{"stream_name":"stderr","time":48.928169725,"data":"    401                     config.quantization_config = parent_quant\n"}
+,{"stream_name":"stderr","time":48.928173056,"data":"--\u003e 402             return model_class.from_pretrained(\n"}
+,{"stream_name":"stderr","time":48.928176313,"data":"    403                 pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs\n"}
+,{"stream_name":"stderr","time":48.928187612,"data":"    404             )\n"}
+,{"stream_name":"stderr","time":48.928191072,"data":"\n"}
+,{"stream_name":"stderr","time":48.928196038,"data":"/usr/local/lib/python3.13/dist-packages/transformers/modeling_utils.py in from_pretrained(cls, pretrained_model_name_or_path, config, cache_dir, ignore_mismatched_sizes, force_download, local_files_only, token, revision, use_safetensors, weights_only, fusion_config, disable_mmap, *model_args, **kwargs)\n"}
+,{"stream_name":"stderr","time":48.928200185,"data":"   4268             config._experts_implementation = kwargs.pop(\"experts_implementation\")\n"}
+,{"stream_name":"stderr","time":48.928203595,"data":"   4269 \n"}
+,{"stream_name":"stderr","time":48.928206675,"data":"-\u003e 4270         hf_quantizer, config, device_map = get_hf_quantizer(\n"}
+,{"stream_name":"stderr","time":48.928210465,"data":"   4271             config, quantization_config, device_map, weights_only, user_agent\n"}
+,{"stream_name":"stderr","time":48.928214283,"data":"   4272         )\n"}
+,{"stream_name":"stderr","time":48.928217139,"data":"\n"}
+,{"stream_name":"stderr","time":48.928220261999996,"data":"/usr/local/lib/python3.13/dist-packages/transformers/quantizers/auto.py in get_hf_quantizer(config, quantization_config, device_map, weights_only, user_agent)\n"}
+,{"stream_name":"stderr","time":48.928223877,"data":"    356 \n"}
+,{"stream_name":"stderr","time":48.928226874,"data":"    357     if hf_quantizer is not None:\n"}
+,{"stream_name":"stderr","time":48.92823062,"data":"--\u003e 358         hf_quantizer.validate_environment(\n"}
+,{"stream_name":"stderr","time":48.928234398,"data":"    359             device_map=device_map,\n"}
+,{"stream_name":"stderr","time":48.928237903,"data":"    360             weights_only=weights_only,\n"}
+,{"stream_name":"stderr","time":48.928241777,"data":"\n"}
+,{"stream_name":"stderr","time":48.928244799,"data":"/usr/local/lib/python3.13/dist-packages/transformers/quantizers/quantizer_bnb_4bit.py in validate_environment(self, *args, **kwargs)\n"}
+,{"stream_name":"stderr","time":48.928248319,"data":"     60             )\n"}
+,{"stream_name":"stderr","time":48.928251344,"data":"     61         if not is_bitsandbytes_available():\n"}
+,{"stream_name":"stderr","time":48.928254493,"data":"---\u003e 62             raise ImportError(\n"}
+,{"stream_name":"stderr","time":48.928258009,"data":"     63                 f\"Using `bitsandbytes` 4-bit quantization requires bitsandbytes: `pip install -U bitsandbytes\u003e={BITSANDBYTES_MIN_VERSION}`\"\n"}
+,{"stream_name":"stderr","time":48.928262557,"data":"     64             )\n"}
+,{"stream_name":"stderr","time":48.928266349,"data":"\n"}
+,{"stream_name":"stderr","time":48.928270079,"data":"ImportError: Using `bitsandbytes` 4-bit quantization requires bitsandbytes: `pip install -U bitsandbytes\u003e=0.46.1`\n"}
+,{"stream_name":"stderr","time":48.928273484,"data":"\n"}
+,{"stream_name":"stderr","time":51.009778598,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":51.009809292,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":51.16422259,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":51.16424874,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":51.885737735,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":51.976610592,"data":"[NbConvertApp] Writing 259191 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":54.457753363,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":55.131943882,"data":"[NbConvertApp] Writing 686591 bytes to __results__.html\n"}
+]

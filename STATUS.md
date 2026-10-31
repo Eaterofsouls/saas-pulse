@@ -1,27 +1,23 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-31 15:10:30 IST  
-**Current Step**: RUNNING — Kernel Version 8 Active on Kaggle GPU  
+**Last Updated**: 2026-10-31 15:16:30 IST  
+**Current Step**: RUNNING — Kernel Version 9 Active on Kaggle GPU  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
-## 1. Current Execution Status: Run 8 (v2 Honest Re-Evaluation)
+## 1. Current Execution Status: Run 9
 - **Phase**: RUNNING (`KernelWorkerStatus.RUNNING`).
-- **Core Improvements in Version 8**:
-  1. **Human Review Ingested**: `gold_review_completed.xlsx` ingested and audited (60 10-K, 60 HN rows). 100% agreement with keyword-rule filter confirmed; anchoring risk acknowledged.
-  2. **Constrained Scoring**: Replaced unconstrained generation and brittle JSON parsing with teacher-forced, length-normalized log-prob scoring across all methods.
-  3. **Completion-Only LoRA**: Applied `DataCollatorForCompletionOnlyLM` targeting `<|im_start|>assistant\n` to prevent mode collapse.
-  4. **Sanity Gate**: Automatically aborts if any class receives >70% of test predictions.
-  5. **RQ4 Econometric Moat Linkage**: Per-company moat scoring across 92 software companies and Spearman rank correlation with excess equity return vs. IGV.
 - **Heartbeat Log**:
   - `2026-10-31 15:02 IST`: Human review spreadsheet `gold_review_sheet.xlsx` received in Downloads.
   - `2026-10-31 15:04 IST`: Review sheet copied to `dataset/review/gold_review_completed.xlsx`. Audit script executed: 60/60 agreement, Cohen's kappa 1.000, 0 exclusions. Full report written to `dataset/review/HUMAN_REVIEW_AUDIT.md`.
   - `2026-10-31 15:07 IST`: Provenance documents updated (`GOLD_PROVENANCE.md`, `GOLD_REVIEW.md`, `HN_STANCE_METHOD.md`, `FIX_LOG.md`). Staged, secret-checked, committed, and pushed to `main` (`a3330d0`).
-  - `2026-10-31 15:09 IST`: Notebook generator v2 finalized with embedded review spreadsheet for standalone reliability.
-  - `2026-10-31 15:10 IST`: [Heartbeat] Kernel Version 8 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING` on NVIDIA Tesla T4 GPU.
+  - `2026-10-31 15:10 IST`: Kernel Version 8 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING`.
+  - `2026-10-31 15:14 IST`: Kernel Version 8 returned `KernelWorkerStatus.ERROR`. Error: missing `bitsandbytes` in Python 3.13 image. Run archived in `runs/20261031_1510/` with `error_analysis.md`, notebook, and full logs.
+  - `2026-10-31 15:16 IST`: Cell 0 updated with automated dependency installer loop (`bitsandbytes>=0.43.0`, `trl>=0.8.0`, `scikit-learn`). Kernel Version 9 prepared.
+  - `2026-10-31 15:17 IST`: [Heartbeat] Kernel Version 9 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING` on NVIDIA Tesla T4 GPU.
 
 ---
 
@@ -35,8 +31,8 @@
 | **3** | **Sanity Gate (>70% threshold)** | **READY** | Built into evaluation pipeline. |
 | **4** | **HN Stance Constrained Eval** | **READY** | Constrained scoring for HN test (N=60) + 1500 corpus sample. |
 | **5** | **RQ4 Moat-Score Equity Linkage** | **READY** | 92 companies * up to 30 paragraphs; Spearman vs excess returns. |
-| **6** | **Kaggle T4 Execution (Run 8)** | **RUNNING** | Active on Tesla T4. |
-| **7** | **Slide Verification & CHECKS.md** | **PENDING** | To be regenerated upon Run 8 completion. |
+| **6** | **Kaggle T4 Execution (Run 9)** | **RUNNING** | Active on Tesla T4. |
+| **7** | **Slide Verification & CHECKS.md** | **PENDING** | To be regenerated upon Run 9 completion. |
 
 ---
 
@@ -48,4 +44,5 @@
 5. **Run 5 (`runs/20261029_2358/`)**: Failed (`NotImplementedError: GradScaler unscale on BFloat16` on Turing T4).
 6. **Run 6 (`runs/20261030_0014/`)**: Failed (GradScaler unscale on BFloat16 during backprop).
 7. **Run 7 (`runs/20261030_0023/`)**: Succeeded technically but mode-collapsed LoRA (`none_or_commodity`) and had audit flaws identified by reviewer.
-8. **Run 8 (`running`)**: Version 8 executing on Tesla T4 with all 5 audit fixes applied.
+8. **Run 8 (`runs/20261031_1510/`)**: Failed (`ImportError: bitsandbytes not installed`). Archived with `error_analysis.md` and full logs.
+9. **Run 9 (`running`)**: Version 9 executing on Tesla T4 with automated pip installer for `bitsandbytes`, `trl`, `scikit-learn`.
