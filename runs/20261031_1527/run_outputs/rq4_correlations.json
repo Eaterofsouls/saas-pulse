@@ -1,0 +1,53 @@
+{
+  "spearman_moat_vs_excess_return": {
+    "rho": 0.1197,
+    "p": 0.2558,
+    "ci_lo": -0.0757,
+    "ci_hi": 0.3111,
+    "n": 92,
+    "significant": false
+  },
+  "spearman_moat_vs_revenue_growth": {
+    "rho": 0.0514,
+    "p": 0.6264,
+    "n": 92
+  },
+  "category_moat_stats": [
+    {
+      "category": "communication",
+      "median": 0.383,
+      "mean": 0.372,
+      "count": 6
+    },
+    {
+      "category": "data/infra",
+      "median": 0.267,
+      "mean": 0.298,
+      "count": 15
+    },
+    {
+      "category": "fintech/HR",
+      "median": 0.267,
+      "mean": 0.308,
+      "count": 17
+    },
+    {
+      "category": "horizontal",
+      "median": 0.167,
+      "mean": 0.228,
+      "count": 25
+    },
+    {
+      "category": "security",
+      "median": 0.2,
+      "mean": 0.239,
+      "count": 12
+    },
+    {
+      "category": "vertical",
+      "median": 0.367,
+      "mean": 0.331,
+      "count": 17
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "python_version": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+  "torch_version": "2.11.0+cu128",
+  "cuda_available": true,
+  "gpu_name": "Tesla T4",
+  "cuda_capability": [
+    7,
+    5
+  ],
+  "run_started_utc": "2026-10-31T09:58:05.125541+00:00",
+  "transformers_version": "5.16.1",
+  "peft_version": "0.20.0",
+  "trl_version": "1.17.1",
+  "accelerate_version": "1.14.0",
+  "bitsandbytes_version": "0.50.2",
+  "scikit-learn_version": "1.6.1"
+}

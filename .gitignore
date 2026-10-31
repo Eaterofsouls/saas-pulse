@@ -22,6 +22,11 @@ KAGGLE_KEY
 dataset/filings_paragraphs.jsonl
 raw/
 
+# Model checkpoint weights and optimizer states
+lora_output/
+*.pt
+*.bin
+
 # Package archive (uploaded to GitHub release / Kaggle dataset)
 saas_pulse_dataset.zip
 

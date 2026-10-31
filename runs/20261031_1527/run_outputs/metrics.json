@@ -1,0 +1,1179 @@
+{
+  "label_source_note": "keyword_rule \u2014 no human review; gold_review_completed.xlsx not present",
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "few_shot_exemplar_ids_10k": [
+    "0001477720-22-000012_Item1_44",
+    "0001773383-22-000053_Item1_11",
+    "0001640147-23-000030_Item1A_24",
+    "0001193125-26-067540_Item1_26",
+    "0001650372-23-000040_Item1_36",
+    "0001023731-25-000039_Item1_25"
+  ],
+  "few_shot_exemplar_ids_hn": [
+    "46802591",
+    "48657658",
+    "44912663",
+    "41592672",
+    "48790149",
+    "42593210"
+  ],
+  "lora_train_loss_final": 0.2033,
+  "lora_best_val_loss_step": 72,
+  "lora_best_val_loss": 0.1768,
+  "task_1_moats": {
+    "num_test_examples": 40,
+    "methods": {
+      "majority_baseline": {
+        "name": "majority_baseline_10k",
+        "n": 40,
+        "accuracy": 0.25,
+        "accuracy_wilson_ci": [
+          0.1419,
+          0.4019
+        ],
+        "macro_precision": 0.0417,
+        "macro_recall": 0.1667,
+        "macro_f1": 0.0667,
+        "macro_f1_bootstrap_ci": [
+          0.037,
+          0.0952
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.25,
+            "recall": 1.0,
+            "f1_score": 0.4,
+            "support": 10
+          }
+        },
+        "pred_dist": {
+          "none_or_commodity": 40
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            10
+          ]
+        ]
+      },
+      "random_baseline": {
+        "name": "random_baseline_10k",
+        "n": 40,
+        "accuracy": 0.2,
+        "accuracy_wilson_ci": [
+          0.105,
+          0.3476
+        ],
+        "macro_precision": 0.2252,
+        "macro_recall": 0.1778,
+        "macro_f1": 0.1939,
+        "macro_f1_bootstrap_ci": [
+          0.0851,
+          0.3021
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.1667,
+            "recall": 0.1667,
+            "f1_score": 0.1667,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.25,
+            "recall": 0.1667,
+            "f1_score": 0.2,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.1429,
+            "recall": 0.1667,
+            "f1_score": 0.1538,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.125,
+            "recall": 0.1667,
+            "f1_score": 0.1429,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.6667,
+            "recall": 0.4,
+            "f1_score": 0.5,
+            "support": 10
+          }
+        },
+        "pred_dist": {
+          "system_of_record": 6,
+          "network_effects_ecosystem": 9,
+          "compliance_security": 8,
+          "switching_costs_integrations": 7,
+          "none_or_commodity": 6,
+          "data_gravity": 4
+        },
+        "confusion_matrix": [
+          [
+            1,
+            1,
+            1,
+            1,
+            2,
+            0
+          ],
+          [
+            0,
+            1,
+            2,
+            2,
+            1,
+            0
+          ],
+          [
+            2,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            1,
+            3,
+            1
+          ],
+          [
+            0,
+            1,
+            2,
+            2,
+            0,
+            1
+          ],
+          [
+            2,
+            0,
+            1,
+            1,
+            2,
+            4
+          ]
+        ]
+      },
+      "keyword_rule_baseline": {
+        "name": "keyword_rule_baseline_10k",
+        "n": 40,
+        "accuracy": 1.0,
+        "accuracy_wilson_ci": [
+          0.9124,
+          1.0
+        ],
+        "macro_precision": 1.0,
+        "macro_recall": 1.0,
+        "macro_f1": 1.0,
+        "macro_f1_bootstrap_ci": [
+          1.0,
+          1.0
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 10
+          }
+        },
+        "pred_dist": {
+          "compliance_security": 6,
+          "data_gravity": 6,
+          "network_effects_ecosystem": 6,
+          "switching_costs_integrations": 6,
+          "none_or_commodity": 10,
+          "system_of_record": 6
+        },
+        "confusion_matrix": [
+          [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            6,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            6,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            10
+          ]
+        ],
+        "note": "Rule preds == gold labels. Identity by construction, NOT a model evaluation."
+      },
+      "zero_shot": {
+        "name": "zero_shot_10k",
+        "n": 40,
+        "accuracy": 0.5,
+        "accuracy_wilson_ci": [
+          0.352,
+          0.648
+        ],
+        "macro_precision": 0.4422,
+        "macro_recall": 0.5444,
+        "macro_f1": 0.4465,
+        "macro_f1_bootstrap_ci": [
+          0.3059,
+          0.5539
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.4615,
+            "recall": 1.0,
+            "f1_score": 0.6316,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.4,
+            "recall": 0.6667,
+            "f1_score": 0.5,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.6667,
+            "recall": 0.6667,
+            "f1_score": 0.6667,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.625,
+            "recall": 0.8333,
+            "f1_score": 0.7143,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.5,
+            "recall": 0.1,
+            "f1_score": 0.1667,
+            "support": 10
+          }
+        },
+        "pred_dist": {
+          "data_gravity": 10,
+          "system_of_record": 13,
+          "compliance_security": 6,
+          "network_effects_ecosystem": 8,
+          "none_or_commodity": 2,
+          "switching_costs_integrations": 1
+        },
+        "confusion_matrix": [
+          [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            4,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            0,
+            1,
+            3,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            4,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            5,
+            0
+          ],
+          [
+            4,
+            3,
+            1,
+            1,
+            0,
+            1
+          ]
+        ],
+        "preds": [
+          "data_gravity",
+          "data_gravity",
+          "system_of_record",
+          "compliance_security",
+          "system_of_record",
+          "data_gravity",
+          "system_of_record",
+          "data_gravity",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "compliance_security",
+          "data_gravity",
+          "compliance_security",
+          "compliance_security",
+          "system_of_record",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "compliance_security",
+          "system_of_record",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "none_or_commodity",
+          "system_of_record",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "system_of_record",
+          "data_gravity",
+          "data_gravity",
+          "system_of_record",
+          "data_gravity",
+          "network_effects_ecosystem",
+          "none_or_commodity",
+          "data_gravity",
+          "switching_costs_integrations",
+          "network_effects_ecosystem",
+          "compliance_security",
+          "data_gravity",
+          "system_of_record"
+        ]
+      },
+      "few_shot_cot": {
+        "name": "few_shot_10k",
+        "n": 40,
+        "accuracy": 0.525,
+        "accuracy_wilson_ci": [
+          0.375,
+          0.6706
+        ],
+        "macro_precision": 0.5155,
+        "macro_recall": 0.5611,
+        "macro_f1": 0.4949,
+        "macro_f1_bootstrap_ci": [
+          0.3291,
+          0.6213
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.5455,
+            "recall": 1.0,
+            "f1_score": 0.7059,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.3333,
+            "recall": 0.3333,
+            "f1_score": 0.3333,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.5,
+            "recall": 0.1667,
+            "f1_score": 0.25,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.5,
+            "recall": 0.8333,
+            "f1_score": 0.625,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.7143,
+            "recall": 0.8333,
+            "f1_score": 0.7692,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.5,
+            "recall": 0.2,
+            "f1_score": 0.2857,
+            "support": 10
+          }
+        },
+        "pred_dist": {
+          "compliance_security": 10,
+          "data_gravity": 6,
+          "system_of_record": 11,
+          "switching_costs_integrations": 2,
+          "none_or_commodity": 4,
+          "network_effects_ecosystem": 7
+        },
+        "confusion_matrix": [
+          [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            2,
+            1,
+            0,
+            0,
+            2
+          ],
+          [
+            1,
+            3,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            5,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            5,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            4,
+            2,
+            2
+          ]
+        ],
+        "preds": [
+          "compliance_security",
+          "data_gravity",
+          "system_of_record",
+          "switching_costs_integrations",
+          "system_of_record",
+          "none_or_commodity",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "system_of_record",
+          "data_gravity",
+          "compliance_security",
+          "data_gravity",
+          "compliance_security",
+          "compliance_security",
+          "system_of_record",
+          "compliance_security",
+          "compliance_security",
+          "compliance_security",
+          "network_effects_ecosystem",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "compliance_security",
+          "system_of_record",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "system_of_record",
+          "data_gravity",
+          "none_or_commodity",
+          "none_or_commodity",
+          "switching_costs_integrations",
+          "data_gravity",
+          "none_or_commodity",
+          "system_of_record",
+          "compliance_security",
+          "network_effects_ecosystem",
+          "compliance_security",
+          "data_gravity",
+          "system_of_record"
+        ]
+      },
+      "lora": {
+        "name": "lora_10k",
+        "n": 40,
+        "accuracy": 0.65,
+        "accuracy_wilson_ci": [
+          0.4951,
+          0.7787
+        ],
+        "macro_precision": 0.6472,
+        "macro_recall": 0.6444,
+        "macro_f1": 0.6328,
+        "macro_f1_bootstrap_ci": [
+          0.475,
+          0.7682
+        ],
+        "per_class": {
+          "system_of_record": {
+            "precision": 0.8333,
+            "recall": 0.8333,
+            "f1_score": 0.8333,
+            "support": 6
+          },
+          "data_gravity": {
+            "precision": 0.5,
+            "recall": 0.3333,
+            "f1_score": 0.4,
+            "support": 6
+          },
+          "switching_costs_integrations": {
+            "precision": 0.5,
+            "recall": 0.3333,
+            "f1_score": 0.4,
+            "support": 6
+          },
+          "compliance_security": {
+            "precision": 0.8,
+            "recall": 0.6667,
+            "f1_score": 0.7273,
+            "support": 6
+          },
+          "network_effects_ecosystem": {
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1_score": 0.8,
+            "support": 6
+          },
+          "none_or_commodity": {
+            "precision": 0.5833,
+            "recall": 0.7,
+            "f1_score": 0.6364,
+            "support": 10
+          }
+        },
+        "pred_dist": {
+          "none_or_commodity": 12,
+          "data_gravity": 4,
+          "network_effects_ecosystem": 9,
+          "compliance_security": 5,
+          "system_of_record": 6,
+          "switching_costs_integrations": 4
+        },
+        "confusion_matrix": [
+          [
+            5,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            2,
+            1,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            2,
+            1,
+            2,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            4,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0,
+            1,
+            7
+          ]
+        ],
+        "preds": [
+          "none_or_commodity",
+          "data_gravity",
+          "network_effects_ecosystem",
+          "compliance_security",
+          "system_of_record",
+          "none_or_commodity",
+          "system_of_record",
+          "none_or_commodity",
+          "system_of_record",
+          "switching_costs_integrations",
+          "compliance_security",
+          "compliance_security",
+          "compliance_security",
+          "compliance_security",
+          "system_of_record",
+          "none_or_commodity",
+          "none_or_commodity",
+          "none_or_commodity",
+          "network_effects_ecosystem",
+          "data_gravity",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "none_or_commodity",
+          "system_of_record",
+          "system_of_record",
+          "network_effects_ecosystem",
+          "network_effects_ecosystem",
+          "data_gravity",
+          "none_or_commodity",
+          "none_or_commodity",
+          "switching_costs_integrations",
+          "network_effects_ecosystem",
+          "none_or_commodity",
+          "data_gravity",
+          "switching_costs_integrations",
+          "network_effects_ecosystem",
+          "none_or_commodity",
+          "switching_costs_integrations",
+          "none_or_commodity"
+        ]
+      }
+    },
+    "mcnemar_tests": {
+      "zero_shot_vs_few_shot": {
+        "b": 3,
+        "c": 4,
+        "chi2_statistic": 0.0,
+        "chi2_p_value": 1.0
+      },
+      "few_shot_vs_lora": {
+        "b": 4,
+        "c": 9,
+        "chi2_statistic": 1.2308,
+        "chi2_p_value": 0.267257
+      },
+      "zero_shot_vs_lora": {
+        "b": 4,
+        "c": 10,
+        "chi2_statistic": 1.7857,
+        "chi2_p_value": 0.181449
+      }
+    }
+  },
+  "hn_near_chance": true,
+  "task_2_hn_stance": {
+    "num_test_examples": 60,
+    "accuracy": 0.4333,
+    "macro_f1": 0.4111,
+    "zero_shot": {
+      "name": "zero_shot_hn",
+      "n": 60,
+      "accuracy": 0.4333,
+      "accuracy_wilson_ci": [
+        0.3157,
+        0.559
+      ],
+      "macro_precision": 0.4917,
+      "macro_recall": 0.4333,
+      "macro_f1": 0.4111,
+      "macro_f1_bootstrap_ci": [
+        0.2858,
+        0.5334
+      ],
+      "per_class": {
+        "build_internal": {
+          "precision": 0.375,
+          "recall": 0.75,
+          "f1_score": 0.5,
+          "support": 20
+        },
+        "buy_saas": {
+          "precision": 0.4,
+          "recall": 0.2,
+          "f1_score": 0.2667,
+          "support": 20
+        },
+        "hybrid_or_neutral": {
+          "precision": 0.7,
+          "recall": 0.35,
+          "f1_score": 0.4667,
+          "support": 20
+        }
+      },
+      "pred_dist": {
+        "build_internal": 40,
+        "buy_saas": 10,
+        "hybrid_or_neutral": 10
+      },
+      "confusion_matrix": [
+        [
+          15,
+          4,
+          1
+        ],
+        [
+          14,
+          4,
+          2
+        ],
+        [
+          11,
+          2,
+          7
+        ]
+      ],
+      "preds": [
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "hybrid_or_neutral",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "hybrid_or_neutral",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "hybrid_or_neutral",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "hybrid_or_neutral",
+        "buy_saas",
+        "build_internal",
+        "build_internal"
+      ]
+    },
+    "few_shot": {
+      "name": "few_shot_hn",
+      "n": 60,
+      "accuracy": 0.4333,
+      "accuracy_wilson_ci": [
+        0.3157,
+        0.559
+      ],
+      "macro_precision": 0.5652,
+      "macro_recall": 0.4333,
+      "macro_f1": 0.4094,
+      "macro_f1_bootstrap_ci": [
+        0.2778,
+        0.5306
+      ],
+      "per_class": {
+        "build_internal": {
+          "precision": 0.3571,
+          "recall": 0.75,
+          "f1_score": 0.4839,
+          "support": 20
+        },
+        "buy_saas": {
+          "precision": 0.5385,
+          "recall": 0.35,
+          "f1_score": 0.4242,
+          "support": 20
+        },
+        "hybrid_or_neutral": {
+          "precision": 0.8,
+          "recall": 0.2,
+          "f1_score": 0.32,
+          "support": 20
+        }
+      },
+      "pred_dist": {
+        "build_internal": 42,
+        "buy_saas": 13,
+        "hybrid_or_neutral": 5
+      },
+      "confusion_matrix": [
+        [
+          15,
+          4,
+          1
+        ],
+        [
+          13,
+          7,
+          0
+        ],
+        [
+          14,
+          2,
+          4
+        ]
+      ],
+      "preds": [
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "hybrid_or_neutral",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "hybrid_or_neutral",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "buy_saas",
+        "build_internal",
+        "build_internal",
+        "buy_saas",
+        "build_internal",
+        "hybrid_or_neutral",
+        "buy_saas",
+        "build_internal",
+        "build_internal"
+      ]
+    }
+  },
+  "corpus_hn_method": "zero_shot",
+  "corpus_hn_shares": {
+    "build_internal": {
+      "count": 1312,
+      "share": 0.8747,
+      "ci_lo": 0.8573,
+      "ci_hi": 0.8907
+    },
+    "buy_saas": {
+      "count": 78,
+      "share": 0.052,
+      "ci_lo": 0.0407,
+      "ci_hi": 0.0627
+    },
+    "hybrid_or_neutral": {
+      "count": 110,
+      "share": 0.0733,
+      "ci_lo": 0.0613,
+      "ci_hi": 0.0867
+    }
+  },
+  "corpus_hn_n": 1500,
+  "rq4_method": "lora",
+  "econometric_linkage": {
+    "active_companies_analyzed": 96,
+    "spearman_rho_growth_vs_excess_return": 0.1197,
+    "spearman_p_value": 0.2558,
+    "category_median_excess_return_vs_igv": {
+      "communication": -34.08,
+      "data/infra": 42.15,
+      "fintech/HR": -131.16,
+      "horizontal": -70.99,
+      "security": -16.36,
+      "vertical": -94.16
+    },
+    "rq4": {
+      "spearman_moat_vs_excess_return": {
+        "rho": 0.1197,
+        "p": 0.2558,
+        "ci_lo": -0.0757,
+        "ci_hi": 0.3111,
+        "n": 92,
+        "significant": false
+      },
+      "spearman_moat_vs_revenue_growth": {
+        "rho": 0.0514,
+        "p": 0.6264,
+        "n": 92
+      },
+      "category_moat_stats": [
+        {
+          "category": "communication",
+          "median": 0.383,
+          "mean": 0.372,
+          "count": 6
+        },
+        {
+          "category": "data/infra",
+          "median": 0.267,
+          "mean": 0.298,
+          "count": 15
+        },
+        {
+          "category": "fintech/HR",
+          "median": 0.267,
+          "mean": 0.308,
+          "count": 17
+        },
+        {
+          "category": "horizontal",
+          "median": 0.167,
+          "mean": 0.228,
+          "count": 25
+        },
+        {
+          "category": "security",
+          "median": 0.2,
+          "mean": 0.239,
+          "count": 12
+        },
+        {
+          "category": "vertical",
+          "median": 0.367,
+          "mean": 0.331,
+          "count": 17
+        }
+      ]
+    }
+  },
+  "run_id": "20261031_0958",
+  "run_completed_utc": "2026-10-31T11:18:14.054957+00:00"
+}
