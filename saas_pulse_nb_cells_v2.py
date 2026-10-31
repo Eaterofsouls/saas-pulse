@@ -73,9 +73,21 @@ METRICS = {}
 
 # CELL:code
 # Cell 2 — Locate Dataset Files
-import glob
+import glob, base64
 
-SEARCH_ROOTS = ["/kaggle/input", "../input", ".", ".."]
+EMBEDDED_REVIEW_B64 = """{{EMBEDDED_REVIEW_B64}}"""
+if EMBEDDED_REVIEW_B64 != "{{EMBEDDED_REVIEW_B64}}" and len(EMBEDDED_REVIEW_B64) > 100:
+    for target_dir in ["/kaggle/working", "."]:
+        target_p = os.path.join(target_dir, "gold_review_completed.xlsx")
+        if not os.path.exists(target_p):
+            try:
+                with open(target_p, "wb") as f:
+                    f.write(base64.b64decode(EMBEDDED_REVIEW_B64))
+                print(f"Unpacked embedded gold_review_completed.xlsx to {target_p}")
+            except Exception as e:
+                print(f"Notice: could not write {target_p}: {e}")
+
+SEARCH_ROOTS = ["/kaggle/input", "../input", ".", "..", "/kaggle/working"]
 
 def find_file(name, roots=SEARCH_ROOTS):
     for root in roots:

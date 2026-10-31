@@ -4,24 +4,22 @@ generate_kaggle_notebook_v2.py
 Generates the SaaS-Pulse v2 Kaggle notebook from saas_pulse_nb_cells_v2.py
 """
 
-import json, os, ast, textwrap
+import json, os, ast, textwrap, base64
 
 CELLS_FILE     = "saas_pulse_nb_cells_v2.py"
 NOTEBOOK_PATH  = "kaggle_kernel_staging/saas_pulse_v2.ipynb"
+REVIEW_XLSX    = "dataset/review/gold_review_completed.xlsx"
 
 
 def load_cells_from_py(path):
-    """
-    Reads the cell template file.  Every top-level string literal that is
-    preceded by a comment of the form  # CELL: <type> <title>
-    becomes one notebook cell.
-
-    The file uses a cell-marker convention:
-      # CELL:code  Cell N — Title
-      # CELL:md    ## Heading
-    followed by an UNINDENTED triple-quoted string (the cell source).
-    """
     src = open(path, encoding="utf-8").read()
+    
+    # Inject embedded review xlsx if present
+    if os.path.exists(REVIEW_XLSX):
+        b64_str = base64.b64encode(open(REVIEW_XLSX, "rb").read()).decode("ascii")
+        src = src.replace("{{EMBEDDED_REVIEW_B64}}", b64_str)
+        print(f"Injected base64 review xlsx ({len(b64_str)} chars)")
+
     lines = src.splitlines(keepends=True)
 
     cells = []
