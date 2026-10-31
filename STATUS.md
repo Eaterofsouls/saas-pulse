@@ -18,6 +18,7 @@
   - `2026-10-31 15:17 IST`: Kernel Version 9 pushed. Successfully ran Zero-Shot (Acc=0.500, F1=0.447) and Few-Shot (Acc=0.525, F1=0.495). Failed at Cell 11 due to removal of `DataCollatorForCompletionOnlyLM` in `trl 1.17.1`. Archived in `runs/20261031_1517/`.
   - `2026-10-31 15:26 IST`: Replaced `trl.SFTTrainer` with standard `transformers.Trainer` and custom `MoatSFTDataset` (exact `-100` label masking on prompt tokens).
   - `2026-10-31 15:27 IST`: [Heartbeat] Kernel Version 10 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING` on NVIDIA Tesla T4 GPU.
+  - `2026-10-31 15:31 IST`: [Heartbeat] Kernel Version 10 active on Tesla T4 (~4 min elapsed; zero-shot/few-shot completed, LoRA fine-tuning in progress). Status: `KernelWorkerStatus.RUNNING`.
 
 ---
 
