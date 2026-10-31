@@ -1,36 +1,27 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-30 00:52:00 IST  
-**Current Step**: COMPLETE — All Milestones Executed, Verified, and Pushed  
-**Final Run Directory**: `runs/20261030_0023/`  
+**Last Updated**: 2026-10-31 15:10:30 IST  
+**Current Step**: RUNNING — Kernel Version 8 Active on Kaggle GPU  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
-## 1. Current Execution Status
-- **Phase**: COMPLETE.
-- **Active Task**: All tasks finished. Verified 100% against `metrics.json`, `CHECKS.md` generated with 18/18 PASS.
+## 1. Current Execution Status: Run 8 (v2 Honest Re-Evaluation)
+- **Phase**: RUNNING (`KernelWorkerStatus.RUNNING`).
+- **Core Improvements in Version 8**:
+  1. **Human Review Ingested**: `gold_review_completed.xlsx` ingested and audited (60 10-K, 60 HN rows). 100% agreement with keyword-rule filter confirmed; anchoring risk acknowledged.
+  2. **Constrained Scoring**: Replaced unconstrained generation and brittle JSON parsing with teacher-forced, length-normalized log-prob scoring across all methods.
+  3. **Completion-Only LoRA**: Applied `DataCollatorForCompletionOnlyLM` targeting `<|im_start|>assistant\n` to prevent mode collapse.
+  4. **Sanity Gate**: Automatically aborts if any class receives >70% of test predictions.
+  5. **RQ4 Econometric Moat Linkage**: Per-company moat scoring across 92 software companies and Spearman rank correlation with excess equity return vs. IGV.
 - **Heartbeat Log**:
-  - `2026-10-29 23:15 IST`: Git initialized, secrets scanned clean, initial commit pushed.
-  - `2026-10-29 23:18 IST`: GitHub Release `v1.0.0` published with `saas_pulse_dataset.zip`.
-  - `2026-10-29 23:21 IST`: Private Kaggle dataset `notaveragehee/saas-pulse-dataset` uploaded and verified `ready`.
-  - `2026-10-29 23:22 IST`: Kernel Version 1 pushed. Error recorded (dataset path glob issue). Full logs and HTML archived in `runs/20261029_2322/`.
-  - `2026-10-29 23:28 IST`: Kernel Version 2 pushed. Error recorded (`AttributeError: shape` on `BatchEncoding`). Full logs and HTML archived in `runs/20261029_2328/`.
-  - `2026-10-29 23:34 IST`: Kernel Version 3 pushed. Zero-shot & Few-shot completed 100%; error at `SFTConfig.max_seq_length`. Full logs and HTML archived in `runs/20261029_2334/`.
-  - `2026-10-29 23:47 IST`: Kernel Version 4 pushed. Zero-shot & Few-shot completed 100%; error at `SFTTrainer` redundant `peft_config`. Full logs and HTML archived in `runs/20261029_2347/`.
-  - `2026-10-29 23:58 IST`: Kernel Version 5 pushed. Zero-shot & Few-shot completed 100%; error at PyTorch AMP unscale on BFloat16 on Turing T4. Full logs and HTML archived in `runs/20261029_2358/`.
-  - `2026-10-30 00:14 IST`: Kernel Version 6 pushed. Zero-shot & Few-shot completed 100%; GradScaler unscale error persisted on Turing T4 due to PyTorch AMP. Full logs and HTML archived in `runs/20261030_0014/`.
-  - `2026-10-30 00:23 IST`: Kernel Version 7 pushed with GradScaler disabled (`fp16=False, bf16=False`) for clean FP32 LoRA adapter optimization.
-  - `2026-10-30 00:29 IST`: [Heartbeat] Kernel version 7 running actively on Tesla T4 (~6 min elapsed; past step 1 backward pass).
-  - `2026-10-30 00:33 IST`: [Heartbeat] Kernel version 7 active on Tesla T4 (~10 min elapsed; LoRA fine-tuning / evaluation).
-  - `2026-10-30 00:36 IST`: [Heartbeat] Kernel version 7 active on Tesla T4 (~13 min elapsed; completing LoRA evaluation & bootstrap CIs).
-  - `2026-10-30 00:38 IST`: [Heartbeat] Kernel version 7 active on Tesla T4 (~15.5 min elapsed; near final output serialization).
-  - `2026-10-30 00:41 IST`: [Heartbeat] Kernel version 7 active on Tesla T4 (~18 min elapsed; awaiting kernel termination).
-  - `2026-10-30 00:44 IST`: [Heartbeat] Kernel version 7 active on Tesla T4 (~21.5 min elapsed; completing final serialization).
-  - `2026-10-30 00:46 IST`: [Heartbeat] Kernel version 7 active on Tesla T4 (~23.5 min elapsed; near completion).
-  - `2026-10-30 00:48 IST`: Kernel Version 7 reached `KernelWorkerStatus.COMPLETE`. Outputs pulled, HTML exported, slides updated, checks passed.
+  - `2026-10-31 15:02 IST`: Human review spreadsheet `gold_review_sheet.xlsx` received in Downloads.
+  - `2026-10-31 15:04 IST`: Review sheet copied to `dataset/review/gold_review_completed.xlsx`. Audit script executed: 60/60 agreement, Cohen's kappa 1.000, 0 exclusions. Full report written to `dataset/review/HUMAN_REVIEW_AUDIT.md`.
+  - `2026-10-31 15:07 IST`: Provenance documents updated (`GOLD_PROVENANCE.md`, `GOLD_REVIEW.md`, `HN_STANCE_METHOD.md`, `FIX_LOG.md`). Staged, secret-checked, committed, and pushed to `main` (`a3330d0`).
+  - `2026-10-31 15:09 IST`: Notebook generator v2 finalized with embedded review spreadsheet for standalone reliability.
+  - `2026-10-31 15:10 IST`: [Heartbeat] Kernel Version 8 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING` on NVIDIA Tesla T4 GPU.
 
 ---
 
@@ -38,14 +29,14 @@
 
 | Step | Milestone | Status | Details / Artifacts |
 | :--- | :--- | :---: | :--- |
-| **0** | **Secrets & Security Check** | **PASSED** | `.gitignore` verified, zero tokens/keys in repo. |
-| **1** | **Dataset Curation & Packaging** | **PASSED** | 100/100 companies, 538 XBRL revenues, 190k paras, 7.8k HN posts. |
-| **2** | **Gold Benchmark Deduplication** | **PASSED** | `gold_10k_moats.csv` strictly 0 text overlap across train/val/test. |
-| **3** | **Methodology & Provenance** | **PASSED** | `GOLD_PROVENANCE.md` & `HN_STANCE_METHOD.md` published. |
-| **4** | **Kaggle Dataset Upload** | **PASSED** | `notaveragehee/saas-pulse-dataset` is active and `ready`. |
-| **5** | **Kaggle T4 Experiment Execution** | **PASSED** | Run 7 completed in 1446.49s on NVIDIA Tesla T4 (`runs/20261030_0023/`). |
-| **6** | **Remote Output Retrieval & Audit** | **PASSED** | `metrics.json`, `predictions.csv`, loss curve & confusion matrices archived. |
-| **7** | **Slide Verification & CHECKS.md** | **PASSED** | Slides regenerated directly from `metrics.json`; 18/18 checks PASSED in `CHECKS.md`. |
+| **0** | **Human Review & Provenance** | **PASSED** | Review ingested; 100% agreement audited; anchoring acknowledged in `GOLD_PROVENANCE.md`. |
+| **1** | **Constrained Log-Prob Scoring** | **READY** | Teacher-forced scoring + length normalization in v2 notebook. |
+| **2** | **Completion-Only LoRA SFT** | **READY** | `DataCollatorForCompletionOnlyLM` with response template `<|im_start|>assistant\n`. |
+| **3** | **Sanity Gate (>70% threshold)** | **READY** | Built into evaluation pipeline. |
+| **4** | **HN Stance Constrained Eval** | **READY** | Constrained scoring for HN test (N=60) + 1500 corpus sample. |
+| **5** | **RQ4 Moat-Score Equity Linkage** | **READY** | 92 companies * up to 30 paragraphs; Spearman vs excess returns. |
+| **6** | **Kaggle T4 Execution (Run 8)** | **RUNNING** | Active on Tesla T4. |
+| **7** | **Slide Verification & CHECKS.md** | **PENDING** | To be regenerated upon Run 8 completion. |
 
 ---
 
@@ -56,4 +47,5 @@
 4. **Run 4 (`runs/20261029_2347/`)**: Failed (`ValueError: redundant peft_config` in `SFTTrainer`).
 5. **Run 5 (`runs/20261029_2358/`)**: Failed (`NotImplementedError: GradScaler unscale on BFloat16` on Turing T4).
 6. **Run 6 (`runs/20261030_0014/`)**: Failed (GradScaler unscale on BFloat16 during backprop).
-7. **Run 7 (`runs/20261030_0023/`)**: **SUCCESSFUL EXECUTION**. All evaluation metrics, loss curves, confusion matrices, and environment metadata generated and verified.
+7. **Run 7 (`runs/20261030_0023/`)**: Succeeded technically but mode-collapsed LoRA (`none_or_commodity`) and had audit flaws identified by reviewer.
+8. **Run 8 (`running`)**: Version 8 executing on Tesla T4 with all 5 audit fixes applied.
