@@ -256,8 +256,7 @@ def score_labels_constrained(target_model, tok, prompt, candidates, normalize_by
     scores = {}
     with torch.no_grad():
         for label in candidates:
-            cand_str = f"{label}
-"
+            cand_str = label + "\n"
             label_ids = tok(cand_str, return_tensors="pt", add_special_tokens=False).input_ids.to(device)
             full_ids = torch.cat([prompt_ids, label_ids], dim=1)
             full_labels = torch.cat([
@@ -291,12 +290,10 @@ def sanity_gate(preds, candidates, threshold=0.70, name=""):
             passed = False
     if not passed:
         msg = f"SANITY GATE WARNING [{name}]: Mode collapse detected! " + ", ".join([f"'{l}'={f:.1%} > {threshold:.0%}" for l, f in violating])
-        print(f"
-{'='*70}
-{msg}
-Distribution: {dict(c)}
-{'='*70}
-")
+        print("=" * 70)
+        print(msg)
+        print(f"Distribution: {dict(c)}")
+        print("=" * 70)
     else:
         print(f"Sanity gate PASSED [{name}]: distribution {dict(c)}")
     return passed

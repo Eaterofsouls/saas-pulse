@@ -1,0 +1,97 @@
+[{"stream_name":"stderr","time":5.556625982,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":5.556662227,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":6.328994802,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.329019799,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.329024455,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.329028117,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":6.889376575,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.889403321,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.889407803,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.8894112629999995,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":34.286737381,"data":"Installing trl\u003e=0.8.0...\n"}
+,{"stream_name":"stdout","time":37.487465219,"data":"Installing bitsandbytes\u003e=0.43.0...\n"}
+,{"stream_name":"stdout","time":48.141167667,"data":"{\n"}
+,{"stream_name":"stdout","time":48.141197583,"data":"  \"python_version\": \"3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\",\n"}
+,{"stream_name":"stdout","time":48.141203097,"data":"  \"torch_version\": \"2.11.0+cu128\",\n"}
+,{"stream_name":"stdout","time":48.141207498,"data":"  \"cuda_available\": true,\n"}
+,{"stream_name":"stdout","time":48.141213569,"data":"  \"gpu_name\": \"Tesla T4\",\n"}
+,{"stream_name":"stdout","time":48.141221341,"data":"  \"cuda_capability\": [\n"}
+,{"stream_name":"stdout","time":48.141224541,"data":"    7,\n"}
+,{"stream_name":"stdout","time":48.1412272,"data":"    5\n"}
+,{"stream_name":"stdout","time":48.141229925,"data":"  ],\n"}
+,{"stream_name":"stdout","time":48.141232647,"data":"  \"run_started_utc\": \"2026-11-02T16:10:44.242781+00:00\",\n"}
+,{"stream_name":"stdout","time":48.141235591,"data":"  \"transformers_version\": \"5.16.1\",\n"}
+,{"stream_name":"stdout","time":48.141264658,"data":"  \"peft_version\": \"0.20.0\",\n"}
+,{"stream_name":"stdout","time":48.141271446,"data":"  \"trl_version\": \"1.17.1\",\n"}
+,{"stream_name":"stdout","time":48.141275769,"data":"  \"accelerate_version\": \"1.14.0\",\n"}
+,{"stream_name":"stdout","time":48.141279837,"data":"  \"bitsandbytes_version\": \"0.50.2\",\n"}
+,{"stream_name":"stdout","time":48.141284031,"data":"  \"scikit-learn_version\": \"1.6.1\"\n"}
+,{"stream_name":"stdout","time":48.141288238,"data":"}\n"}
+,{"stream_name":"stdout","time":48.16224577,"data":"RUN_ID=20261102_1610  OUT=/kaggle/working/run_outputs\n"}
+,{"stream_name":"stdout","time":48.253302413,"data":"Unpacked embedded gold_review_completed.xlsx to /kaggle/working/gold_review_completed.xlsx\n"}
+,{"stream_name":"stdout","time":48.253327442,"data":"  FOUND: gold_10k_moats.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/gold_10k_moats.csv\n"}
+,{"stream_name":"stdout","time":48.253340948,"data":"  FOUND: gold_hn_stance.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/gold_hn_stance.csv\n"}
+,{"stream_name":"stdout","time":48.253343751,"data":"  FOUND: filings_paragraphs.jsonl -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/filings_paragraphs.jsonl\n"}
+,{"stream_name":"stdout","time":48.253346261,"data":"  FOUND: hn_comments.jsonl -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/hn_comments.jsonl\n"}
+,{"stream_name":"stdout","time":48.253348625,"data":"  FOUND: stock_performance.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/stock_performance.csv\n"}
+,{"stream_name":"stdout","time":48.253351006,"data":"  FOUND: revenue.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/revenue.csv\n"}
+,{"stream_name":"stdout","time":48.337788154,"data":"Verification: user_corrected_label == predicted_moat in 200/200 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":48.337812564,"data":"Verification: user_corrected_label == predicted_stance in 60/60 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":48.337818954,"data":"NOTE: Gold labels are keyword-rule generated. Both train and test labels are rule-derived.\n"}
+,{"stream_name":"stdout","time":48.337824582,"data":"\n"}
+,{"stream_name":"stdout","time":48.337828994,"data":"Review file FOUND: /kaggle/working/gold_review_completed.xlsx — applying student-approved labels...\n"}
+,{"stream_name":"stdout","time":48.878632864,"data":"  10K review: 52 rows evaluated, 8 excluded\n"}
+,{"stream_name":"stdout","time":48.878658254,"data":"  Labels changed vs rule: 18\n"}
+,{"stream_name":"stdout","time":48.878662786,"data":"  Rule\u003c-\u003eApproved agreement rate: 0.654\n"}
+,{"stream_name":"stdout","time":48.878666887,"data":"  HN review: unreviewed per protocol. Stance labels reported as keyword_rule.\n"}
+,{"stream_name":"stdout","time":48.878670622,"data":"\n"}
+,{"stream_name":"stdout","time":48.878674092,"data":"10K: train=140, val=17, test=35\n"}
+,{"stream_name":"stdout","time":48.878677597,"data":"HN:  test=60\n"}
+,{"stream_name":"stdout","time":48.878681058,"data":"\n"}
+,{"stream_name":"stdout","time":48.878684578,"data":"Test label distribution (10K):\n"}
+,{"stream_name":"stdout","time":48.878688496,"data":"final_label\n"}
+,{"stream_name":"stdout","time":48.878691976,"data":"none_or_commodity               16\n"}
+,{"stream_name":"stdout","time":48.878695246,"data":"network_effects_ecosystem        6\n"}
+,{"stream_name":"stdout","time":48.878698494,"data":"system_of_record                 5\n"}
+,{"stream_name":"stdout","time":48.878702066,"data":"switching_costs_integrations     3\n"}
+,{"stream_name":"stdout","time":48.878705979,"data":"compliance_security              3\n"}
+,{"stream_name":"stdout","time":48.878709637,"data":"data_gravity                     2\n"}
+,{"stream_name":"stdout","time":48.87871341,"data":"\n"}
+,{"stream_name":"stdout","time":48.878716885,"data":"Test label distribution (HN):\n"}
+,{"stream_name":"stdout","time":48.878720145,"data":"final_label\n"}
+,{"stream_name":"stdout","time":48.878723359,"data":"build_internal       20\n"}
+,{"stream_name":"stdout","time":48.8787266,"data":"buy_saas             20\n"}
+,{"stream_name":"stdout","time":48.878729859,"data":"hybrid_or_neutral    20\n"}
+,{"stream_name":"stdout","time":49.074482073,"data":"Loading tokenizer: Qwen/Qwen2.5-1.5B-Instruct\n"}
+,{"stream_name":"stderr","time":49.327951041,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":49.327974038,"data":"\n"}
+,{"stream_name":"stderr","time":49.328003127,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":52.183154891,"data":"Loading model in 4-bit NF4 ...\n"}
+,{"stream_name":"stdout","time":86.521117484,"data":"Model loaded on cuda:0.\n"}
+,{"stream_name":"stderr","time":89.529534721,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":89.53015612,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":89.530167771,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":89.530175216,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":89.530180216,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":89.530185376,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":89.530190813,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":89.530195493,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":89.530200578,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":89.530204655,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":89.530208918,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":89.530213216,"data":"Exception encountered at \"In [6]\":\n"}
+,{"stream_name":"stderr","time":89.530217341,"data":"  File \"\u003ctokenize\u003e\", line 28\n"}
+,{"stream_name":"stderr","time":89.530221706,"data":"    return scores\n"}
+,{"stream_name":"stderr","time":89.530227439,"data":"    ^\n"}
+,{"stream_name":"stderr","time":89.530234923,"data":"IndentationError: unindent does not match any outer indentation level\n"}
+,{"stream_name":"stderr","time":89.530267676,"data":"\n"}
+,{"stream_name":"stderr","time":89.530274583,"data":"\n"}
+,{"stream_name":"stderr","time":91.535563494,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":91.535602124,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":91.683595152,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":91.683620081,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":92.431472607,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":92.527461005,"data":"[NbConvertApp] Writing 239119 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":94.990705764,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":95.688464416,"data":"[NbConvertApp] Writing 664562 bytes to __results__.html\n"}
+]
