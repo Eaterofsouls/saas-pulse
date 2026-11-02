@@ -1,29 +1,28 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-10-31 16:58:00 IST  
-**Current Step**: COMPLETE — Kaggle Run 10 Fully Executed, Downloaded, Synchronized & Verified  
+**Last Updated**: 2026-11-02 20:56:00 IST  
+**Current Step**: INGESTING APPROVED REVIEW BUNDLE (26 Overrides Approved by Student)  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
-## 1. Current Execution Status: Run 10 (COMPLETE)
-- **Status**: `KernelWorkerStatus.COMPLETE` on Kaggle Tesla T4 GPU.
-- **Output Archive**: `runs/20261031_1527/` (all metrics, predictions, confusion matrices, loss curves, and logs).
-- **Audit Verification**: `CHECKS.md` passes **33 / 33 checks (100% Traceability)**.
+## 1. Current Execution Status: Ingesting Approved Review Bundle
+- **Status**: Review file `gold_review_completed.xlsx` verified and active.
+- **Verification Details**:
+  - Sheet `10K_review` confirmed: **60 rows** (20 val, 40 test).
+  - `your_label` filled in **26 rows** (15 `none_or_commodity`, 8 `exclude`, 1 `compliance_security`, 1 `network_effects_ecosystem`, 1 `switching_costs_integrations`).
+  - Exclusions dropped: **8 rows** (5 test, 3 val), leaving **52 evaluated rows** (35 test, 17 val).
+  - Agreement between keyword rule and student-approved review: **65.38%** (34 agreed, 18 changed), Cohen's $\kappa = 0.5742$.
+  - Label source: `label_source = llm_reviewed_student_approved` (reviewed by Claude Opus 5.5, approved by Daksh Chauhan) for all 60 val/test rows; `keyword_rule` for the 140 train rows.
+  - `HN_review` sheet was not reviewed: HN gold labels remain `keyword_rule`.
 
 ### Heartbeat & Milestone Log:
-- `2026-10-31 15:02 IST`: Human review spreadsheet `gold_review_sheet.xlsx` received in Downloads.
-- `2026-10-31 15:04 IST`: Review sheet copied to `dataset/review/gold_review_completed.xlsx`. Audit executed: 60/60 agreement, Cohen's kappa 1.000, 0 exclusions. Full report written to `dataset/review/HUMAN_REVIEW_AUDIT.md`.
-- `2026-10-31 15:07 IST`: Provenance documents updated (`GOLD_PROVENANCE.md`, `GOLD_REVIEW.md`, `HN_STANCE_METHOD.md`, `FIX_LOG.md`). Staged, secret-checked, committed, and pushed to `main`.
-- `2026-10-31 15:10 IST`: Kernel Version 8 pushed. Returned error (missing `bitsandbytes`). Archived in `runs/20261031_1510/`.
-- `2026-10-31 15:17 IST`: Kernel Version 9 pushed. Successfully ran Zero-Shot (Acc=0.500, F1=0.447) and Few-Shot (Acc=0.525, F1=0.495). Failed at Cell 11 due to removal of `DataCollatorForCompletionOnlyLM` in `trl 1.17.1`. Archived in `runs/20261031_1517/`.
-- `2026-10-31 15:26 IST`: Replaced `trl.SFTTrainer` with standard `transformers.Trainer` and custom `MoatSFTDataset` (exact `-100` label masking on prompt tokens).
-- `2026-10-31 15:27 IST`: Kernel Version 10 pushed to Kaggle. Status: `KernelWorkerStatus.RUNNING` on NVIDIA Tesla T4 GPU.
-- `2026-10-31 16:48 IST`: Kernel completed successfully (`KernelWorkerStatus.COMPLETE`).
-- `2026-10-31 16:50 IST`: All run outputs downloaded to `runs/20261031_1527/`.
-- `2026-10-31 16:56 IST`: Presentation slides (`PRESENTATION_SLIDES.md`, `presentation.html`) updated with 6-method table, exact empirical metrics, and honest disclosures. `CHECKS.md` regenerated (33/33 checks PASS).
+- `2026-11-02 20:53 IST`: Received and extracted `saas_fix_bundle.zip`.
+- `2026-11-02 20:54 IST`: Copied `gold_review_completed.xlsx` to `dataset/review/gold_review_completed.xlsx` and `AGENT_PROMPT_FIX.md` to root.
+- `2026-11-02 20:55 IST`: Verified `10K_review` has 60 rows and 26 filled overrides. 8 exclusions dropped (5 test, 3 val). Evaluated agreement = 65.38%, Cohen's $\kappa = 0.5742$.
+- `2026-11-02 20:56 IST`: Committed and pushed "add approved review file + fix prompt". Proceeding to regenerate dataset and re-run Kaggle GPU evaluation with approved labels.
 
 ---
 
