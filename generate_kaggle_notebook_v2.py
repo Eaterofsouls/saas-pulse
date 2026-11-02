@@ -80,7 +80,8 @@ if __name__ == "__main__":
     cells = load_cells_from_py(CELLS_FILE)
     print(f"Loaded {len(cells)} cells from {CELLS_FILE}")
     nb = make_nb(cells)
-    os.makedirs(os.path.dirname(NOTEBOOK_PATH), exist_ok=True)
-    with open(NOTEBOOK_PATH, "w", encoding="utf-8") as f:
-        json.dump(nb, f, indent=1, ensure_ascii=False)
-    print(f"Notebook written to: {NOTEBOOK_PATH}  ({len(cells)} cells)")
+    os.makedirs("kaggle_kernel_staging", exist_ok=True)
+    for p in ["kaggle_kernel_staging/saas_pulse_experiment.ipynb", "kaggle_kernel_staging/saas_pulse_v2.ipynb"]:
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(nb, f, indent=1, ensure_ascii=False)
+        print(f"Notebook written to: {p}  ({len(cells)} cells)")

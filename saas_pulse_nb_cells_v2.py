@@ -98,7 +98,7 @@ METRICS = {}
 import glob, base64
 
 EMBEDDED_REVIEW_B64 = """{{EMBEDDED_REVIEW_B64}}"""
-if EMBEDDED_REVIEW_B64 != "{{EMBEDDED_REVIEW_B64}}" and len(EMBEDDED_REVIEW_B64) > 100:
+if len(EMBEDDED_REVIEW_B64.strip()) > 100:
     for target_dir in ["/kaggle/working", "."]:
         target_p = os.path.join(target_dir, "gold_review_completed.xlsx")
         if not os.path.exists(target_p):
@@ -109,10 +109,17 @@ if EMBEDDED_REVIEW_B64 != "{{EMBEDDED_REVIEW_B64}}" and len(EMBEDDED_REVIEW_B64)
             except Exception as e:
                 print(f"Notice: could not write {target_p}: {e}")
 
-SEARCH_ROOTS = ["/kaggle/input", "../input", ".", "..", "/kaggle/working"]
+SEARCH_ROOTS = ["/kaggle/working", ".", "..", "/kaggle/input", "../input"]
 
 def find_file(name, roots=SEARCH_ROOTS):
+    for d in ["/kaggle/working", "/kaggle/input/saas-pulse-dataset", ".", ".."]:
+        cand = os.path.join(d, name)
+        if os.path.exists(cand):
+            return cand
     for root in roots:
+        cand = os.path.join(root, name)
+        if os.path.exists(cand):
+            return cand
         hits = glob.glob(f"{root}/**/{name}", recursive=True)
         if hits:
             return hits[0]
@@ -150,7 +157,7 @@ print("NOTE: Gold labels are keyword-rule generated. Both train and test labels 
 
 REVIEW_PATH = find_file("gold_review_completed.xlsx")
 if REVIEW_PATH:
-    print(f"\nReview file FOUND: {REVIEW_PATH} — applying human labels...")
+    print(f"\nReview file FOUND: {REVIEW_PATH} — applying student-approved labels...")
     xls = pd.read_excel(REVIEW_PATH, sheet_name=None)
     if "10K_review" in xls:
         rev = xls["10K_review"].copy()
@@ -166,51 +173,27 @@ if REVIEW_PATH:
         
         df10k = df10k[~df10k["para_id"].isin(exclude_ids)].copy()
         df10k["label_source"] = df10k["para_id"].apply(
-            lambda pid: "human_reviewed" if pid in reviewed_ids else df10k.get("label_source", "keyword_rule")
+            lambda pid: "llm_reviewed_student_approved" if pid in reviewed_ids else "keyword_rule"
         )
         df10k["final_label"] = df10k["para_id"].apply(
-            lambda pid: lookup_10k.get(pid, df10k.loc[df10k["para_id"] == pid, "final_label" if "final_label" in df10k.columns else "user_corrected_label"].values[0])
+            lambda pid: lookup_10k.get(pid, df10k.loc[df10k["para_id"] == pid, "predicted_moat"].values[0])
         )
         n_changed   = (rev_valid["final_label"] != rev_valid["suggested_label"]).sum()
         agree_rate  = (rev_valid["final_label"] == rev_valid["suggested_label"]).mean()
-        print(f"  10K review: {len(rev_valid)} rows processed, {len(exclude_ids)} excluded")
+        print(f"  10K review: {len(rev_valid)} rows evaluated, {len(exclude_ids)} excluded")
         print(f"  Labels changed vs rule: {n_changed}")
-        print(f"  Rule<->Human agreement rate: {agree_rate:.3f}")
+        print(f"  Rule<->Approved agreement rate: {agree_rate:.3f}")
         METRICS["review_10k_n_rows"]     = len(rev_valid)
         METRICS["review_10k_n_excluded"] = len(exclude_ids)
         METRICS["review_10k_n_changed"]  = int(n_changed)
         METRICS["review_10k_agree_rate"] = round(float(agree_rate), 4)
 
-    if "HN_review" in xls:
-        rev_h = xls["HN_review"].copy()
-        rev_h["your_clean"] = rev_h["your_label"].fillna("").astype(str).str.strip().str.lower()
-        rev_h_valid = rev_h[rev_h["your_clean"] != "exclude"].copy()
-        rev_h_valid["final_label"] = rev_h_valid["your_clean"].where(
-            rev_h_valid["your_clean"] != "",
-            rev_h_valid["suggested_label"]
-        )
-        exclude_hn_ids = set(rev_h.loc[rev_h["your_clean"] == "exclude", "id"])
-        reviewed_hn_ids = set(rev_h_valid["id"].astype(str))
-        lookup_hn = dict(zip(rev_h_valid["id"].astype(str), rev_h_valid["final_label"]))
-        
-        dfhn = dfhn[~dfhn["id"].isin(exclude_hn_ids)].copy()
-        dfhn["label_source"] = dfhn["id"].astype(str).apply(
-            lambda hid: "human_reviewed" if hid in reviewed_hn_ids else dfhn.get("label_source", "keyword_rule")
-        )
-        dfhn["final_label"] = dfhn["id"].astype(str).apply(
-            lambda hid: lookup_hn.get(hid, dfhn.loc[dfhn["id"].astype(str) == hid, "final_label" if "final_label" in dfhn.columns else "user_corrected_label"].values[0])
-        )
-        n_h_changed  = (rev_h_valid["final_label"] != rev_h_valid["suggested_label"]).sum()
-        agree_h_rate = (rev_h_valid["final_label"] == rev_h_valid["suggested_label"]).mean()
-        print(f"  HN review: {len(rev_h_valid)} rows processed, {len(exclude_hn_ids)} excluded")
-        print(f"  Labels changed vs rule: {n_h_changed}")
-        print(f"  Rule<->Human agreement rate: {agree_h_rate:.3f}")
-        METRICS["review_hn_n_rows"]     = len(rev_h_valid)
-        METRICS["review_hn_n_excluded"] = len(exclude_hn_ids)
-        METRICS["review_hn_n_changed"]  = int(n_h_changed)
-        METRICS["review_hn_agree_rate"] = round(float(agree_h_rate), 4)
+    # HN review was NOT reviewed per student instructions. Stance labels remain rule-generated.
+    dfhn["label_source"] = "keyword_rule"
+    dfhn["final_label"]  = dfhn["predicted_stance"] if "predicted_stance" in dfhn.columns else dfhn["user_corrected_label"]
+    print("  HN review: unreviewed per protocol. Stance labels reported as keyword_rule.")
 
-    METRICS["label_source_note"] = "human_reviewed via gold_review_completed.xlsx (anchoring risk documented)"
+    METRICS["label_source_note"] = "llm_reviewed_student_approved (Claude Opus 5.5 + Daksh Chauhan approval)"
 else:
     print("\nReview file NOT found. Using pre-existing label_source / final_label from CSVs.")
     if "label_source" not in df10k.columns:
@@ -221,11 +204,7 @@ else:
         dfhn["label_source"] = "keyword_rule"
     if "final_label" not in dfhn.columns:
         dfhn["final_label"] = dfhn["user_corrected_label"]
-
-METRICS["label_source_note"] = (
-    "human_reviewed" if REVIEW_PATH
-    else "keyword_rule — no human review; gold_review_completed.xlsx not present"
-)
+    METRICS["label_source_note"] = "keyword_rule — no human review; gold_review_completed.xlsx not present" 
 
 train10k = df10k[df10k["split"] == "train"].copy()
 val10k   = df10k[df10k["split"] == "val"].copy()
@@ -460,9 +439,9 @@ rng = np.random.default_rng(SEED)
 rand_preds = list(rng.choice(MOAT_LABELS, len(y_test_10k)))
 res_rand   = compute_metrics(y_test_10k, rand_preds, MOAT_LABELS, "random_baseline_10k")
 
-rule_preds = list(test10k["user_corrected_label"])
+rule_preds = list(test10k["rule_label"] if "rule_label" in test10k.columns else test10k["predicted_moat"])
 res_rule   = compute_metrics(y_test_10k, rule_preds, MOAT_LABELS, "keyword_rule_baseline_10k")
-res_rule["note"] = "Rule preds == gold labels. Identity by construction, NOT a model evaluation."
+res_rule["note"] = "Heuristic keyword rule baseline evaluated against student-approved gold labels."
 
 print("Baselines calculated.")
 

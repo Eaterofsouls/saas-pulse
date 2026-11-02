@@ -1,28 +1,32 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-11-02 20:56:00 IST  
-**Current Step**: INGESTING APPROVED REVIEW BUNDLE (26 Overrides Approved by Student)  
+**Last Updated**: 2026-11-02 21:06:00 IST  
+**Current Step**: RUNNING — Kernel Version 11 Queued on Kaggle GPU (Student-Approved Labels)  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
-## 1. Current Execution Status: Ingesting Approved Review Bundle
-- **Status**: Review file `gold_review_completed.xlsx` verified and active.
-- **Verification Details**:
-  - Sheet `10K_review` confirmed: **60 rows** (20 val, 40 test).
-  - `your_label` filled in **26 rows** (15 `none_or_commodity`, 8 `exclude`, 1 `compliance_security`, 1 `network_effects_ecosystem`, 1 `switching_costs_integrations`).
-  - Exclusions dropped: **8 rows** (5 test, 3 val), leaving **52 evaluated rows** (35 test, 17 val).
-  - Agreement between keyword rule and student-approved review: **65.38%** (34 agreed, 18 changed), Cohen's $\kappa = 0.5742$.
-  - Label source: `label_source = llm_reviewed_student_approved` (reviewed by Claude Opus 5.5, approved by Daksh Chauhan) for all 60 val/test rows; `keyword_rule` for the 140 train rows.
-  - `HN_review` sheet was not reviewed: HN gold labels remain `keyword_rule`.
+## 1. Current Execution Status: Run 11 (ACTIVE)
+- **Status**: `KernelWorkerStatus.QUEUED` / `RUNNING` on Kaggle Tesla T4 GPU.
+- **Kernel Version**: Version 11.
+- **Key Enhancements in Run 11**:
+  - Embedded review spreadsheet unpacks directly to `/kaggle/working/gold_review_completed.xlsx`.
+  - Ingests 26 student-approved overrides (Claude Opus 5.5 + Daksh Chauhan).
+  - 8 `exclude` rows dropped (5 test, 3 val), evaluating on $N=35$ test and $N=17$ val.
+  - `label_source = llm_reviewed_student_approved` for evaluated 10-K rows.
+  - Keyword rule baseline evaluated against student-approved ground truth (expected ~54% accuracy).
 
 ### Heartbeat & Milestone Log:
 - `2026-11-02 20:53 IST`: Received and extracted `saas_fix_bundle.zip`.
 - `2026-11-02 20:54 IST`: Copied `gold_review_completed.xlsx` to `dataset/review/gold_review_completed.xlsx` and `AGENT_PROMPT_FIX.md` to root.
 - `2026-11-02 20:55 IST`: Verified `10K_review` has 60 rows and 26 filled overrides. 8 exclusions dropped (5 test, 3 val). Evaluated agreement = 65.38%, Cohen's $\kappa = 0.5742$.
-- `2026-11-02 20:56 IST`: Committed and pushed "add approved review file + fix prompt". Proceeding to regenerate dataset and re-run Kaggle GPU evaluation with approved labels.
+- `2026-11-02 20:56 IST`: Committed and pushed "add approved review file + fix prompt" (`e304a08`).
+- `2026-11-02 21:00 IST`: Executed `step0_apply_review.py`: updated `dataset/gold_10k_moats.csv`, `dataset/gold_hn_stance.csv`, and `dataset/MANIFEST.csv`.
+- `2026-11-02 21:02 IST`: Updated `GOLD_PROVENANCE.md` and `GOLD_REVIEW.md` with honest documentation.
+- `2026-11-02 21:04 IST`: Patched notebook cells with student-approved label ingestion logic and base64 self-containment.
+- `2026-11-02 21:05 IST`: Pushed Kernel Version 11 to Kaggle. Status: `KernelWorkerStatus.QUEUED` on Tesla T4.
 
 ---
 
