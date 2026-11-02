@@ -1,0 +1,178 @@
+[{"stream_name":"stderr","time":6.559821763,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":6.559879611,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":7.4900984600000005,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.490128828,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.490134328,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.490138839,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.104310365,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.104339837,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.104345799,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.104350697,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":41.920463461,"data":"Installing trl\u003e=0.8.0...\n"}
+,{"stream_name":"stdout","time":44.830549449,"data":"Installing bitsandbytes\u003e=0.43.0...\n"}
+,{"stream_name":"stdout","time":55.292035985,"data":"{\n"}
+,{"stream_name":"stdout","time":55.292062819,"data":"  \"python_version\": \"3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\",\n"}
+,{"stream_name":"stdout","time":55.292073878,"data":"  \"torch_version\": \"2.11.0+cu128\",\n"}
+,{"stream_name":"stdout","time":55.292077668,"data":"  \"cuda_available\": true,\n"}
+,{"stream_name":"stdout","time":55.292080552,"data":"  \"gpu_name\": \"Tesla T4\",\n"}
+,{"stream_name":"stdout","time":55.292084001,"data":"  \"cuda_capability\": [\n"}
+,{"stream_name":"stdout","time":55.292101095,"data":"    7,\n"}
+,{"stream_name":"stdout","time":55.292106198,"data":"    5\n"}
+,{"stream_name":"stdout","time":55.292111113,"data":"  ],\n"}
+,{"stream_name":"stdout","time":55.292115868,"data":"  \"run_started_utc\": \"2026-11-02T15:41:43.876926+00:00\",\n"}
+,{"stream_name":"stdout","time":55.29212097,"data":"  \"transformers_version\": \"5.16.1\",\n"}
+,{"stream_name":"stdout","time":55.2921253,"data":"  \"peft_version\": \"0.20.0\",\n"}
+,{"stream_name":"stdout","time":55.29212943,"data":"  \"trl_version\": \"1.17.1\",\n"}
+,{"stream_name":"stdout","time":55.292133572,"data":"  \"accelerate_version\": \"1.14.0\",\n"}
+,{"stream_name":"stdout","time":55.29213773,"data":"  \"bitsandbytes_version\": \"0.50.2\",\n"}
+,{"stream_name":"stdout","time":55.292142063,"data":"  \"scikit-learn_version\": \"1.6.1\"\n"}
+,{"stream_name":"stdout","time":55.292151855,"data":"}\n"}
+,{"stream_name":"stdout","time":55.316610022,"data":"RUN_ID=20261102_1541  OUT=/kaggle/working/run_outputs\n"}
+,{"stream_name":"stdout","time":55.491815451,"data":"Unpacked embedded gold_review_completed.xlsx to /kaggle/working/gold_review_completed.xlsx\n"}
+,{"stream_name":"stdout","time":58.841454323,"data":"  FOUND: gold_10k_moats.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/gold_10k_moats.csv\n"}
+,{"stream_name":"stdout","time":58.841496988,"data":"  FOUND: gold_hn_stance.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/gold_hn_stance.csv\n"}
+,{"stream_name":"stdout","time":58.841502833,"data":"  FOUND: filings_paragraphs.jsonl -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/filings_paragraphs.jsonl\n"}
+,{"stream_name":"stdout","time":58.84150717,"data":"  FOUND: hn_comments.jsonl -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/hn_comments.jsonl\n"}
+,{"stream_name":"stdout","time":58.841510711,"data":"  FOUND: stock_performance.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/stock_performance.csv\n"}
+,{"stream_name":"stdout","time":58.841514152,"data":"  FOUND: revenue.csv -\u003e ../input/datasets/notaveragehee/saas-pulse-dataset/revenue.csv\n"}
+,{"stream_name":"stdout","time":59.600944201,"data":"Verification: user_corrected_label == predicted_moat in 200/200 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":59.600981139,"data":"Verification: user_corrected_label == predicted_stance in 60/60 rows (100.0%)\n"}
+,{"stream_name":"stdout","time":59.600986093,"data":"NOTE: Gold labels are keyword-rule generated. Both train and test labels are rule-derived.\n"}
+,{"stream_name":"stdout","time":59.600989882,"data":"\n"}
+,{"stream_name":"stdout","time":59.600993685,"data":"Review file FOUND: /kaggle/working/gold_review_completed.xlsx — applying student-approved labels...\n"}
+,{"stream_name":"stdout","time":60.051792303,"data":"  10K review: 52 rows evaluated, 8 excluded\n"}
+,{"stream_name":"stdout","time":60.05181963,"data":"  Labels changed vs rule: 18\n"}
+,{"stream_name":"stdout","time":60.051824854,"data":"  Rule\u003c-\u003eApproved agreement rate: 0.654\n"}
+,{"stream_name":"stdout","time":60.051829175,"data":"  HN review: unreviewed per protocol. Stance labels reported as keyword_rule.\n"}
+,{"stream_name":"stdout","time":60.051833042,"data":"\n"}
+,{"stream_name":"stdout","time":60.051836426,"data":"10K: train=140, val=17, test=35\n"}
+,{"stream_name":"stdout","time":60.051839872,"data":"HN:  test=60\n"}
+,{"stream_name":"stdout","time":60.051843238,"data":"\n"}
+,{"stream_name":"stdout","time":60.051846432,"data":"Test label distribution (10K):\n"}
+,{"stream_name":"stdout","time":60.05185051,"data":"final_label\n"}
+,{"stream_name":"stdout","time":60.051854571,"data":"none_or_commodity               16\n"}
+,{"stream_name":"stdout","time":60.051858364,"data":"network_effects_ecosystem        6\n"}
+,{"stream_name":"stdout","time":60.051862122,"data":"system_of_record                 5\n"}
+,{"stream_name":"stdout","time":60.05186589,"data":"switching_costs_integrations     3\n"}
+,{"stream_name":"stdout","time":60.051869179,"data":"compliance_security              3\n"}
+,{"stream_name":"stdout","time":60.051872622,"data":"data_gravity                     2\n"}
+,{"stream_name":"stdout","time":60.05187635,"data":"\n"}
+,{"stream_name":"stdout","time":60.051879533,"data":"Test label distribution (HN):\n"}
+,{"stream_name":"stdout","time":60.051882878,"data":"final_label\n"}
+,{"stream_name":"stdout","time":60.051886652,"data":"build_internal       20\n"}
+,{"stream_name":"stdout","time":60.05189002,"data":"buy_saas             20\n"}
+,{"stream_name":"stdout","time":60.051893453,"data":"hybrid_or_neutral    20\n"}
+,{"stream_name":"stdout","time":60.250708861,"data":"Loading tokenizer: Qwen/Qwen2.5-1.5B-Instruct\n"}
+,{"stream_name":"stderr","time":60.302255026,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":60.302275755,"data":"\n"}
+,{"stream_name":"stderr","time":60.302286993,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":62.096571754,"data":"Loading model in 4-bit NF4 ...\n"}
+,{"stream_name":"stdout","time":90.209299976,"data":"Model loaded on cuda:0.\n"}
+,{"stream_name":"stdout","time":90.227589472,"data":"Constrained scoring and sanity gate defined.\n"}
+,{"stream_name":"stdout","time":90.2453141,"data":"Prompt builders defined with add_generation_prompt=True.\n"}
+,{"stream_name":"stdout","time":92.195462772,"data":"\n"}
+,{"stream_name":"stdout","time":92.195493121,"data":"[majority_baseline_10k] n=35  acc=0.457 [0.305, 0.618]  macro-F1=0.105 [0.074, 0.129]\n"}
+,{"stream_name":"stdout","time":92.195498325,"data":"  pred_dist: {'none_or_commodity': 35}\n"}
+,{"stream_name":"stdout","time":93.892369262,"data":"\n"}
+,{"stream_name":"stdout","time":93.892413009,"data":"[random_baseline_10k] n=35  acc=0.143 [0.063, 0.294]  macro-F1=0.122 [0.029, 0.208]\n"}
+,{"stream_name":"stdout","time":93.892423222,"data":"  pred_dist: {np.str_('system_of_record'): 5, np.str_('network_effects_ecosystem'): 8, np.str_('compliance_security'): 7, np.str_('switching_costs_integrations'): 7, np.str_('none_or_commodity'): 5, np.str_('data_gravity'): 3}\n"}
+,{"stream_name":"stdout","time":95.368308321,"data":"\n"}
+,{"stream_name":"stdout","time":95.368340227,"data":"[keyword_rule_baseline_10k] n=35  acc=0.657 [0.492, 0.792]  macro-F1=0.667 [0.472, 0.796]\n"}
+,{"stream_name":"stdout","time":95.368346043,"data":"  pred_dist: {'compliance_security': 5, 'data_gravity': 5, 'network_effects_ecosystem': 6, 'switching_costs_integrations': 6, 'system_of_record': 6, 'none_or_commodity': 7}\n"}
+,{"stream_name":"stdout","time":95.368351185,"data":"Baselines calculated.\n"}
+,{"stream_name":"stdout","time":95.569089471,"data":"Running zero-shot constrained scoring on 10K test (n=40)...\n"}
+,{"stream_name":"stdout","time":105.786112041,"data":"  10/40 done\n"}
+,{"stream_name":"stdout","time":115.115184647,"data":"  20/40 done\n"}
+,{"stream_name":"stdout","time":124.246449803,"data":"  30/40 done\n"}
+,{"stream_name":"stdout","time":128.867700199,"data":"Sanity gate PASSED [zero_shot_10k]: distribution {'data_gravity': 9, 'system_of_record': 12, 'compliance_security': 5, 'network_effects_ecosystem': 8, 'switching_costs_integrations': 1}\n"}
+,{"stream_name":"stdout","time":130.304535231,"data":"\n"}
+,{"stream_name":"stdout","time":130.304567079,"data":"[zero_shot_10k] n=35  acc=0.371 [0.232, 0.537]  macro-F1=0.331 [0.191, 0.427]\n"}
+,{"stream_name":"stdout","time":130.304572748,"data":"  pred_dist: {'data_gravity': 9, 'system_of_record': 12, 'compliance_security': 5, 'network_effects_ecosystem': 8, 'switching_costs_integrations': 1}\n"}
+,{"stream_name":"stdout","time":130.304577953,"data":"Zero-shot 10K complete.\n"}
+,{"stream_name":"stdout","time":130.505055911,"data":"10K exemplar IDs (1 per class, from train): ['0001477720-22-000012_Item1_44', '0001773383-22-000053_Item1_11', '0001640147-23-000030_Item1A_24', '0001193125-26-067540_Item1_26', '0001650372-23-000040_Item1_36', '0001023731-25-000039_Item1_25']\n"}
+,{"stream_name":"stdout","time":131.807532044,"data":"HN exemplar IDs (2 per class): ['46802591', '48657658', '44912663', '41592672', '48790149', '42593210']\n"}
+,{"stream_name":"stdout","time":132.007945413,"data":"Running few-shot constrained scoring on 10K test (n=40)...\n"}
+,{"stream_name":"stdout","time":151.89358125,"data":"  10/40 done\n"}
+,{"stream_name":"stdout","time":173.031519579,"data":"  20/40 done\n"}
+,{"stream_name":"stdout","time":194.332164237,"data":"  30/40 done\n"}
+,{"stream_name":"stdout","time":205.779039503,"data":"Sanity gate PASSED [few_shot_10k]: distribution {'compliance_security': 8, 'data_gravity': 6, 'system_of_record': 11, 'switching_costs_integrations': 2, 'network_effects_ecosystem': 7, 'none_or_commodity': 1}\n"}
+,{"stream_name":"stdout","time":207.248817129,"data":"\n"}
+,{"stream_name":"stdout","time":207.248852205,"data":"[few_shot_10k] n=35  acc=0.371 [0.232, 0.537]  macro-F1=0.329 [0.189, 0.449]\n"}
+,{"stream_name":"stdout","time":207.248858265,"data":"  pred_dist: {'compliance_security': 8, 'data_gravity': 6, 'system_of_record': 11, 'switching_costs_integrations': 2, 'network_effects_ecosystem': 7, 'none_or_commodity': 1}\n"}
+,{"stream_name":"stdout","time":207.248863903,"data":"Few-shot 10K complete.\n"}
+,{"stream_name":"stdout","time":209.360073409,"data":"Dataset prepared: train=140, val=17\n"}
+,{"stream_name":"stdout","time":209.36010223,"data":"Sanity check: example 0 has 362 prompt tokens (loss-masked with -100) and 5 completion tokens.\n"}
+,{"stream_name":"stdout","time":209.843155861,"data":"trainable params: 2,179,072 || all params: 1,545,893,376 || trainable%: 0.1410\n"}
+,{"stream_name":"stdout","time":209.843188643,"data":"Starting LoRA training (completion-only loss masking via standard Trainer)...\n"}
+,{"stream_name":"stdout","time":464.917725845,"data":"Training complete.\n"}
+,{"stream_name":"stdout","time":464.91778159,"data":"  train_loss=0.2032\n"}
+,{"stream_name":"stdout","time":464.917788235,"data":"  Best val_loss=0.1386 at step 54\n"}
+,{"stream_name":"stdout","time":464.93023472,"data":"Loss curve saved.\n"}
+,{"stream_name":"stdout","time":465.131903703,"data":"Running LoRA constrained scoring on 10K test (n=40)...\n"}
+,{"stream_name":"stdout","time":475.236578609,"data":"  10/40 done\n"}
+,{"stream_name":"stdout","time":486.211677609,"data":"  20/40 done\n"}
+,{"stream_name":"stdout","time":497.069150511,"data":"  30/40 done\n"}
+,{"stream_name":"stdout","time":502.402098512,"data":"Sanity gate PASSED [lora_10k]: distribution {'none_or_commodity': 8, 'data_gravity': 4, 'network_effects_ecosystem': 9, 'system_of_record': 6, 'switching_costs_integrations': 4, 'compliance_security': 4}\n"}
+,{"stream_name":"stdout","time":504.099175369,"data":"\n"}
+,{"stream_name":"stdout","time":504.099207779,"data":"[lora_10k] n=35  acc=0.629 [0.463, 0.768]  macro-F1=0.598 [0.382, 0.763]\n"}
+,{"stream_name":"stdout","time":504.099213741,"data":"  pred_dist: {'none_or_commodity': 8, 'data_gravity': 4, 'network_effects_ecosystem': 9, 'system_of_record': 6, 'switching_costs_integrations': 4, 'compliance_security': 4}\n"}
+,{"stream_name":"stdout","time":523.676818392,"data":"\n"}
+,{"stream_name":"stdout","time":523.676871072,"data":"[lora_10k_val] n=17  acc=0.588 [0.360, 0.784]  macro-F1=0.511 [0.250, 0.673]\n"}
+,{"stream_name":"stdout","time":523.67687722,"data":"  pred_dist: {'switching_costs_integrations': 4, 'network_effects_ecosystem': 2, 'none_or_commodity': 3, 'data_gravity': 2, 'system_of_record': 2, 'compliance_security': 4}\n"}
+,{"stream_name":"stdout","time":523.676883047,"data":"LoRA evaluation and McNemar tests complete.\n"}
+,{"stream_name":"stdout","time":523.876859643,"data":"Running zero-shot HN stance (n=60)...\n"}
+,{"stream_name":"stdout","time":534.530257642,"data":"  20/60 done\n"}
+,{"stream_name":"stdout","time":544.798786449,"data":"  40/60 done\n"}
+,{"stream_name":"stdout","time":555.350353367,"data":"  60/60 done\n"}
+,{"stream_name":"stdout","time":555.350380928,"data":"Sanity gate PASSED [zero_shot_hn]: distribution {'build_internal': 42, 'buy_saas': 9, 'hybrid_or_neutral': 9}\n"}
+,{"stream_name":"stdout","time":557.036109035,"data":"\n"}
+,{"stream_name":"stdout","time":557.036157106,"data":"[zero_shot_hn] n=60  acc=0.400 [0.286, 0.526]  macro-F1=0.368 [0.241, 0.491]\n"}
+,{"stream_name":"stdout","time":557.036161949,"data":"  pred_dist: {'build_internal': 42, 'buy_saas': 9, 'hybrid_or_neutral': 9}\n"}
+,{"stream_name":"stdout","time":557.036166002,"data":"Running few-shot HN stance (n=60)...\n"}
+,{"stream_name":"stdout","time":575.629471713,"data":"  20/60 done\n"}
+,{"stream_name":"stdout","time":594.592220858,"data":"  40/60 done\n"}
+,{"stream_name":"stdout","time":613.979053848,"data":"  60/60 done\n"}
+,{"stream_name":"stdout","time":613.979094361,"data":"\n"}
+,{"stream_name":"stdout","time":613.979100027,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":613.97910443,"data":"SANITY GATE FAILED [few_shot_hn]: 'build_internal' got 44/60 = 73.3% \u003e 70%. Mode collapse detected!\n"}
+,{"stream_name":"stdout","time":613.97910929,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":613.979113843,"data":"\n"}
+,{"stream_name":"stderr","time":617.938151515,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":617.938787255,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":617.938808422,"data":"    import sys;import papermill as pm;pm.execute_notebook(\"__notebook__.ipynb\",\"__notebook__.ipynb\",progress_bar=False,log_output=True,stdout_file=sys.stdout,stderr_file=sys.stderr,allow_errors=False,timeout=43200)\n"}
+,{"stream_name":"stderr","time":617.938826742,"data":"                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":617.9388325,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":617.938838134,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":617.938843261,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":617.938848124,"data":"  File \"/usr/local/lib/python3.13/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":617.938853161,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":617.938857279,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":617.938861335,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":617.938865474,"data":"Exception encountered at \"In [14]\":\n"}
+,{"stream_name":"stderr","time":617.938869601,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":617.938873708,"data":"AssertionError                            Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":617.938883054,"data":"/tmp/ipykernel_22/2043068993.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":617.938886526,"data":"     24         print(f\"  {i + 1}/60 done\")\n"}
+,{"stream_name":"stderr","time":617.938889457,"data":"     25 \n"}
+,{"stream_name":"stderr","time":617.938892322,"data":"---\u003e 26 sanity_gate(hn_fs_preds, HN_LABELS, threshold=0.70, name=\"few_shot_hn\")\n"}
+,{"stream_name":"stderr","time":617.938895317,"data":"     27 res_hn_fs = compute_metrics(y_test_hn, hn_fs_preds, HN_LABELS, \"few_shot_hn\")\n"}
+,{"stream_name":"stderr","time":617.938898306,"data":"     28 res_hn_fs[\"preds\"] = hn_fs_preds\n"}
+,{"stream_name":"stderr","time":617.938908936,"data":"\n"}
+,{"stream_name":"stderr","time":617.938911276,"data":"/tmp/ipykernel_22/3800497654.py in sanity_gate(preds, candidates, threshold, name)\n"}
+,{"stream_name":"stderr","time":617.938913542,"data":"     38                    f\"{frac:.1%} \u003e {threshold:.0%}. Mode collapse detected!\")\n"}
+,{"stream_name":"stderr","time":617.938915951,"data":"     39             print(f\"\\n{'='*70}\\n{msg}\\n{'='*70}\\n\")\n"}
+,{"stream_name":"stderr","time":617.938918424,"data":"---\u003e 40             raise AssertionError(msg)\n"}
+,{"stream_name":"stderr","time":617.938920794,"data":"     41     print(f\"Sanity gate PASSED [{name}]: distribution {dict(c)}\")\n"}
+,{"stream_name":"stderr","time":617.938923097,"data":"     42 \n"}
+,{"stream_name":"stderr","time":617.938925211,"data":"\n"}
+,{"stream_name":"stderr","time":617.938927324,"data":"AssertionError: SANITY GATE FAILED [few_shot_hn]: 'build_internal' got 44/60 = 73.3% \u003e 70%. Mode collapse detected!\n"}
+,{"stream_name":"stderr","time":617.938929776,"data":"\n"}
+,{"stream_name":"stderr","time":619.939410357,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":619.939435476,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":620.104003076,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":620.104026442,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":620.84781491,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":620.966323935,"data":"[NbConvertApp] Writing 249787 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":623.373594378,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":624.075685309,"data":"[NbConvertApp] Writing 667400 bytes to __results__.html\n"}
+]

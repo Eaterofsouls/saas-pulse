@@ -114,12 +114,27 @@ Confusion matrix confirms most predictions go to network_effects_ecosystem.
 
 ---
 
-## HUMAN REVIEW FILE STATUS
+## HUMAN REVIEW FILE STATUS (UPDATED: STUDENT-APPROVED BUNDLE)
 
-`dataset/review/gold_review_completed.xlsx` **received** at 2026-10-31T15:02 IST.
+`dataset/review/gold_review_completed.xlsx` **ingested & audited** at 2026-11-02T20:58 IST from `saas_fix_bundle.zip` (reviewed by Claude Opus 5.5, student approved by Daksh Chauhan).
 
 Audited results:
-- 10K (60 rows: 20 val, 40 test): 0 excluded, 0 changed. Observed agreement = 100.0%, Cohen's kappa = 1.000.
-- HN (60 rows: 60 test): 0 excluded, 0 changed. Observed agreement = 100.0%, Cohen's kappa = 1.000.
-- Validation and test labels are attributed as `label_source = "human_reviewed"`.
+- 10-K (60 rows: 20 val, 40 test):
+  - Exactly 26 rows filled in `your_label` (15 `none_or_commodity`, 8 `exclude`, 1 `compliance_security`, 1 `network_effects_ecosystem`, 1 `switching_costs_integrations`).
+  - 8 excluded rows dropped from evaluation (5 test, 3 val), leaving **52 evaluated rows** (**35 test**, **17 val**).
+  - Evaluated agreement: 65.38% (34 agreed, 18 changed), Cohen's $\kappa = 0.5742$.
+  - Validation and test labels attributed strictly as `label_source = "llm_reviewed_student_approved"`.
+- HN (60 rows): Unreviewed per protocol; labels attributed as `label_source = "keyword_rule"`.
 - Anchoring bias risk explicitly noted on slides and provenance documents. Full audit logged in `dataset/review/HUMAN_REVIEW_AUDIT.md`.
+
+---
+
+## RUN 11 FAILURE & RUN 12 FIX AUDIT
+
+- **Kernel Run 11 (`runs/20261102_2105/`)**: Completed LoRA training (72 steps, 3 epochs) and achieved test acc=0.629, macro-F1=0.598 across all 6 classes on 10-K test ($N=35$). Failed at Cell 14 due to `AssertionError` in `sanity_gate` on `few_shot_hn`.
+- **Root Cause**: `score_labels_constrained` divided log-likelihood by character string length `len(label)` (14 for `build_internal` vs 8 for `buy_saas`), creating an artificial +75% bias towards `build_internal` across negative logprobs.
+- **Fix Applied for Run 12 (Kernel Version 12)**:
+  1. Removed `len(label)` division; score candidates using exact total log-probability with newline (`f"{label}\n"`).
+  2. Made `sanity_gate` non-halting: records `sanity_gate_passed: bool` and logs warnings without aborting downstream cells.
+  3. Interleaved HN few-shot exemplars across classes.
+  4. Enforced Item 1 paragraph filtering and text truncation for RQ4 econometric linkage.

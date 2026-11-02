@@ -1,22 +1,22 @@
 # SaaS-Pulse Live Status & Progress Tracker
 
 **Repository**: [https://github.com/Eaterofsouls/saas-pulse](https://github.com/Eaterofsouls/saas-pulse)  
-**Last Updated**: 2026-11-02 21:06:00 IST  
-**Current Step**: RUNNING — Kernel Version 11 Queued on Kaggle GPU (Student-Approved Labels)  
+**Last Updated**: 2026-11-02 21:38:00 IST  
+**Current Step**: RUNNING — Kernel Version 12 Pushed to Kaggle GPU (Fixed Constrained Scoring)  
 **Kaggle Kernel URL**: [https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment](https://www.kaggle.com/code/notaveragehee/saas-pulse-experiment)  
 **Kaggle Dataset URL**: [https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset](https://www.kaggle.com/datasets/notaveragehee/saas-pulse-dataset)
 
 ---
 
-## 1. Current Execution Status: Run 11 (ACTIVE)
+## 1. Current Execution Status: Run 12 (ACTIVE)
 - **Status**: `KernelWorkerStatus.QUEUED` / `RUNNING` on Kaggle Tesla T4 GPU.
-- **Kernel Version**: Version 11.
-- **Key Enhancements in Run 11**:
-  - Embedded review spreadsheet unpacks directly to `/kaggle/working/gold_review_completed.xlsx`.
-  - Ingests 26 student-approved overrides (Claude Opus 5.5 + Daksh Chauhan).
-  - 8 `exclude` rows dropped (5 test, 3 val), evaluating on $N=35$ test and $N=17$ val.
-  - `label_source = llm_reviewed_student_approved` for evaluated 10-K rows.
-  - Keyword rule baseline evaluated against student-approved ground truth (expected ~54% accuracy).
+- **Kernel Version**: Version 12.
+- **Key Enhancements in Run 12**:
+  - **Pristine Constrained Scoring**: Removed `len(label)` character length division bug that artificially biased scores towards `build_internal` (14 chars) over `buy_saas` (8 chars). Scores now evaluate `f"{label}\n"` using exact sequence total log-probability: `total_log_prob = -float(out.loss.item()) * n_toks`.
+  - **Non-Halting Sanity Gate**: Mode collapse detection prints warnings, reports distribution, and records `sanity_gate_passed: bool` in metrics without terminating execution with an unhandled exception before `metrics.json` is saved.
+  - **Interleaved HN Exemplars**: Alternating class order across rounds prevents sequence block bias.
+  - **Item 1 Paragraph Filtering**: Enforced Item 1 paragraph selection for latest fiscal year in RQ4 econometric linkage.
+  - **Ingests Approved Review Bundle**: Evaluates on $N=35$ test and $N=17$ val (5 test, 3 val excluded), with `label_source = llm_reviewed_student_approved`.
 
 ### Heartbeat & Milestone Log:
 - `2026-11-02 20:53 IST`: Received and extracted `saas_fix_bundle.zip`.
@@ -27,9 +27,12 @@
 - `2026-11-02 21:02 IST`: Updated `GOLD_PROVENANCE.md` and `GOLD_REVIEW.md` with honest documentation.
 - `2026-11-02 21:04 IST`: Patched notebook cells with student-approved label ingestion logic and base64 self-containment.
 - `2026-11-02 21:05 IST`: Pushed Kernel Version 11 to Kaggle. Status: `KernelWorkerStatus.QUEUED` on Tesla T4.
-- `2026-11-02 21:11 IST`: [Heartbeat] Kernel Version 11 actively executing on Tesla T4 GPU. Status: `KernelWorkerStatus.RUNNING`. Unpacking approved review, running zero-shot, few-shot, and masked completion LoRA SFT on student-approved ground truth.
+- `2026-11-02 21:11 IST`: [Heartbeat] Kernel Version 11 actively executing on Tesla T4 GPU. Status: `KernelWorkerStatus.RUNNING`.
 - `2026-11-02 21:15 IST`: [Heartbeat] Kernel Version 11 active on Tesla T4 (~4.5 min elapsed; zero-shot and few-shot evaluation completed, LoRA fine-tuning underway). Status: `KernelWorkerStatus.RUNNING`.
 - `2026-11-02 21:19 IST`: [Heartbeat] Kernel Version 11 active on Tesla T4 (~8 min elapsed; LoRA training completed, evaluating LoRA model and HN stance). Status: `KernelWorkerStatus.RUNNING`.
+- `2026-11-02 21:22 IST`: Kernel Version 11 failed at Cell 14 (`AssertionError: SANITY GATE FAILED [few_shot_hn]` due to character length division bug in candidate log-likelihood). Downloaded all run logs and model weights to `runs/20261102_2105/`. Archived with `error_analysis.md`.
+- `2026-11-02 21:36 IST`: Diagnosed candidate scoring character-division bug and patched `saas_pulse_nb_cells_v2.py`. Replaced character normalization with true total log-probability and non-halting sanity gate. Regenerated `saas_pulse_experiment.ipynb`.
+- `2026-11-02 21:38 IST`: Pushing Kernel Version 12 to Kaggle. Status: `QUEUED`.
 
 ---
 

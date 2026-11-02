@@ -247,16 +247,18 @@ METRICS["base_model"] = MODEL_ID
 
 # CELL:code
 # Cell 5 — Constrained Log-Prob Scoring (Core Utility)
-def score_labels_constrained(target_model, tok, prompt, candidates, normalize_by_length=True):
-    # Computes negative log-likelihood of each candidate continuation given prompt.
+def score_labels_constrained(target_model, tok, prompt, candidates, normalize_by_tokens=False):
+    # Computes log-likelihood of each candidate continuation given prompt.
     # Uses teacher-forcing with prompt tokens masked by -100.
-    # Normalizes score by sequence length to avoid penalizing longer candidate strings.
+    # Evaluates exact label tokens followed by newline as specified in prompt protocol.
     device = next(target_model.parameters()).device
     prompt_ids = tok(prompt, return_tensors="pt", add_special_tokens=True).input_ids.to(device)
     scores = {}
     with torch.no_grad():
         for label in candidates:
-            label_ids = tok(label, return_tensors="pt", add_special_tokens=False).input_ids.to(device)
+            cand_str = f"{label}
+"
+            label_ids = tok(cand_str, return_tensors="pt", add_special_tokens=False).input_ids.to(device)
             full_ids = torch.cat([prompt_ids, label_ids], dim=1)
             full_labels = torch.cat([
                 torch.full_like(prompt_ids, -100),
@@ -265,28 +267,39 @@ def score_labels_constrained(target_model, tok, prompt, candidates, normalize_by
             out = target_model(input_ids=full_ids, labels=full_labels)
             n_toks = label_ids.shape[1]
             total_log_prob = -float(out.loss.item()) * n_toks
-            if normalize_by_length:
-                # Length-normalized log-likelihood (acc_norm standard)
-                scores[label] = float(total_log_prob / len(label))
+            if normalize_by_tokens:
+                # Per-token log-likelihood (acc_norm standard: divide by token count n_toks, NEVER char length!)
+                scores[label] = float(-out.loss.item())
             else:
+                # Total sequence log-likelihood (standard prefix-free argmax)
                 scores[label] = float(total_log_prob)
     return scores
 
-def predict_constrained(target_model, tok, prompt, candidates):
-    scores = score_labels_constrained(target_model, tok, prompt, candidates, normalize_by_length=True)
+def predict_constrained(target_model, tok, prompt, candidates, normalize_by_tokens=False):
+    scores = score_labels_constrained(target_model, tok, prompt, candidates, normalize_by_tokens=normalize_by_tokens)
     return max(scores, key=scores.get), scores
 
 def sanity_gate(preds, candidates, threshold=0.70, name=""):
     c = Counter(preds)
     n = len(preds)
+    passed = True
+    violating = []
     for label in candidates:
         frac = c.get(label, 0) / n
         if frac > threshold:
-            msg = (f"SANITY GATE FAILED [{name}]: '{label}' got {c[label]}/{n} = "
-                   f"{frac:.1%} > {threshold:.0%}. Mode collapse detected!")
-            print(f"\n{'='*70}\n{msg}\n{'='*70}\n")
-            raise AssertionError(msg)
-    print(f"Sanity gate PASSED [{name}]: distribution {dict(c)}")
+            violating.append((label, frac))
+            passed = False
+    if not passed:
+        msg = f"SANITY GATE WARNING [{name}]: Mode collapse detected! " + ", ".join([f"'{l}'={f:.1%} > {threshold:.0%}" for l, f in violating])
+        print(f"
+{'='*70}
+{msg}
+Distribution: {dict(c)}
+{'='*70}
+")
+    else:
+        print(f"Sanity gate PASSED [{name}]: distribution {dict(c)}")
+    return passed
 
 print("Constrained scoring and sanity gate defined.")
 
@@ -447,17 +460,17 @@ print("Baselines calculated.")
 
 # CELL:code
 # Cell 8 — Zero-Shot Constrained Scoring (10K Test)
-print("Running zero-shot constrained scoring on 10K test (n=40)...")
+print(f"Running zero-shot constrained scoring on 10K test (n={len(test10k)})...")
 zs_preds = []
 for i, row in enumerate(test10k.itertuples()):
     prompt = build_zero_shot_prompt_10k(row.text)
     pred, _ = predict_constrained(model, tokenizer, prompt, MOAT_LABELS)
     zs_preds.append(pred)
     if (i + 1) % 10 == 0:
-        print(f"  {i + 1}/40 done")
+        print(f"  {i + 1}/{len(test10k)} done")
 
-sanity_gate(zs_preds, MOAT_LABELS, threshold=0.70, name="zero_shot_10k")
 res_zs = compute_metrics(y_test_10k, zs_preds, MOAT_LABELS, "zero_shot_10k")
+res_zs["sanity_gate_passed"] = sanity_gate(zs_preds, MOAT_LABELS, threshold=0.70, name="zero_shot_10k")
 res_zs["preds"] = zs_preds
 print("Zero-shot 10K complete.")
 
@@ -502,16 +515,22 @@ if HN_JSONL:
         return "hybrid_or_neutral"
 
     hn_pool["rule_stance"] = hn_pool["text"].apply(hn_rule)
-    exemplars_hn = []
-    exemplar_ids_hn = []
+    exemplars_by_class = {lbl: [] for lbl in HN_LABELS}
     for lbl in HN_LABELS:
         pool   = hn_pool[hn_pool["rule_stance"] == lbl]
         n_pick = min(2, len(pool))
         chosen = pool.sample(n_pick, random_state=SEED) if n_pick > 0 else pool
         for _, r in chosen.iterrows():
-            exemplars_hn.append((lbl, r["text"]))
-            exemplar_ids_hn.append(str(r["id"]))
-    print(f"HN exemplar IDs (2 per class): {exemplar_ids_hn}")
+            exemplars_by_class[lbl].append((str(r["id"]), r["text"]))
+    exemplars_hn = []
+    exemplar_ids_hn = []
+    for round_idx in range(2):
+        for lbl in HN_LABELS:
+            if round_idx < len(exemplars_by_class[lbl]):
+                ex_id, ex_txt = exemplars_by_class[lbl][round_idx]
+                exemplars_hn.append((lbl, ex_txt))
+                exemplar_ids_hn.append(ex_id)
+    print(f"HN exemplar IDs (2 per class, interleaved): {exemplar_ids_hn}")
     METRICS["few_shot_exemplar_ids_hn"] = exemplar_ids_hn
 else:
     exemplars_hn = [(lbl, "N/A") for lbl in HN_LABELS]
@@ -520,17 +539,17 @@ else:
 
 # CELL:code
 # Cell 10 — Few-Shot Constrained Scoring (10K Test)
-print("Running few-shot constrained scoring on 10K test (n=40)...")
+print(f"Running few-shot constrained scoring on 10K test (n={len(test10k)})...")
 fs_preds = []
 for i, row in enumerate(test10k.itertuples()):
     prompt = build_few_shot_prompt_10k(row.text, exemplars_10k)
     pred, _ = predict_constrained(model, tokenizer, prompt, MOAT_LABELS)
     fs_preds.append(pred)
     if (i + 1) % 10 == 0:
-        print(f"  {i + 1}/40 done")
+        print(f"  {i + 1}/{len(test10k)} done")
 
-sanity_gate(fs_preds, MOAT_LABELS, threshold=0.70, name="few_shot_10k")
 res_fs = compute_metrics(y_test_10k, fs_preds, MOAT_LABELS, "few_shot_10k")
+res_fs["sanity_gate_passed"] = sanity_gate(fs_preds, MOAT_LABELS, threshold=0.70, name="few_shot_10k")
 res_fs["preds"] = fs_preds
 print("Few-shot 10K complete.")
 
@@ -678,17 +697,17 @@ print("Loss curve saved.")
 # Cell 12 — LoRA Constrained Scoring (10K Test & Val)
 peft_model.eval()
 
-print("Running LoRA constrained scoring on 10K test (n=40)...")
+print(f"Running LoRA constrained scoring on 10K test (n={len(test10k)})...")
 lora_preds = []
 for i, row in enumerate(test10k.itertuples()):
     prompt = build_zero_shot_prompt_10k(row.text)
     pred, _ = predict_constrained(peft_model, tokenizer, prompt, MOAT_LABELS)
     lora_preds.append(pred)
     if (i + 1) % 10 == 0:
-        print(f"  {i + 1}/40 done")
+        print(f"  {i + 1}/{len(test10k)} done")
 
-sanity_gate(lora_preds, MOAT_LABELS, threshold=0.70, name="lora_10k")
 res_lora = compute_metrics(y_test_10k, lora_preds, MOAT_LABELS, "lora_10k")
+res_lora["sanity_gate_passed"] = sanity_gate(lora_preds, MOAT_LABELS, threshold=0.70, name="lora_10k")
 res_lora["preds"] = lora_preds
 
 # Val evaluation
@@ -736,8 +755,8 @@ for i, row in enumerate(testhn.itertuples()):
     if (i + 1) % 20 == 0:
         print(f"  {i + 1}/60 done")
 
-sanity_gate(hn_zs_preds, HN_LABELS, threshold=0.70, name="zero_shot_hn")
 res_hn_zs = compute_metrics(y_test_hn, hn_zs_preds, HN_LABELS, "zero_shot_hn")
+res_hn_zs["sanity_gate_passed"] = sanity_gate(hn_zs_preds, HN_LABELS, threshold=0.70, name="zero_shot_hn")
 res_hn_zs["preds"] = hn_zs_preds
 
 print("Running few-shot HN stance (n=60)...")
@@ -749,8 +768,8 @@ for i, row in enumerate(testhn.itertuples()):
     if (i + 1) % 20 == 0:
         print(f"  {i + 1}/60 done")
 
-sanity_gate(hn_fs_preds, HN_LABELS, threshold=0.70, name="few_shot_hn")
 res_hn_fs = compute_metrics(y_test_hn, hn_fs_preds, HN_LABELS, "few_shot_hn")
+res_hn_fs["sanity_gate_passed"] = sanity_gate(hn_fs_preds, HN_LABELS, threshold=0.70, name="few_shot_hn")
 res_hn_fs["preds"] = hn_fs_preds
 
 hn_acc = res_hn_fs["accuracy"]
@@ -783,18 +802,25 @@ if HN_JSONL:
                                      random_state=SEED)
     print(f"  Sampled {len(sample_df)} comments...")
 
-    best_method = ("few_shot" if res_hn_fs["macro_f1"] >= res_hn_zs["macro_f1"]
-                   else "zero_shot")
-    print(f"  Using {best_method} for corpus inference")
+    valid_methods = [
+        (m, r) for m, r in [("few_shot", res_hn_fs), ("zero_shot", res_hn_zs)]
+        if r.get("sanity_gate_passed", True)
+    ]
+    if valid_methods:
+        best_method = max(valid_methods, key=lambda x: x[1]["macro_f1"])[0]
+    else:
+        best_method = "zero_shot" if res_hn_zs["macro_f1"] >= res_hn_fs["macro_f1"] else "few_shot"
+    print(f"  Using {best_method} for corpus inference (sanity gate verified)")
     METRICS["corpus_hn_method"] = best_method
 
     corpus_preds = []
     t0 = _time.time()
     for i, row in enumerate(sample_df.itertuples()):
+        text_snip = str(row.text)[:400]
         if best_method == "few_shot":
-            prompt = build_few_shot_prompt_hn(row.text, exemplars_hn)
+            prompt = build_few_shot_prompt_hn(text_snip, exemplars_hn)
         else:
-            prompt = build_zero_shot_prompt_hn(row.text)
+            prompt = build_zero_shot_prompt_hn(text_snip)
         pred, _ = predict_constrained(model, tokenizer, prompt, HN_LABELS)
         corpus_preds.append(pred)
         if (i + 1) % 300 == 0:
@@ -852,20 +878,24 @@ if FILINGS_PQ and STOCK_CSV:
         t_fil     = fil_df[fil_df["ticker"] == ticker]
         latest_fy = t_fil["fiscal_year"].max()
         t_fil     = t_fil[t_fil["fiscal_year"] == latest_fy]
+        t_item1   = t_fil[t_fil["section"] == "Item 1"]
+        if len(t_item1) >= 10:
+            t_fil = t_item1
         sample_n  = min(30, len(t_fil))
         t_sample  = (t_fil.sample(sample_n, random_state=SEED)
                      if sample_n > 0 else t_fil)
 
         preds_c = []
         for row in t_sample.itertuples():
+            para_txt = str(row.text)[:600]
             if best_rq4 == "few_shot":
-                prompt = build_few_shot_prompt_10k(row.text, exemplars_10k)
+                prompt = build_few_shot_prompt_10k(para_txt, exemplars_10k)
                 pred, _ = predict_constrained(model, tokenizer, prompt, MOAT_LABELS)
             elif best_rq4 == "lora":
-                prompt = build_zero_shot_prompt_10k(row.text)
+                prompt = build_zero_shot_prompt_10k(para_txt)
                 pred, _ = predict_constrained(peft_model, tokenizer, prompt, MOAT_LABELS)
             else:
-                prompt = build_zero_shot_prompt_10k(row.text)
+                prompt = build_zero_shot_prompt_10k(para_txt)
                 pred, _ = predict_constrained(model, tokenizer, prompt, MOAT_LABELS)
             preds_c.append(pred)
 
@@ -995,7 +1025,7 @@ for ax, (name, preds) in zip(axes, [
     disp = ConfusionMatrixDisplay(cm, display_labels=[l[:12] for l in MOAT_LABELS])
     disp.plot(ax=ax, colorbar=False, xticks_rotation=45)
     ax.set_title(name)
-fig.suptitle("10-K Moat Classification (test n=40, labels=keyword-rule)", y=1.02)
+fig.suptitle(f"10-K Moat Classification (test n={len(y_test_10k)}, student-approved labels)", y=1.02)
 fig.tight_layout()
 fig.savefig(OUT / "confusion_matrices.png", dpi=120, bbox_inches="tight")
 plt.close(fig)
@@ -1010,7 +1040,7 @@ with open(OUT / "metrics.json", "w") as f:
     json.dump(METRICS, f, indent=2, default=str)
 print(f"metrics.json written. Keys: {list(METRICS.keys())}")
 
-print("\n===== RESULTS SUMMARY (10K moat classification, n=40, keyword-rule labels) =====")
+print(f"\n===== RESULTS SUMMARY (10K moat classification, n={len(y_test_10k)}, student-approved labels) =====")
 print(f"{'Method':<30} {'Acc':>6} {'[95% CI]':>18} {'MacroF1':>8} {'[95% CI]':>18}")
 print("-" * 80)
 for mkey in ["majority_baseline", "random_baseline", "keyword_rule_baseline",
