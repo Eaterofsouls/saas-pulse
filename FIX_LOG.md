@@ -138,3 +138,6 @@ Audited results:
   2. Made `sanity_gate` non-halting: records `sanity_gate_passed: bool` and logs warnings without aborting downstream cells.
   3. Interleaved HN few-shot exemplars across classes.
   4. Enforced Item 1 paragraph filtering and text truncation for RQ4 econometric linkage.
+- **Kernel Run 12 (`runs/20261102_2138/`)**: Failed immediately at Cell 5 with `IndentationError` / string literal escape caused by automated regex patch.
+- **Fix Applied for Run 13 (Kernel Version 13)**: Clean syntax rewrite verified with Python `ast.parse()` (`verify_cells_syntax.py`) across all 21 code cells.
+- **Kernel Run 13 (`runs/20261102_2144/`)**: **SUCCESSFUL EXECUTION ON KAGGLE TESLA T4 GPU**. Ran for 74 minutes, completed with `KernelWorkerStatus.COMPLETE`. Achieved 0.600 Accuracy, 0.589 Macro-F1 with balanced 6-class distribution (no mode collapse). Both HN stance methods passed sanity gate. Econometric linkage evaluated on N=92 companies ($\rho = 0.1839, p = 0.0793$). 100% verification checks passed in `CHECKS.md`.
