@@ -79,4 +79,4 @@ This document records the exact distributions and sample records of the gold eva
 - **Observed Agreement**: 65.38% on evaluated val/test items (34 agreed, 18 changed).
 - **Cohen's Kappa**: $\kappa = 0.5742$ (moderate agreement).
 - **Exclusions**: 8 rows dropped from evaluation (marked `exclude`).
-- Full audit log available in `dataset/review/HUMAN_REVIEW_AUDIT.md`.
+- Full audit log available in `dataset/review/REVIEW_AUDIT.md`.

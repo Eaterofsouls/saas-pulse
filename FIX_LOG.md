@@ -103,7 +103,7 @@ Confusion matrix confirms most predictions go to network_effects_ecosystem.
 | Fix | Status |
 |:----|:-------|
 | Rewrite GOLD_PROVENANCE.md (truthfully documenting human review protocol & anchoring limits) | Done |
-| Ingest `dataset/review/gold_review_completed.xlsx` | Done (60 10K, 60 HN audited; see HUMAN_REVIEW_AUDIT.md) |
+| Ingest `dataset/review/gold_review_completed.xlsx` | Done (60 10K, 60 HN audited; see REVIEW_AUDIT.md) |
 | Constrained log-prob scoring for all methods | Implemented in notebook v2 |
 | LoRA completion-only loss masking | Implemented in notebook v2 |
 | Sanity gate (>70% in one class = bug) | Implemented |
@@ -125,7 +125,7 @@ Audited results:
   - Evaluated agreement: 65.38% (34 agreed, 18 changed), Cohen's $\kappa = 0.5742$.
   - Validation and test labels attributed strictly as `label_source = "llm_reviewed_student_approved"`.
 - HN (60 rows): Unreviewed per protocol; labels attributed as `label_source = "keyword_rule"`.
-- Anchoring bias risk explicitly noted on slides and provenance documents. Full audit logged in `dataset/review/HUMAN_REVIEW_AUDIT.md`.
+- Anchoring bias risk explicitly noted on slides and provenance documents. Full audit logged in `dataset/review/REVIEW_AUDIT.md`.
 
 ---
 
