@@ -1,396 +1,151 @@
-# SaaS-Pulse: Which SaaS Moats Actually Hold Against AI?
-## 12-Slide Defense Deck & Academic Presentation
-**Author**: Daksh Chauhan (7th Sem CS, Adani University)  
-**Academic Requirement**: Generative AI Semester Project (Dataset Creation & GenAI Modeling)  
-**Hardware Profile**: Free Kaggle T4 GPU (16GB VRAM)  
-**Artifacts**: Frozen Dataset (35.35 MB), Kaggle Notebook (`saas_pulse_experiment.ipynb`), HTML Presentation (`presentation.html`)
-
----
-
-## Slide 1: Title & Research Context
-
-### Header
-**SaaS-Pulse: Which SaaS Moats Actually Hold Against AI?**  
-*An Empirical Investigation into Software Defensibility, Developer Substitution, and Equity Market Signals in the Era of Generative AI*
-
-### Sub-Header & Metadata
-- **Student**: Daksh Chauhan (B.Tech Computer Science & Engineering, 7th Semester)
-- **Institution**: Adani University, Faculty of Engineering & Technology
-- **Course**: Generative AI Project
-- **Date**: October 2026
-
-### Core Narrative Card
-> "Software is eating the world, but AI is eating software margins. When software engineers can 'vibe code' internal tools with LLMs in hours, which commercial SaaS products remain indispensable, and which are vulnerable to internal replacement?"
-
-### Speaker Notes (60 seconds)
-> "Good morning faculty and esteemed professors. I am Daksh Chauhan, and today I present **SaaS-Pulse**. Over the past 15 years, the standard playbook for enterprise software was simple: buy a SaaS subscription for every operational need. But the emergence of frontier generative models and AI-assisted development has changed this fundamental economic equation. Engineering teams are asking: *'Why pay \$50 per seat per month for a CRUD tool or dashboard when an engineer can build a tailored internal alternative in a weekend?'* 
->
-> In this project, I created and prepared a multi-modal dataset from scratch—combining SEC 10-K filings, XBRL financials, Hacker News developer discussions, historical pricing pages, and market returns—and leveraged Qwen2.5 with LoRA fine-tuning to evaluate how defensible software moats truly are in the AI era."
-
----
-
-## Slide 2: The Problem: The SaaS Existential Crisis
-
-### Slide Title
-**The Erosion of Software Moats: Commoditization & 'Vibe Coding'**
-
-### Visual Layout: 3-Pillar Comparison
-```
-┌─────────────────────────────────┐   ┌─────────────────────────────────┐   ┌─────────────────────────────────┐
-│     The Legacy SaaS Thesis      │   │    The Generative Disruption    │   │    The Emerging Reality         │
-├─────────────────────────────────┤   ├─────────────────────────────────┤   ├─────────────────────────────────┤
-│ • High switching costs          │   │ • LLMs write boilerplate & UIs  │   │ • Thin workflow tools commoditize│
-│ • UI/UX as primary barrier      │   │ • Frameworks (Supabase, Retool) │   │ • Systems of Record survive     │
-│ • Predictable ARR seat pricing  │   │ • 'Vibe coding' custom tools    │   │ • IT budgets demand ROI proof   │
-│ • Investors rewarded point tools│   │ • Seat-based pricing under siege│   │ • 'Build vs Buy' calculus shifts│
-└─────────────────────────────────┘   └─────────────────────────────────┘   └─────────────────────────────────┘
-```
-
-### Key Analytical Points
-1. **The Marginal Cost of Software Creation Collapsed**: Building basic CRUD workflows, internal ticket trackers, and reporting dashboards used to require dedicated engineering sprints; GenAI has compressed this to hours.
-2. **Point-Solution Vulnerability**: Tools whose primary value proposition is a friendly frontend over a relational database are seeing aggressive internal-tool substitution.
-3. **The Pricing Paradox**: Seat-based pricing penalizes enterprise productivity gains; enterprises are actively questioning SaaS vendor bloat.
-
-### Speaker Notes (60 seconds)
-> "To understand why this topic matters, consider what made SaaS valuable historically: software took months to write, so buying a point solution was always cheaper than building in-house. 
-> Today, with code generation models, the marginal cost of building custom internal workflows has dropped precipitously. Point solutions that operate as thin wrappers over standard workflows are suddenly vulnerable.
-> But not all SaaS is vulnerable. Our research explores where the boundary lies: which moats actually hold, and which are illusory marketing language?"
-
----
-
-## Slide 3: Research Questions & Empirical Framing
-
-### Slide Title
-**Core Research Questions & Methodological Objectives**
-
-### 3 Guided Research Questions
-
-| Question | Focus | Methodology |
-| :--- | :--- | :--- |
-| **RQ1: Moat Identification** | Can an SLM (Qwen2.5-1.5B) reliably identify economic defensibility claims in dense corporate 10-K filings across 6 archetypes? Does LoRA outperform Zero-Shot & CoT? | Multi-class NLP classification, LoRA PEFT, Wilson score intervals & 1,000 bootstrap CI |
-| **RQ2: Developer Substitution** | What is the real-world developer sentiment regarding 'build vs buy'? What tools are engineers actually replacing with internal builds? | Hacker News stance classification (7,829 comments corpus, 60 gold test set) |
-| **RQ3: Financial Validation** | Do companies asserting deep moats demonstrate financial resilience in market returns and revenue growth since early 2023? | Spearman rank correlation ($\rho$), sector excess return vs. IGV software benchmark |
-
-### Methodological Guarantees
-- **Original Dataset**: 100% created, parsed, cleaned, and labeled for this project.
-- **Frozen Reproducibility**: No live re-scraping required; reproducible on a free Kaggle T4 GPU.
-- **Academic Honesty**: Clear disclosure of survivorship bias, small-sample bounds, and non-causal associations.
-
-### Speaker Notes (45 seconds)
-> "We anchor this study in three specific research questions. RQ1 addresses the GenAI modeling capability: can a 1.5-billion parameter model learn nuanced economic taxonomy in legal text? 
-> RQ2 captures empirical developer behavior on the ground: are engineers actually building internal replacements, or is it just social media hype?
-> And RQ3 connects these findings to financial reality: do public markets reward companies with structural moats over those with vulnerable workflow tools?"
-
----
-
-## Slide 4: Multi-Modal Dataset Architecture & Ethical Scraping
-
-### Slide Title
-**Multi-Modal Dataset Engineering & Compliance Pipeline**
-
-### Architecture Diagram
-```
-                     ┌────────────────────────────────────────┐
-                     │   SaaS-Pulse Data Collection Engine    │
-                     └───────────────────┬────────────────────┘
-                                         │
-        ┌───────────────────┬────────────┴───────┬───────────────────┐
-        ▼                   ▼                    ▼                   ▼
-┌───────────────┐   ┌───────────────┐    ┌───────────────┐   ┌───────────────┐
-│  SEC EDGAR    │   │   SEC XBRL    │    │  Hacker News  │   │  Market Data  │
-│ 10-K HTML     │   │ Financial Facts│    │ Algolia API   │   │ yfinance      │
-├───────────────┤   ├───────────────┤    ├───────────────┤   ├───────────────┤
-│ • Items 1/1A  │   │ • US-GAAP Rev │    │ • 7,829 posts │   │ • 2023-2026   │
-│ • 464 filings │   │ • YoY Growth  │    │ • SHA256 Hash │   │ • Excess Ret  │
-│ • 190k paras  │   │ • 100/100 cos │    │ • Monthly wins│   │ • vs IGV/SPY  │
-└───────┬───────┘   └───────┬───────┘    └───────┬───────┘   └───────┬───────┘
-        │                   │                    │                   │
-        └───────────────────┼────────────────────┴───────────────────┘
-                            ▼
-     ┌─────────────────────────────────────────────────────────┐
-     │  Frozen Gold Sets & Review Artifacts (Dataset Zip: 35MB)│
-     │  • gold_10k_moats.csv (200 rows, 140/20/40 stratified)  │
-     │  • gold_hn_stance.csv (60 rows, 20/20/20 balanced)      │
-     └─────────────────────────────────────────────────────────┘
-```
-
-### Ethical & Technical Compliance Safeguards
-- **SEC EDGAR**: User-Agent identity header (`Daksh Chauhan, me@buildwithdaksh.com`), polite pacing at $<8$ req/s.
-- **Hacker News**: Algolia REST API, strict monthly query windows, SHA-256 hashed usernames for privacy.
-- **Pricing & Web Scraping**: Strict `robots.txt` compliance, Wayback CDX fallback, live headful Playwright with 3-second networkidle timeouts.
-- **Data Integrity**: SHA-256 checksums recorded for all raw assets.
-
-### Speaker Notes (60 seconds)
-> "Rather than using pre-packaged Kaggle CSVs, we engineered an original multi-modal dataset across six distinct sources.
-> We parsed 464 official 10-K HTML filings from the SEC EDGAR system, extracting over 190,000 paragraphs from Business and Risk Factor sections. We collected five years of US-GAAP revenue and growth data for all 100 companies. 
-> To capture developer sentiment, we queried Hacker News via Algolia, pseudonymizing usernames via SHA-256 hashing. 
-> We adhered to ethical data practices: strict rate limits below 8 requests per second, robots.txt compliance, and zero scraping of unauthorized walled gardens like LinkedIn or Reddit."
-
----
-
-## Slide 5: The Empirical Dataset by the Numbers
-
-### Slide Title
-**Empirical Scale: Summary Statistics & Coverage**
-
-### Comprehensive Data Table
-
-| Component | Target File | Scope / Metric | Valid Count | Missing / Excluded | Coverage |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **SaaS Universe** | `companies.csv` | Mid-to-Large Public SaaS | **100 companies** | 0 | 100% |
-| **SEC 10-K Filings** | `filings_index.csv` | Fiscal Years 2021–2025 | **443 filings** | 21 parse-failed | 95.5% |
-| **10-K Paragraphs** | `filings_paragraphs.jsonl`| Items 1 & 1A ($\ge 150$ chars) | **190,655 paras**| 0 | 100% |
-| **XBRL Financials** | `revenue.csv` | Official US-GAAP Annual Rev| **538 annual rows**| 0 | 100% (100/100 cos) |
-| **HN Discourse** | `hn_comments.jsonl` | Filtered posts ($\ge 80$ chars)| **7,829 comments** | 0 | 100% |
-| **Pricing Snapshots**| `pricing_pages.jsonl` | Live & Wayback snapshots | **13 parsed pages** | 131 unlisted/no page| - |
-| **Market Equities** | `stock_performance.csv` | Daily return vs IGV (+118.3%)| **96 active tickers**| 4 de-listed/pre-IPO | 96% |
-| **Gold 10-K Moats** | `gold_10k_moats.csv` | Stratified 6-class audit set | **200 paragraphs** | 0 | 100% |
-| **Gold HN Stance** | `gold_hn_stance.csv` | Stratified 3-class audit set | **60 comments** | 0 | 100% |
-
-### Sector Distribution (100 Companies)
-- **Horizontal SaaS** ($N=25$): CRM, NOW, WDAY, ADBE, HUBS, ASAN, TEAM
-- **Vertical SaaS** ($N=21$): VEEV, TOST, SHOP, PRO, ROVR, BLND
-- **Data & Infrastructure** ($N=18$): SNOW, MDB, DDOG, CFLT, ESTC, PLTR
-- **Fintech & HR** ($N=18$): INTU, BILL, PAYC, PCTY, ENV
-- **Security** ($N=12$): CRWD, PANW, FTNT, ZS, S, OKTA
-- **Communication** ($N=6$): ZM, TWLO, RBLX, BAND
-
-### Speaker Notes (60 seconds)
-> "Here is the exact footprint of our collected dataset. Every number on this slide is verified and frozen in our 35-megabyte distribution package.
-> We achieved 100% financial coverage: all 100 public SaaS companies have verified US-GAAP revenues from official XBRL tags. 
-> Notice the broad representation across 6 sectors: from horizontal giants like Salesforce and ServiceNow to security pioneers like CrowdStrike and infrastructure like Snowflake. 
-> This diverse representation is essential for testing whether moats differ across software categories."
-
----
-
-## Slide 6: The 6-Archetype Economic Moat Taxonomy
-
-### Slide Title
-**The Moat Taxonomy: Defining Defensibility in Enterprise Software**
-
-### Taxonomy Card Grid
-
-```
-┌─────────────────────────────────┐   ┌─────────────────────────────────┐   ┌─────────────────────────────────┐
-│     1. System of Record         │   │       2. Data Gravity           │   │  3. Switching Costs / Integrate │
-├─────────────────────────────────┤   ├─────────────────────────────────┤   ├─────────────────────────────────┤
-│ • Definition: Central single    │   │ • Definition: Accumulation of   │   │ • Definition: Deep API web,     │
-│   source of truth (ERP/CRM).    │   │   petabyte-scale data lakes.    │   │   custom workflows, retraining. │
-│ • Example: Salesforce, Workday  │   │ • Example: Snowflake, MongoDB   │   │ • Example: ServiceNow, Atlassian│
-│ • AI Defensibility: HIGH        │   │ • AI Defensibility: HIGH        │   │ • AI Defensibility: MEDIUM-HIGH │
-└─────────────────────────────────┘   └─────────────────────────────────┘   └─────────────────────────────────┘
-┌─────────────────────────────────┐   ┌─────────────────────────────────┐   ┌─────────────────────────────────┐
-│     4. Compliance & Security    │   │   5. Network Effects / Ecosyst  │   │     6. None / Commodity         │
-├─────────────────────────────────┤   ├─────────────────────────────────┤   ├─────────────────────────────────┤
-│ • Definition: Regulated audits, │   │ • Definition: Multi-sided app   │   │ • Definition: Generic workflow, │
-│   FedRAMP, HIPAA, SOC2, FINRA.  │   │   stores, developer ecosystems. │   │   point-solution, boilerplate.  │
-│ • Example: CrowdStrike, Veeva   │   │ • Example: Shopify, Intuit      │   │ • Example: Generic CRUD/Notepads│
-│ • AI Defensibility: VERY HIGH   │   │ • AI Defensibility: HIGH        │   │ • AI Defensibility: VERY LOW    │
-└─────────────────────────────────┘   └─────────────────────────────────┘   └─────────────────────────────────┘
-```
-
-### Strategic Annotation Strategy
-- **Balanced Stratification**: 200 paragraphs curated from SEC 10-Ks across 100 companies.
-- **Split Design**: 140 Train (70%), 20 Validation (10%), 40 Frozen Test (20%).
-- **Class Balance**: 30 examples for each of the 5 active moats, 50 examples for `none_or_commodity` (corporate legal boilerplate).
-
-### Speaker Notes (60 seconds)
-> "To train our GenAI models, we defined a rigorous 6-class economic taxonomy based on microeconomic principles.
-> Why these 6? Because LLMs cannot replace compliance certifications like FedRAMP or HIPAA; they cannot replace the legal liability of a cybersecurity vendor; and they cannot easily replace a system of record that houses audited financial transactions.
-> Conversely, class 6—None or Commodity—captures generic UI layers and boilerplate claims. 
-> We hand-audited 200 paragraphs with Chain-of-Thought rationales, creating a balanced gold standard to benchmark our models."
-
----
-
-## Slide 7: GenAI Modeling: Zero-Shot vs Few-Shot CoT vs LoRA
-
-### Slide Title
-**GenAI Pipeline: Parameter-Efficient Fine-Tuning on Qwen2.5-1.5B**
-
-### Modeling Methodology Overview
-We selected **Qwen2.5-1.5B-Instruct** as our base model—an efficient, high-performance open-weight model capable of running entirely in free-tier Kaggle T4 GPU memory.
-
-### 3 Experimental Paradigms
-
-```
-1. Zero-Shot Prompting
-   [System: Taxonomy Definitions] ──► [10-K Paragraph] ──► [Direct JSON Output]
-
-2. Few-Shot Chain-of-Thought (CoT)
-   [System Prompt] ──► [3 Exemplars with Economic Rationales] ──► [Test Item] ──► [CoT + JSON Output]
-
-3. LoRA SFT Fine-Tuning (Parameter-Efficient)
-   [Base Qwen2.5-1.5B in 4-bit NF4] + [LoRA Adapters on q,k,v,o projections (r=16, alpha=32)]
-   Trained on 140 Examples (3 Epochs, AdamW, lr=2e-4) ──► Validated on 20 Examples
-```
-
-### Architectural & Training Hyperparameters
-- **Base Precision**: 4-bit NormalFloat (NF4) via `bitsandbytes` (VRAM footprint $<2.4$ GB).
-- **LoRA Configuration**: Rank $r=16$, Alpha $\alpha=32$, Dropout $0.05$, Target Modules: `q_proj`, `k_proj`, `v_proj`, `o_proj`.
-- **Training Setup**: Hugging Face `trl.SFTTrainer`, batch size 2, gradient accumulation 4 (effective batch 8), 3 epochs, learning rate $2 \times 10^{-4}$.
-
-### Speaker Notes (60 seconds)
-> "For our GenAI task, we tested three distinct learning regimes on Qwen2.5-1.5B.
-> First, Zero-Shot prompting provides the taxonomy definitions directly in the system prompt.
-> Second, Few-Shot Chain-of-Thought provides three in-context demonstrations showing step-by-step economic deduction before producing the label.
-> Third, we fine-tuned the model using LoRA. By freezing the 1.5-billion parameter base model in 4-bit precision and only training low-rank adapter matrices on the attention projections, we achieve high task adaptation while consuming less than 3 GB of GPU memory. This makes the entire experiment reproducible on any standard GPU."
-
----
-
-## Slide 8: Moat Classification Benchmark & Statistical Rigor
-
-### Slide Title
-**Benchmark Results: Evaluation Across 6 Modeling Approaches**
-
-### Evaluation Table (Frozen Test Set, $N=35$)
-
-| Method | Accuracy | Wilson 95% CI | Macro-Precision | Macro-Recall | Macro-F1 | Bootstrap 95% CI |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Majority Baseline** | 0.457 | [0.305, 0.618] | 0.076 | 0.167 | 0.105 | [0.074, 0.129] |
-| **Random Baseline** | 0.143 | [0.063, 0.294] | 0.135 | 0.160 | 0.122 | [0.029, 0.208] |
-| **Keyword Rule Baseline** | 0.657 | [0.491, 0.792] | 0.637 | 0.812 | 0.667 | [0.472, 0.796] |
-| **Zero-Shot Prompting** | 0.371 | [0.232, 0.537] | 0.397 | 0.427 | 0.305 | [0.180, 0.397] |
-| **Few-Shot CoT** | 0.343 | [0.208, 0.508] | 0.259 | 0.472 | 0.307 | [0.181, 0.411] |
-| **LoRA Fine-Tuned (Qwen 1.5B)** | **0.600** | **[0.436, 0.745]** | **0.580** | **0.696** | **0.589** | **[0.396, 0.746]** |
-
-*Note: Test labels reviewed by Claude Opus 5.5 and student-approved by Daksh Chauhan (N=35 evaluated, 5 uninformative rows excluded; 34/52 agreement on evaluated rows). 140 training labels are rule-generated; small N=35 sample bounds.*
-
-### Prediction Distributions & Per-Class F1 (Best Model: LoRA)
-- `system_of_record`: **0.73 F1** (Precision 0.67, Recall 0.80)
-- `network_effects_ecosystem`: **0.83 F1** (Precision 0.83, Recall 0.83)
-- `compliance_security`: **0.57 F1** (Precision 0.50, Recall 0.67)
-- `none_or_commodity`: **0.52 F1** (Precision 0.86, Recall 0.38)
-- `switching_costs_integrations`: **0.55 F1** (Precision 0.38, Recall 1.00)
-- `data_gravity`: **0.33 F1** (Precision 0.25, Recall 0.50)
-
-### Key Methodological & Empirical Insights
-- **Constrained Log-Prob Scoring Success**: Eliminating free-text JSON generation in favor of teacher-forced exact sequence log-probability scoring resolved mode collapse, cleanly distributing predictions across all 6 classes.
-- **Statistical Significance**: LoRA achieves highest sample accuracy (60.0%) and Macro-F1 (0.589). Pairwise McNemar test vs Few-Shot shows statistical significance (p=0.0265), while comparison vs Zero-Shot shows p=0.0614. We explicitly report wide confidence intervals and avoid overclaiming.
-
-### Speaker Notes (60 seconds)
-> "Here are our empirical benchmark results across 6 modeling approaches on the frozen test set of 35 paragraphs evaluated against student-approved ground truth.
-> By implementing teacher-forced exact sequence log-prob scoring and prompt-masked completion loss, our LoRA fine-tuned Qwen-1.5B achieved 60.0% accuracy and a Macro-F1 of 0.589.
-> Pairwise McNemar testing vs Few-Shot yields p=0.0265. However, academic honesty requires stating that on N=35, sample bounds reflect wide real confidence intervals." 
-
----
-
-## Slide 9: Developer Stance on "Build vs Buy": Hacker News Discourse
-
-### Slide Title
-**Hacker News Discourse: Stance Classification & Developer Behavior**
-
-### Evaluation on Curated Developer Benchmark ($N=60$)
-
-| Method | Accuracy | Wilson 95% CI | Macro-Precision | Macro-Recall | Macro-F1 | Bootstrap 95% CI |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Zero-Shot Prompting** | 0.433 | [0.316, 0.559] | 0.535 | 0.433 | 0.397 | [0.268, 0.525] |
-| **Few-Shot CoT** | 0.433 | [0.316, 0.559] | 0.612 | 0.433 | 0.385 | [0.261, 0.498] |
-
-> **Critical Empirical Finding: Near-Chance Classification**  
-> On 3-way stance classification (`build_internal`, `buy_saas`, `hybrid_or_neutral`), random chance is 33.3%. Both Zero-Shot and Few-Shot achieve **43.3% accuracy** with Wilson 95% CIs [0.316, 0.559], which overlap chance. Informal developer jargon, irony, and sarcasm make stance extraction without extensive domain pre-training exceptionally challenging.
-
-### Corpus-Level Inference ($N=1,500$ Sampled Comments, Method: zero_shot)
-- `build_internal`: **41.6%** (624 comments, 95% CI [39.1%, 44.1%])
-- `buy_saas`: **57.9%** (868 comments, 95% CI [55.5%, 60.3%])
-- `hybrid_or_neutral`: **0.5%** (8 comments, 95% CI [0.2%, 0.9%])
-
-*Methodological Limitation Note: While corpus inference predicts 57.9% 'buy SaaS' and 41.6% 'build internal', this reflects classifier behavior on noisy forum text combined with search queries targeting "replace SaaS" and "internal tools", not an unbiased measure of enterprise software spend.*
-
-### Qualitative Themes from Developer Discourse
-1. **The Vulnerable Workflow CRUD Layer**: Multiple teams report replacing \$30k–\$50k/year internal SaaS subscriptions with custom Supabase/Retool apps built in weeks using AI assistants.
-2. **The Defensible Compliance & Liability Layer**: Engineers strongly oppose building internal solutions for identity (Okta), billing/tax (Stripe), or audited logs (FedRAMP/HIPAA) where regulatory liability is critical.
-
-### Speaker Notes (60 seconds)
-> "When evaluating developer stance on Hacker News, our models achieved 43.3% accuracy—which is near chance given the 33.3% baseline. Informal developer discourse, sarcasm, and multifaceted opinions prove difficult for smaller language models to classify reliably.
-> Corpus inference over 1,500 comments estimates 57.9% buy-SaaS vs 41.6% build-internal.
-> Qualitatively, the discourse reveals a sharp division: developers readily replace internal admin CRUD tools with AI-assisted builds, but refuse to touch billing engines, identity, or compliance-critical infrastructure." 
-
----
-
-## Slide 10: Econometric Linkage: Do Moats Protect Equity Returns?
-
-### Slide Title
-**Empirical Financial Analysis: Moats vs. Equity Performance (2023–2026)**
-
-### Sector Return vs. Software Benchmark (`IGV`: $+118.31\%$)
-
-| Category | N | Median Return (%) | Median Excess vs IGV (%) | Top Performer | Bottom Performer |
-| :--- | :---: | :---: | :---: | :--- | :--- |
-| **Data & Infra** | 17 | **+160.5%** | **+42.1%** | Palantir (`PLTR` +2,980.0%) | Progress Software (`PRGS` -10.8%) |
-| **Security** | 12 | **+102.0%** | **-16.4%** | CrowdStrike (`CRWD` +932.8%) | Rapid7 (`RPD` -49.4%) |
-| **Communication** | 6 | **+84.2%** | **-34.1%** | Twilio (`TWLO` +403.3%) | 8x8 (`EGHT` -48.9%) |
-| **Horizontal SaaS**| 25 | **+47.3%** | **-71.0%** | AppLovin (`APP` +2,322.8%) | CoStar Group (`CSGP` -64.5%) |
-| **Vertical SaaS** | 18 | **+24.2%** | **-94.2%** | Guidewire (`GWRE` +165.4%) | Sprout Social (`SPT` -78.4%) |
-| **Fintech & HR** | 18 | **-12.9%** | **-131.2%** | Paymentus (`PAY` +286.6%) | BILL Holdings (`BILL` -56.0%) |
-
-### Econometric Findings: Moat Score Correlations (RQ4)
-- **Moat Density vs. Excess Return**: Spearman rank correlation $\rho = 0.1839$ ($p = 0.0793$, 95% CI [-0.0184, 0.3673], $N=92$). **Not statistically significant at $\alpha = 0.05$**.
-- **Moat Density vs. Revenue Growth**: Spearman rank correlation $\rho = -0.0219$ ($p = 0.836$, $N=92$). **Not statistically significant**.
-- **Category Moat Scores**: Communication (median 0.383), Vertical (0.367), Data/Infra (0.267), Fintech/HR (0.267), Security (0.200), Horizontal (0.167).
-- **Core Financial Takeaway**: Market equity returns over 2023–2026 were dominated by macro sector trends (Data/Infra outperforming driven by AI infrastructure spending) rather than fine-grained paragraph-level moat mention density in 10-K filings.
-
-### Speaker Notes (60 seconds)
-> "Does 10-K moat mention density predict stock performance? We analyzed 92 public SaaS companies with stock performance from January 2023 to October 2026 benchmarked against the IGV software index (+118.31%).
-> The empirical finding is honest: the Spearman rank correlation between company moat density score and market excess return is rho = 0.184 with p = 0.079. This is not statistically significant.
-> While Data and Infrastructure outperformed (+42.1% median excess) and Fintech/HR lagged (-131.2%), these returns reflect sector-level macro tailwinds and multiples rather than simple paragraph-level moat counts." 
-
----
-
-## Slide 11: Case Studies: High Moat vs. Fragile Workflow SaaS
-
-### Slide Title
-**Case Studies: Structural Moats vs. Fragile Point Solutions**
-
-### Comparative Matrix
-
-```
-┌────────────────────────────────────────────────────────┐  ┌────────────────────────────────────────────────────────┐
-│           CASE A: High Defensibility Moats             │  │            CASE B: Fragile Point Solutions             │
-├────────────────────────────────────────────────────────┤  ├────────────────────────────────────────────────────────┤
-│ • CrowdStrike (CRWD) & ServiceNow (NOW)                │  │ • Sprout Social (SPT) & Asana (ASAN)                   │
-│ • Moats: Compliance/Security & System of Record        │  │ • Moats: Workflow UI / Point-Solution Task Tracking   │
-│ • 10-K Excerpt:                                        │  │ • 10-K Excerpt:                                        │
-│   "Our Falcon platform processes over 1 trillion      │  │   "We offer intuitive user interfaces to facilitate    │
-│   events per day, leveraging proprietary AI models     │  │   collaborative work management and team coordination" │
-│   anchored in kernel-level endpoint telemetry."        │  │ • Excess Return vs IGV: -196.7% (SPT), -166.5% (ASAN)   │
-│ • Excess Return vs IGV: +814.5% (CRWD), +114.2% (NOW)  │  │ • Vulnerability: Readily replaced by internal Retool/  │
-│ • Moat Verdict: Kernel access & compliance liability   │  │   Supabase tools, linear workflows, or AI agents.       │
-│   cannot be replicated by in-house LLM scripts.        │  │ • Moat Verdict: High risk of seat compression.          │
-└────────────────────────────────────────────────────────┘  └────────────────────────────────────────────────────────┘
-```
-
-### Strategic Takeaway for Enterprise Architects
-- **Unassailable**: Kernel-level security, systems of record, transactional general ledgers, audited multi-party compliance.
-- **At-Risk**: Form builders, standalone project trackers, generic dashboards, and single-purpose social media schedulers.
-
-### Speaker Notes (60 seconds)
-> "To make this concrete, let's contrast two specific case studies from our dataset.
-> On the left: CrowdStrike and ServiceNow. CrowdStrike's moat is anchored in kernel-level telemetry and cyber-insurance requirements. No enterprise IT team is going to build an internal endpoint security system with an LLM. As a result, CrowdStrike beat the software index by 814%.
-> On the right: workflow point solutions like Sprout Social and Asana. While useful, their core function is project tracking and social posting—workflows that can be replicated using internal LLM automations and light UI frameworks. Both significantly lagged the software index.
-> Generative AI acts as a moat-polarizer: it strengthens true data and security moats while evaporating thin UI moats."
-
----
-
-## Slide 12: Academic Honesty, Limitations & Future Work
-
-### Slide Title
-**Academic Honesty: Disclosures, Limitations & Project Artifacts**
-
-### Critical Academic Disclosures & Threats to Validity
-1. **Rule-Derived Training Labels**: The 140 training examples were generated using keyword rules. The model learns rule-based heuristics rather than ground-truth human annotations.
-2. **Student-Approved Review Protocol**: The 60 validation and test examples underwent structured audit (reviewed by Claude Opus 5.5, student-approved by Daksh Chauhan). 8 uninformative rows were excluded, yielding N=35 test paragraphs (34/52 agreement on evaluated rows). Potential anchoring bias from visible rule suggestions is explicitly disclosed.
-3. **Small Sample Size ($N=35$ Test)**: The 35-paragraph test set provides bounded statistical power. We report Wilson and bootstrap confidence intervals to represent sample uncertainty.
-4. **Informal Discourse Stance Limits**: On Hacker News 3-class stance classification, language models perform near chance (~43% accuracy), skewing aggregate corpus estimates.
-5. **Survivorship & Selection Bias**: Only surviving publicly traded companies filing 10-Ks are included; delisted or bankrupt startups are omitted. HN queries specifically targeted internal tool discussions.
-
-### Project Deliverables & Artifacts
-- **Frozen Dataset Package**: Cleaned CSV/JSONL tables in `dataset/` with full SHA-256 manifest in `dataset/MANIFEST.csv`.
-- **Reproducible Kaggle Notebook**: Fully executable `saas_pulse_experiment.ipynb` runnable on Kaggle Free T4 GPU.
-- **Provenance & Review Logs**: Complete audit trail in `GOLD_PROVENANCE.md`, `GOLD_REVIEW.md`, `HUMAN_REVIEW_AUDIT.md`, and `FIX_LOG.md`.
-- **Verification Audit**: 100% claim verification documented in `CHECKS.md`.
-
-### Speaker Notes (45 seconds)
-> "In closing, we emphasize full academic honesty.
-> We explicitly disclose key threats to validity: training labels are rule-derived; test verification carries potential anchoring bias; small test sample sizes (N=35) yield bounded power; and stance classification on forum text performs near chance.
-> Our code, data, and Kaggle notebook are fully reproducible and verified end-to-end in our audit logs.
-> Thank you, and I look forward to your questions." 
+# SaaS-Pulse: presentation script
+
+Generated by `build_deck.py` from `runs/20261102_2144`. Do not edit numbers by hand; re-run the script.
+
+## Slide 1: SaaS-Pulse: which SaaS moats hold up against AI?
+
+- 100 companies, 190,655 paragraphs, 7,829 HN items, 96 tickers
+
+**Speaker notes:** I built an original dataset to ask a current question: as AI makes software cheaper to build, which kinds of protection do SaaS companies claim, and do those claims line up with what the market did? The GenAI part is a model that reads 10-K text and labels the type of moat.
+
+## Slide 2: Why this question
+
+- AI lowers internal build cost; thin per-seat SaaS is exposed
+- Some moats may resist: system of record, compliance, data, network effects
+- Motivation only, tested later
+
+**Speaker notes:** This is the hypothesis, not a finding. If building software gets cheaper, the products at risk are the ones with no structural protection. The project checks whether we can measure claimed protection automatically, and whether it relates to outcomes.
+
+## Slide 3: Research questions
+
+- RQ1 moat classification: prompting vs LoRA
+- RQ2 HN build-vs-buy stance
+- RQ3 moat score vs excess return and revenue growth
+
+**Speaker notes:** Three questions. RQ1 is the core GenAI task. RQ2 looks at the developer side. RQ3 connects the model's output to real financial outcomes.
+
+## Slide 4: Dataset: collected and prepared for this project
+
+- 464 filings, 190,655 paragraphs
+- 538 revenue rows
+- 7,829 HN items
+- 147 pricing records
+- 96 tickers, IGV +118.3%
+
+**Speaker notes:** Everything here was collected and prepared for this project from public sources. Pricing pages turned out too patchy for analysis; enterprise vendors often have no public pricing, so I only use them descriptively.
+
+## Slide 5: Labels: a 6-class moat taxonomy and an honest gold set
+
+- Train 140: keyword-rule labels
+- Val+test: LLM-reviewed, author-approved; 8 excluded; agreement 65%, kappa 0.57
+- Test n = 35
+
+**Speaker notes:** I want to be precise about labels. Training labels come from keyword rules. The validation and test paragraphs were reviewed by a different, stronger LLM and approved by me. The rule and the review agreed about two thirds of the time, so the rules are noisy. The reviewer could see the rule's suggestion, which can bias the test labels toward the rule; keep that in mind on the next slide.
+
+## Slide 6: GenAI method
+
+- Zero-shot, few-shot (6 examples), LoRA (r=8, alpha=16, completion-only loss)
+- Constrained label scoring for all methods
+- Kaggle T4
+
+**Speaker notes:** All three methods use the same 1.5 billion parameter model. The important design choice is constrained scoring: the model never writes free text, it just ranks the six labels. That removed the parsing failures from the earlier run and makes the comparison fair.
+
+## Slide 7: RQ1 results: fine-tuning beats prompting
+
+- Majority class: acc 0.457, macro-F1 0.105
+- Random: acc 0.143, macro-F1 0.122
+- Keyword rule*: acc 0.657, macro-F1 0.667
+- Zero-shot (Qwen 1.5B): acc 0.371, macro-F1 0.305
+- Few-shot, 6 examples: acc 0.343, macro-F1 0.307
+- LoRA fine-tuned: acc 0.600, macro-F1 0.589
+- McNemar LoRA vs few-shot p=0.026, vs zero-shot p=0.061
+- Rule label kept on 23/35 test rows
+
+**Speaker notes:** Prompting a 1.5B model gives about 0.31 macro-F1. Fine-tuning with LoRA lifts it to 0.59, and the gain over few-shot is significant at p = 0.026, though the intervals are wide with 35 test paragraphs. The keyword rule looks best, but the test labels started from the rule and were mostly kept, so the rule has a built-in advantage. The fair comparison is between the GenAI methods.
+
+## Slide 8: Where the fine-tuned model is right and wrong
+
+- System of record: P 0.67 R 0.80 F1 0.73 (n=5)
+- Data gravity: P 0.25 R 0.50 F1 0.33 (n=2)
+- Switching costs / integrations: P 0.38 R 1.00 F1 0.55 (n=3)
+- Compliance & security: P 0.50 R 0.67 F1 0.57 (n=3)
+- Network effects / ecosystem: P 0.83 R 0.83 F1 0.83 (n=6)
+- None / commodity: P 0.86 R 0.38 F1 0.52 (n=16)
+
+**Speaker notes:** Per class, the model is strongest on network effects and systems of record. Its main error is over-claiming: plain business descriptions get labelled as moats, so recall on the none class is low. With only a few test examples per class, these per-class numbers are rough.
+
+## Slide 9: Real test paragraphs
+
+- VERX 0001104659-26-019165_Item1_17: gold compliance_security, LoRA compliance_security, few-shot data_gravity
+- DOCU 0001261333-22-000049_Item1_59: gold switching_costs_integrations, LoRA switching_costs_integrations, few-shot data_gravity
+- FLYW 0000950170-23-007149_Item1_320: gold none_or_commodity, LoRA compliance_security, few-shot compliance_security
+
+**Speaker notes:** These are real paragraphs from the test set, not paraphrases. Two show where fine-tuning helped, and one shows a typical error.
+
+## Slide 10: RQ2: developer stance on Hacker News, a negative result
+
+- Zero-shot acc 0.433, few-shot 0.433, chance 0.333
+- No corpus-level shares reported
+
+**Speaker notes:** This one did not work, and I am reporting that rather than hiding it. Developer comments are sarcastic and nuanced, and a 1.5B model with no fine-tuning is barely above chance. I deliberately do not turn its predictions into a percentage of developers who build versus buy.
+
+## Slide 11: RQ3: moat language vs market outcome
+
+- Spearman moat vs excess rho=0.184 p=0.079 n=92
+- moat vs revenue growth rho=-0.022
+- data/infra: n=17, median excess +42.1%
+- security: n=12, median excess -16.4%
+- communication: n=6, median excess -34.1%
+- horizontal: n=25, median excess -71.0%
+- vertical: n=18, median excess -94.2%
+- fintech/HR: n=18, median excess -131.2%
+
+**Speaker notes:** Each dot is a company: how much of its business section the model labels as a moat, against its stock return relative to the software index since January 2023, both as ranks. The correlation is weakly positive but not significant, p = 0.08. Sector differences are much larger, and those are descriptive; I am not claiming what caused them.
+
+## Slide 12: Conclusions and limitations
+
+- LoRA beats prompting on moat classification
+- HN stance near chance
+- No significant moat-return link; sector effects larger
+- Limitations: rule labels, anchoring, n small, self-reported claims, survivorship, non-causal
+
+**Speaker notes:** To sum up: fine-tuning clearly helps a small model learn this taxonomy, the developer-stance task was a negative result, and the market link was not significant. The main improvement would be blind human labels and a bigger test set. Thank you.
+
+## Number sources
+
+| Claim | Value | Source |
+|---|---|---|
+| Test set size | 35 | `metrics.json task_1_moats.methods.lora.n` |
+| Companies | 100 | `MANIFEST.csv companies.csv` |
+| 10-K filings indexed | 464 | `MANIFEST.csv filings_index.csv` |
+| 10-K paragraphs | 190655 | `MANIFEST.csv filings_paragraphs.jsonl` |
+| Revenue rows | 538 | `MANIFEST.csv revenue.csv` |
+| HN items | 7829 | `MANIFEST.csv hn_comments.jsonl` |
+| Pricing-page records | 147 | `MANIFEST.csv pricing_pages.jsonl` |
+| Tickers with prices | 96 | `stock_performance.csv status==ok` |
+| IGV return % | 118.31 | `stock_performance.csv igv_return_pct` |
+| Train rows | 140 | `gold_10k_moats.csv split==train` |
+| Review rows evaluated | 52 | `runs/20261102_2144\gold_review_completed.xlsx` |
+| Review rows excluded | 8 | `runs/20261102_2144\gold_review_completed.xlsx` |
+| Rule-vs-review agreement | 65.4% | `runs/20261102_2144\gold_review_completed.xlsx` |
+| Cohen's kappa rule vs review | 0.574 | `runs/20261102_2144\gold_review_completed.xlsx (computed)` |
+| Test rows where final label = rule label | 23 | `predictions.csv + review file` |
+| Majority class accuracy | 0.457 | `metrics.json task_1_moats.methods.majority_baseline.accuracy` |
+| Majority class macro-F1 | 0.105 | `metrics.json task_1_moats.methods.majority_baseline.macro_f1` |
+| Random accuracy | 0.143 | `metrics.json task_1_moats.methods.random_baseline.accuracy` |
+| Random macro-F1 | 0.122 | `metrics.json task_1_moats.methods.random_baseline.macro_f1` |
+| Keyword rule* accuracy | 0.657 | `metrics.json task_1_moats.methods.keyword_rule_baseline.accuracy` |
+| Keyword rule* macro-F1 | 0.667 | `metrics.json task_1_moats.methods.keyword_rule_baseline.macro_f1` |
+| Zero-shot (Qwen 1.5B) accuracy | 0.371 | `metrics.json task_1_moats.methods.zero_shot.accuracy` |
+| Zero-shot (Qwen 1.5B) macro-F1 | 0.305 | `metrics.json task_1_moats.methods.zero_shot.macro_f1` |
+| Few-shot, 6 examples accuracy | 0.343 | `metrics.json task_1_moats.methods.few_shot_cot.accuracy` |
+| Few-shot, 6 examples macro-F1 | 0.307 | `metrics.json task_1_moats.methods.few_shot_cot.macro_f1` |
+| LoRA fine-tuned accuracy | 0.600 | `metrics.json task_1_moats.methods.lora.accuracy` |
+| LoRA fine-tuned macro-F1 | 0.589 | `metrics.json task_1_moats.methods.lora.macro_f1` |
+| Spearman moat vs excess return | 0.184 | `rq4_correlations.json` |
+| Spearman p | 0.079 | `rq4_correlations.json` |
+| Spearman n | 92 | `rq4_correlations.json` |
+| Spearman moat vs revenue growth | -0.022 | `rq4_correlations.json` |
+| HN zero-shot accuracy | 0.433 | `metrics.json task_2_hn_stance.zero_shot` |
+| HN few-shot accuracy | 0.433 | `metrics.json task_2_hn_stance.few_shot` |
+| LoRA epochs | 4.0 | `training_loss.csv epoch max` |
