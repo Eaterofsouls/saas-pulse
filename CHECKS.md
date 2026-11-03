@@ -1,61 +1,40 @@
-# SaaS-Pulse Slide Verification & Metric Audit (CHECKS.md)
+# Number Sources (CHECKS.md)
 
-**Generated from Execution Run**: `runs/20261102_2144`  
-**Execution Timestamp**: 2026-11-02T17:27:31.973671+00:00  
-**Hardware Profile**: NVIDIA Tesla T4 (Kaggle Cloud GPU)  
-**Base Model**: `Qwen/Qwen2.5-1.5B-Instruct` (4-bit NF4 + LoRA PEFT)  
-**Total Claims Audited**: 34  
-**Audit Result**: ALL CHECKS PASSED (100% Traceability)
+## Number sources
 
----
-
-## 1. Exhaustive Verification Table
-
-| Category | Claim / Metric | Source of Truth | Expected Value | Found on Slide | Status |
-| :--- | :--- | :--- | :---: | :---: | :---: |
-| **Dataset Split** | Frozen Test Set Size N=35 | `metrics.json:task_1_moats.num_test_examples` | 35 | 35 | **PASS** |
-| **RQ1 Modeling** | 6-Method Table contains 'Majority Baseline' | `PRESENTATION_SLIDES.md & presentation.html` | True | True | **PASS** |
-| **RQ1 Modeling** | 6-Method Table contains 'Random Baseline' | `PRESENTATION_SLIDES.md & presentation.html` | True | True | **PASS** |
-| **RQ1 Modeling** | 6-Method Table contains 'Keyword Rule Baseline' | `PRESENTATION_SLIDES.md & presentation.html` | True | True | **PASS** |
-| **RQ1 Modeling** | 6-Method Table contains 'Zero-Shot Prompting' | `PRESENTATION_SLIDES.md & presentation.html` | True | True | **PASS** |
-| **RQ1 Modeling** | 6-Method Table contains 'Few-Shot CoT' | `PRESENTATION_SLIDES.md & presentation.html` | True | True | **PASS** |
-| **RQ1 Modeling** | 6-Method Table contains 'LoRA Fine-Tuned (Qwen 1.5B)' | `PRESENTATION_SLIDES.md & presentation.html` | True | True | **PASS** |
-| **RQ1 Modeling** | LoRA Accuracy == 0.600 | `metrics.json:lora.accuracy` | 0.600 | 0.600 | **PASS** |
-| **RQ1 Modeling** | LoRA Macro-F1 == 0.589 | `metrics.json:lora.macro_f1` | 0.589 | 0.589 | **PASS** |
-| **RQ1 Modeling** | Few-Shot Accuracy == 0.343 | `metrics.json:few_shot_cot.accuracy` | 0.343 | 0.343 | **PASS** |
-| **RQ1 Modeling** | Few-Shot Macro-F1 == 0.307 | `metrics.json:few_shot_cot.macro_f1` | 0.307 | 0.307 | **PASS** |
-| **RQ1 Modeling** | Zero-Shot Accuracy == 0.371 | `metrics.json:zero_shot.accuracy` | 0.371 | 0.371 | **PASS** |
-| **RQ1 Modeling** | Zero-Shot Macro-F1 == 0.305 | `metrics.json:zero_shot.macro_f1` | 0.305 | 0.305 | **PASS** |
-| **Statistical Rigor** | McNemar test p-value reported (p=0.0265) | `metrics.json:mcnemar_tests.few_shot_vs_lora` | 0.0265 | 0.0265 | **PASS** |
-| **RQ2 HN Stance** | HN Zero-Shot Accuracy == 43.3% | `metrics.json:task_2_hn_stance.zero_shot.accuracy` | 43.3% | 43.3% | **PASS** |
-| **RQ2 HN Stance** | HN Near-Chance Statement Present | `metrics.json:hn_near_chance` | near chance | near chance | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '0.482' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '0.654' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '0.835' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '0.260' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '0.404' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '0.067' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '44%' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '36%' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '86.4' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | Absence of stale/fabricated value '46.5' | `PRESENTATION_SLIDES.md & presentation.html` | Absent | Absent | **PASS** |
-| **Sanity Audit** | LoRA Macro-F1 is healthy (not mode collapsed to 0.067) | `metrics.json:lora.macro_f1` | 0.589 | 0.589 | **PASS** |
-| **RQ4 Financials** | Spearman rho == 0.1839 | `metrics.json:econometric_linkage.rq4.spearman_moat_vs_excess_return.rho` | 0.1839 | 0.1839 | **PASS** |
-| **RQ4 Financials** | Valid stock ticker count == 96 | `dataset/stock_performance.csv` | 96 | 96 | **PASS** |
-| **RQ4 Financials** | IGV Benchmark return == 118.31% | `dataset/stock_performance.csv:igv_return_pct` | 118.31% | 118.31% | **PASS** |
-| **Dataset Integrity** | Total Companies == 100 | `MANIFEST.csv:companies.csv` | 100 | 100 | **PASS** |
-| **Dataset Integrity** | HN Comments Corpus == 7,829 | `MANIFEST.csv:hn_comments.jsonl` | 7829 | 7829 | **PASS** |
-| **Dataset Integrity** | XBRL Revenue Facts == 538 | `MANIFEST.csv:revenue.csv` | 538 | 538 | **PASS** |
-| **Dataset Integrity** | SEC 10-K Paragraphs == 190,655 | `MANIFEST.csv:filings_paragraphs.jsonl` | 190655 | 190655 | **PASS** |
-
----
-
-## 2. Hardcoded / Stale Placeholders Audit
-We performed an automated negative scan of both `PRESENTATION_SLIDES.md` and `presentation.html` for any stale numbers or ungrounded claims (`0.482`, `0.654`, `0.835`, `0.260`, `0.404`, `0.067`, `44%`, `36%`, `+86.4`, `+46.5`).
-- **Scan Result**: All stale/fabricated values were completely eliminated. Every number traces 1:1 to `runs/20261102_2144/run_outputs/metrics.json`.
-
-## 3. Methodological Integrity & Academic Disclosures
-- **Task 1 Moat Classification**: The 6-method table reports empirical numbers with Wilson and bootstrap confidence intervals. LoRA achieves 60.0% accuracy and 0.589 Macro-F1 across all 6 classes. Pairwise McNemar tests confirm LoRA significantly outperforms Few-Shot on N=35 (p=0.0265), which is transparently stated.
-- **Task 2 HN Stance**: Language models perform near chance (43.3% vs 33.3% baseline), demonstrating that informal developer text requires specialized domain pretraining.
-- **Task 4 Econometric Linkage**: Spearman rank correlation between company moat density and excess market return is $\rho = 0.1839$ ($p = 0.0793$), which is not statistically significant. Market returns reflect macro sector dynamics (Data/Infra outperforming) rather than simple paragraph-level moat mention frequency.
-- **Provenance & Review**: Fully disclosed that training rows are rule-derived, and reviewed test rows carry potential anchoring bias from visible rule suggestions.
+| Claim | Value | Source |
+|---|---|---|
+| Test set size | 35 | `metrics.json task_1_moats.methods.lora.n` |
+| Companies | 100 | `MANIFEST.csv companies.csv` |
+| 10-K filings indexed | 464 | `MANIFEST.csv filings_index.csv` |
+| 10-K paragraphs | 190655 | `MANIFEST.csv filings_paragraphs.jsonl` |
+| Revenue rows | 538 | `MANIFEST.csv revenue.csv` |
+| HN items | 7829 | `MANIFEST.csv hn_comments.jsonl` |
+| Pricing-page records | 147 | `MANIFEST.csv pricing_pages.jsonl` |
+| Tickers with prices | 96 | `stock_performance.csv status==ok` |
+| IGV return % | 118.31 | `stock_performance.csv igv_return_pct` |
+| Train rows | 140 | `gold_10k_moats.csv split==train` |
+| Review rows evaluated | 52 | `runs/20261102_2144\gold_review_completed.xlsx` |
+| Review rows excluded | 8 | `runs/20261102_2144\gold_review_completed.xlsx` |
+| Rule-vs-review agreement | 65.4% | `runs/20261102_2144\gold_review_completed.xlsx` |
+| Cohen's kappa rule vs review | 0.574 | `runs/20261102_2144\gold_review_completed.xlsx (computed)` |
+| Test rows where final label = rule label | 23 | `predictions.csv + review file` |
+| Majority class accuracy | 0.457 | `metrics.json task_1_moats.methods.majority_baseline.accuracy` |
+| Majority class macro-F1 | 0.105 | `metrics.json task_1_moats.methods.majority_baseline.macro_f1` |
+| Random accuracy | 0.143 | `metrics.json task_1_moats.methods.random_baseline.accuracy` |
+| Random macro-F1 | 0.122 | `metrics.json task_1_moats.methods.random_baseline.macro_f1` |
+| Keyword rule* accuracy | 0.657 | `metrics.json task_1_moats.methods.keyword_rule_baseline.accuracy` |
+| Keyword rule* macro-F1 | 0.667 | `metrics.json task_1_moats.methods.keyword_rule_baseline.macro_f1` |
+| Zero-shot (Qwen 1.5B) accuracy | 0.371 | `metrics.json task_1_moats.methods.zero_shot.accuracy` |
+| Zero-shot (Qwen 1.5B) macro-F1 | 0.305 | `metrics.json task_1_moats.methods.zero_shot.macro_f1` |
+| Few-shot, 6 examples accuracy | 0.343 | `metrics.json task_1_moats.methods.few_shot_cot.accuracy` |
+| Few-shot, 6 examples macro-F1 | 0.307 | `metrics.json task_1_moats.methods.few_shot_cot.macro_f1` |
+| LoRA fine-tuned accuracy | 0.600 | `metrics.json task_1_moats.methods.lora.accuracy` |
+| LoRA fine-tuned macro-F1 | 0.589 | `metrics.json task_1_moats.methods.lora.macro_f1` |
+| Spearman moat vs excess return | 0.184 | `rq4_correlations.json` |
+| Spearman p | 0.079 | `rq4_correlations.json` |
+| Spearman n | 92 | `rq4_correlations.json` |
+| Spearman moat vs revenue growth | -0.022 | `rq4_correlations.json` |
+| HN zero-shot accuracy | 0.433 | `metrics.json task_2_hn_stance.zero_shot` |
+| HN few-shot accuracy | 0.433 | `metrics.json task_2_hn_stance.few_shot` |
+| LoRA epochs | 4.0 | `training_loss.csv epoch max` |
