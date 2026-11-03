@@ -141,3 +141,21 @@ Audited results:
 - **Kernel Run 12 (`runs/20261102_2138/`)**: Failed immediately at Cell 5 with `IndentationError` / string literal escape caused by automated regex patch.
 - **Fix Applied for Run 13 (Kernel Version 13)**: Clean syntax rewrite verified with Python `ast.parse()` (`verify_cells_syntax.py`) across all 21 code cells.
 - **Kernel Run 13 (`runs/20261102_2144/`)**: **SUCCESSFUL EXECUTION ON KAGGLE TESLA T4 GPU**. Ran for 74 minutes, completed with `KernelWorkerStatus.COMPLETE`. Achieved 0.600 Accuracy, 0.589 Macro-F1 with balanced 6-class distribution (no mode collapse). Both HN stance methods passed sanity gate. Econometric linkage evaluated on N=92 companies ($\rho = 0.1839, p = 0.0793$). 100% verification checks passed in `CHECKS.md`.
+
+
+---
+
+## STOCK SPLIT AUDIT (STEP 5)
+
+- **Audit Date**: 2026-11-03
+- **Tickers Audited via yfinance**:
+  - CRWD (CrowdStrike Holdings, Inc.): Had a **4-for-1 stock split** on **2026-07-02** (yf.Ticker('CRWD').splits = 4.0).
+    - Unadjusted close on 2023-01-03: \.28 / 4 = \.820000.
+    - Thus, price_start_2023 = 25.82 in dataset/stock_performance.csv is the correct auto-adjusted split price.
+  - NOW (ServiceNow, Inc.): Had a **5-for-1 stock split** on **2025-12-18** (yf.Ticker('NOW').splits = 5.0).
+    - Unadjusted close on 2023-01-03: \.50 / 5 = \.100000.
+    - Thus, price_start_2023 = 77.10 in dataset/stock_performance.csv is the correct auto-adjusted split price.
+  - PANW (Palo Alto Networks Inc): Had a **3-for-1 stock split** on **2022-09-14** and a **2-for-1 stock split** on **2024-12-16** (yf.Ticker('PANW').splits = 2.0).
+    - Unadjusted close on 2023-01-03: \.45 / 2 = \.225000.
+    - Thus, price_start_2023 = 69.22 in dataset/stock_performance.csv is the correct auto-adjusted split price.
+- **Conclusion**: All three tickers underwent post-Jan 2023 stock splits; auto-adjusted prices in dataset/stock_performance.csv are fine. No edits to stock_performance.csv required.
